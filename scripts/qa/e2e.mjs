@@ -10,10 +10,11 @@ p.on("console", (m) => m.type() === "error" && !m.text().includes("favicon") && 
 const step = (s) => console.log("✓", s);
 
 await p.goto(`${BASE}/product/m1-ganesh-ji`, { waitUntil: "networkidle" });
+await p.waitForTimeout(1500);
 await p.getByRole("button", { name: "Add to cart", exact: true }).first().click();
 await p.getByRole("dialog", { name: "Shopping cart" }).waitFor();
 step("added to cart, drawer open");
-await p.getByRole("link", { name: /Checkout securely/ }).click();
+await p.getByRole("link", { name: /^Checkout/ }).click();
 await p.waitForURL("**/checkout");
 await p.getByPlaceholder("Coupon code").waitFor();
 await p.fill('input[name="email"]', "test.buyer@example.com");

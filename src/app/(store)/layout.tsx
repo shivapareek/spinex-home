@@ -23,7 +23,7 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
       <Footer site={site} pages={footerPages} categories={cats} />
       <CartDrawer freeShippingThreshold={commerce.freeShippingThreshold} />
       <SearchPalette />
-      <Toaster position="bottom-center" toastOptions={{ style: { borderRadius: 999, background: "#140A0C", color: "#F7F0E3", border: "1px solid rgba(201,162,74,.3)" } }} />
+      <Toaster position="bottom-center" toastOptions={{ style: { borderRadius: 12, background: "#111111", color: "#FFFFFF", border: "none", fontFamily: "var(--font-geist-sans)" } }} />
     </div>
   );
 }

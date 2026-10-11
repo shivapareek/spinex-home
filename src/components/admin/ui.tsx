@@ -99,7 +99,7 @@ export function Select({ className, children, ...p }: React.SelectHTMLAttributes
   return (
     <select
       {...p}
-      className={cn(inputClass, "appearance-none bg-[right_0.9rem_center] bg-no-repeat pr-9", className)}
+      className={cn(inputClass, "appearance-none bg-no-repeat pr-9 [background-position:right_0.9rem_center]", className)}
       style={{ backgroundImage: SELECT_ARROW, ...p.style }}
     >
       {children}

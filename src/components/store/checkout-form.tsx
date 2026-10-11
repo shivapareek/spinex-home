@@ -198,7 +198,7 @@ export function CheckoutForm({ states, codEnabled, codFee, razorpayEnabled, pref
               </div>
             ) : (
               <div className="flex gap-2">
-                <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="Coupon code" className="field h-11 min-w-0 flex-1 uppercase" />
+                <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="Coupon code" className="field h-11 min-w-0 flex-1 uppercase placeholder:normal-case" />
                 <button type="button" onClick={() => code && setCoupon(code)} className="btn-outline h-11 rounded-xl px-5">Apply</button>
               </div>
             )}
