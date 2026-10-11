@@ -12,7 +12,7 @@ export default function CategoriesPage() {
   const rows = db
     .select({
       c: categories,
-      count: sql<number>`(select count(*) from products where products.category_id = ${categories.id})`,
+      count: sql<number>`(select count(*) from products p where p.category_id = "categories"."id")`,
     })
     .from(categories)
     .orderBy(asc(categories.sortOrder))

@@ -272,8 +272,8 @@ export function Studio({
   ) : null;
 
   return (
-    <div className={cn("grid gap-5", full && "lg:grid-cols-[1fr_340px]")}>
-      <div>
+    <div className={cn("grid min-w-0 grid-cols-1 gap-5", full && "lg:grid-cols-[minmax(0,1fr)_340px]")}>
+      <div className="min-w-0">
         {/* Space tabs */}
         <div className="no-scrollbar -mx-1 mb-3 flex gap-1.5 overflow-x-auto px-1 pb-1">
           {tabs.map(({ id, label, Icon, on, act }) => (
