@@ -26,7 +26,7 @@ async function caption(text) {
     if (!el) {
       el = document.createElement("div");
       el.id = "demo-cap";
-      el.style.cssText = "position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:99999;background:rgba(20,10,12,.88);color:#F3E6C2;font:600 17px system-ui;padding:12px 22px;border-radius:999px;border:1px solid rgba(201,162,74,.5);box-shadow:0 10px 30px rgba(0,0,0,.4);pointer-events:none;white-space:nowrap";
+      el.style.cssText = "position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:99999;background:#111;color:#fff;font:600 16px system-ui;padding:12px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);pointer-events:none;white-space:nowrap";
       document.body.appendChild(el);
     }
     el.textContent = t;
@@ -57,8 +57,8 @@ async function slowScroll(total, step = 12) {
 
 // 1. Hero
 await p.goto(BASE + "/", { waitUntil: "networkidle" });
-await wait(2600);
-await caption("Hero: mandir ke darwaze khulte hain → live Darshan portal");
+await wait(1200);
+await caption("Hero: clean white design + live preview card");
 await glide(300, 300, 900, 450, 40);
 await wait(1500);
 await caption("Space badlo: Car → Mandir → Desk");
@@ -78,7 +78,7 @@ for (const n of ["Show Bal Krishna with Flute", "Show Hanuman Ji Reading Ramayan
 await caption("Homepage sections — sab kuch admin CMS se editable");
 await slowScroll(2600);
 await wait(800);
-await caption("Same idol, 4 spaces — ek click mein switch");
+await caption("Try before you buy — same idol, 4 spaces");
 for (const n of ["Meditation Adiyogi", "Khatu Shyam Darbar", "Bal Krishna with Flute"]) {
   const btn = p.getByRole("button", { name: n, exact: true });
   if (await btn.count()) { await btn.first().click(); await wait(1500); }
@@ -124,7 +124,7 @@ await wait(600);
 
 // 4. Darshan Studio
 await p.goto(BASE + "/experience?scene=temple", { waitUntil: "networkidle" });
-await caption("Darshan Studio — koi bhi idol, koi bhi space, camera ya apni photo");
+await caption("Try in your space — koi bhi idol, koi bhi space, camera ya photo");
 await wait(1500);
 for (const n of ["Meditation Adiyogi", "Radha Krishna with Cow", "Ganesh Lakshmi Combo", "Floral Ring Ganesh Ji"]) {
   const btn = p.locator(`button[title="${n}"]`);
@@ -135,9 +135,9 @@ await wait(1800);
 
 // 5. Shop
 await p.goto(BASE + "/shop", { waitUntil: "networkidle" });
-await caption("Shop — Car / Mandir / Desk aur deity filters");
+await caption("Shop — simple filters: Space, Category, Deity, Price");
 await wait(1200);
-await p.getByRole("button", { name: "Car", exact: true }).click();
+await p.getByRole("button", { name: "Car dashboard", exact: true }).first().click();
 await wait(1800);
 await slowScroll(900);
 await wait(800);

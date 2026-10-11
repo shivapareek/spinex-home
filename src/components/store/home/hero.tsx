@@ -63,8 +63,8 @@ export function Hero({ hero, idols, scenes }: { hero: HomeSettings["hero"]; idol
 
         {/* Live preview card */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: EASE }} className="rounded-[28px] border border-line bg-white p-3 shadow-soft">
-          <div className="flex items-center justify-between gap-3 px-2 pb-3 pt-1">
-            <p className="text-sm font-medium">See how it looks in your…</p>
+          <div className="flex items-center justify-center gap-3 px-2 pb-3 pt-1 sm:justify-between">
+            <p className="hidden text-sm font-medium sm:block">See how it looks in your…</p>
             <div className="flex rounded-full bg-surface p-1" role="tablist" aria-label="Choose a space">
               {scenes.map((s, i) => {
                 const Icon = SCENE_ICON[s.kind] ?? Couch;

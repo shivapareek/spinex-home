@@ -25,8 +25,8 @@ export default function BulkOrders() {
             <div className="no-scrollbar -mx-4 mt-10 flex gap-3 overflow-x-auto px-4 md:mx-0 md:mt-14 md:grid md:grid-cols-5 md:gap-4 md:overflow-visible md:px-0">
               {strip.slice(0, 5).map((p) => (
                 <div key={p.id} className="w-32 shrink-0 md:w-auto">
-                  <div className="grid aspect-square place-items-center rounded-2xl bg-surface">
-                    <img src={p.cutout!} alt={p.name} loading="lazy" className="h-[72%] w-[72%] object-contain" />
+                  <div className="relative aspect-square rounded-2xl bg-surface">
+                    <img src={p.cutout!} alt={p.name} loading="lazy" className="absolute inset-[14%] h-[72%] w-[72%] object-contain" />
                   </div>
                   <p className="mt-2 truncate text-xs text-muted">{p.name}</p>
                 </div>

@@ -42,10 +42,10 @@ export function ProductMedia({
             role="tab"
             aria-selected={tab === id}
             onClick={() => setTab(id)}
-            className={cn("relative flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2 text-xs font-medium transition-colors sm:text-sm", tab === id ? "text-ink" : "text-muted hover:text-ink")}
+            className={cn("relative flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-2 py-2 text-xs font-medium transition-colors sm:gap-2 sm:px-3 sm:text-sm", tab === id ? "text-ink" : "text-muted hover:text-ink")}
           >
             {tab === id && <motion.span layoutId="pm-tab" className="absolute inset-0 rounded-full bg-white shadow-card" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
-            <Icon className="relative h-4 w-4" weight={tab === id ? "fill" : "light"} />
+            <Icon className="relative hidden h-4 w-4 sm:block" weight={tab === id ? "fill" : "light"} />
             <span className="relative">{label}</span>
             {id === "space" && tab !== id && <span className="relative hidden rounded-full bg-accent-soft px-1.5 py-0.5 text-[10px] font-semibold text-accent sm:block">New</span>}
           </button>
