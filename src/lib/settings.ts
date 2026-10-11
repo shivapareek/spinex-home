@@ -107,37 +107,37 @@ export const DEFAULT_COMMERCE: CommerceSettings = {
 
 export const DEFAULT_HOME: HomeSettings = {
   hero: {
-    eyebrow: "Spinex Home · Est. Rajasthan",
-    title: "Bring the divine",
-    titleAccent: "wherever you go.",
+    eyebrow: "New: preview any idol in your own space",
+    title: "Divine idols for your",
+    titleAccent: "car, mandir & desk.",
     subtitle:
-      "Hand-finished idols for your car dashboard, home mandir and work desk. Turn them in 360°, then place them in your own space before they reach your door.",
+      "Beautifully finished god idols, made to sit on your car dashboard, in your home mandir or on your work desk. See exactly how they look before you buy.",
     shloka: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ",
     shlokaMeaning: "O Lord of the curved trunk, radiant as a million suns",
-    primaryCta: { label: "Explore the collection", href: "/shop" },
-    secondaryCta: { label: "Try in your car", href: "/experience" },
+    primaryCta: { label: "Shop all idols", href: "/shop" },
+    secondaryCta: { label: "Try in your space", href: "/experience" },
     featured: ["m1-ganesh-ji", "meditation-adiyogi", "krishna-ji-flute", "hanuman-ji-kitab", "golden-shivling"],
     showDoorsIntro: true,
   },
   sections: (
-    ["marquee", "deities", "experience", "bestsellers", "dashboard", "craft", "testimonials", "marketplaces", "bulk", "faq", "newsletter"] as HomeSectionKey[]
-  ).map((key) => ({ key, enabled: true })),
+    ["bestsellers", "deities", "experience", "dashboard", "craft", "testimonials", "marketplaces", "bulk", "faq", "marquee", "newsletter"] as HomeSectionKey[]
+  ).map((key) => ({ key, enabled: key !== "marquee" && key !== "newsletter" })),
   marquee: ["Ganesh Ji", "Mahadev", "Hanuman Ji", "Radha Krishna", "Khatu Shyam", "Lakshmi Ji", "Buddha", "Kamdhenu"],
   experience: {
-    eyebrow: "Darshan Studio",
-    title: "See it on your dashboard before it arrives.",
-    subtitle: "Switch between a car dashboard, a home mandir and a work desk — or point your camera at your own space.",
+    eyebrow: "Try before you buy",
+    title: "See it in your space before it arrives.",
+    subtitle: "Pick an idol, choose a car dashboard, home mandir or desk — or use your phone camera — and see the real size and look.",
   },
   dashboard: {
-    eyebrow: "Made for the road",
+    eyebrow: "Car dashboard idols",
     title: "Compact. Stable. Made to ride with you.",
     body:
       "Our dashboard idols are sized to sit neatly on the dash without blocking your view, with flat, stable bases built for daily drives.",
     productSlug: "krishna-ji-flute",
   },
   craft: {
-    eyebrow: "The craft",
-    title: "Detailed by hand, finished in gold — made to be looked at every day.",
+    eyebrow: "Why Spinex",
+    title: "Made with care, packed with care.",
     body:
       "Every Spinex idol is finished with care — fine painted details, gilded accents and a sealed surface — then checked and packed by our team before it leaves for your home.",
     stats: [
@@ -148,7 +148,7 @@ export const DEFAULT_HOME: HomeSettings = {
     ],
   },
   marketplaces: {
-    title: "Trusted by devotees on India's biggest marketplaces",
+    title: "Also available on",
     items: [
       { name: "Amazon", rating: "", note: "Spinex Home store", url: "" },
       { name: "Flipkart", rating: "", note: "Spinex Home store", url: "" },
@@ -160,7 +160,7 @@ export const DEFAULT_HOME: HomeSettings = {
     body: "Corporate Diwali gifts, temple shops, car accessory stores — get catalogue pricing on bulk orders with GST invoice.",
   },
   newsletter: {
-    title: "Festive drops, first.",
+    title: "Get festive offers first",
     body: "New idols and festival offers — once a month, never spam.",
   },
 };

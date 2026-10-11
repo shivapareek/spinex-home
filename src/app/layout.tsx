@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Plus_Jakarta_Sans, Tiro_Devanagari_Hindi } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { Noto_Sans_Devanagari } from "next/font/google";
 import { getSetting } from "@/lib/settings";
 import "./globals.css";
 
-const display = Fraunces({ subsets: ["latin"], variable: "--font-display", axes: ["SOFT", "opsz"], display: "swap" });
-const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
-const deva = Tiro_Devanagari_Hindi({ subsets: ["devanagari", "latin"], weight: "400", variable: "--font-deva", display: "swap" });
+const deva = Noto_Sans_Devanagari({ subsets: ["devanagari"], weight: ["500"], variable: "--font-deva", display: "swap" });
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = getSetting("site");
@@ -18,11 +18,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const viewport: Viewport = { themeColor: "#140A0C" };
+export const viewport: Viewport = { themeColor: "#FFFFFF" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${deva.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${deva.variable}`}>
       <body>{children}</body>
     </html>
   );

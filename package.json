@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.4",
     "framer-motion": "^14.1.0",
+    "geist": "^1.7.2",
     "jose": "^6.2.12",
     "marked": "^18.1.0",
     "nanoid": "^6.0.2",

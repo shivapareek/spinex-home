@@ -33,9 +33,12 @@ export default function HomePage() {
     newsletter: () => <S.Newsletter copy={home.newsletter} />,
   };
 
+  const spaceIdols = listProducts({ slugs: ["krishna-ji-flute", "hanuman-ji-kitab", "meditation-adiyogi", "radha-krishna-cow"] }).filter((p) => p.cutout).map(toIdol);
+
   return (
     <>
       {heroIdols.length > 0 && heroScenes.length > 0 && <Hero hero={home.hero} idols={heroIdols} scenes={heroScenes} />}
+      {builtIn.length > 0 && (spaceIdols.length > 0 || heroIdols.length > 0) && <S.ShopBySpace scenes={builtIn} idols={spaceIdols.length ? spaceIdols : heroIdols} />}
       {home.sections.filter((s) => s.enabled && render[s.key]).map((s) => (
         <div key={s.key}>{render[s.key]()}</div>
       ))}

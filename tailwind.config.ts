@@ -10,27 +10,35 @@ export default {
     },
     extend: {
       colors: {
-        ink: { DEFAULT: "#140A0C", 2: "#1E1013", 3: "#2A161A" },
-        maroon: { DEFAULT: "#5E1224", deep: "#3A0A15", soft: "#7A2236" },
-        gold: { DEFAULT: "#C9A24A", bright: "#E9CC7A", deep: "#94701F", pale: "#F3E6C2" },
-        ivory: { DEFAULT: "#F7F0E3", 2: "#EFE4CF", 3: "#E4D6BB" },
-        sindoor: "#D2431F",
-        tulsi: "#3F6B4A",
+        // Neutral, white-first palette. Legacy token names are kept so every screen maps cleanly.
+        ink: { DEFAULT: "#111111", 2: "#1C1C1C", 3: "#2A2A2A" },
+        ivory: { DEFAULT: "#F6F6F5", 2: "#EFEFED", 3: "#E4E4E1" },
+        surface: "#F6F6F5",
+        line: "#E8E8E6",
+        muted: "#6B6B6B",
+        // Single brand accent: saffron
+        accent: { DEFAULT: "#EA580C", soft: "#FFF1E8", deep: "#C2410C" },
+        maroon: { DEFAULT: "#C2410C", deep: "#9A3412", soft: "#EA580C" },
+        gold: { DEFAULT: "#EA580C", bright: "#F97316", deep: "#C2410C", pale: "#FFF1E8" },
+        sindoor: "#DC2626",
+        tulsi: "#16A34A",
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        deva: ["var(--font-deva)", "serif"],
+        display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+        deva: ["var(--font-deva)", "system-ui", "sans-serif"],
       },
       transitionTimingFunction: {
         silk: "cubic-bezier(0.32,0.72,0,1)",
         spring: "cubic-bezier(0.34,1.56,0.64,1)",
       },
       boxShadow: {
-        aura: "0 30px 80px -30px rgba(201,162,74,0.45)",
-        soft: "0 24px 60px -28px rgba(20,10,12,0.28)",
-        lift: "0 40px 90px -40px rgba(20,10,12,0.45)",
-        inset: "inset 0 1px 1px rgba(255,255,255,0.18)",
+        aura: "0 12px 32px -12px rgba(234,88,12,0.35)",
+        soft: "0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -12px rgba(0,0,0,0.12)",
+        lift: "0 24px 60px -24px rgba(0,0,0,0.25)",
+        inset: "inset 0 1px 0 rgba(255,255,255,0.6)",
+        card: "0 1px 2px rgba(0,0,0,0.04)",
       },
       keyframes: {
         "spin-slow": { to: { transform: "rotate(360deg)" } },
