@@ -82,7 +82,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: SP 
           </AutoSubmitSelect>
           <noscript><button className="text-xs underline">Apply</button></noscript>
           {filtered && (
-            <Link href="/admin/products" className="self-center px-2 text-xs font-medium text-maroon hover:underline">Clear filters</Link>
+            <Link href="/admin/products" className="self-center px-2 text-xs font-medium text-accent-deep hover:underline">Clear filters</Link>
           )}
         </form>
       </div>
@@ -98,17 +98,17 @@ export default async function ProductsPage({ searchParams }: { searchParams: SP 
           head={["Product", "Category", "Price", "Stock", "Flags", "Live", ""]}
           empty={
             <div>
-              <p className="font-display text-lg text-ink">No products match</p>
-              <p className="mt-1">Try a different search or <Link href="/admin/products" className="text-maroon underline">clear filters</Link>.</p>
+              <p className="font-semibold text-lg text-ink">No products match</p>
+              <p className="mt-1">Try a different search or <Link href="/admin/products" className="text-accent-deep underline">clear filters</Link>.</p>
             </div>
           }
         >
           {rows.map(({ p, categoryName }) => {
             const low = p.stock <= lowStockThreshold;
             return (
-              <tr key={p.id} className="transition hover:bg-ivory/40">
+              <tr key={p.id} className="transition hover:bg-surface">
                 <td className={td}>
-                  <Link href={`/admin/products/${p.id}`} className="flex items-center gap-3 hover:text-maroon">
+                  <Link href={`/admin/products/${p.id}`} className="flex items-center gap-3 hover:text-accent-deep">
                     <Thumb src={p.images[0] ?? p.cutout} alt={p.name} />
                     <span className="min-w-0">
                       <span className="block max-w-[240px] truncate font-medium">{p.name}</span>
@@ -137,7 +137,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: SP 
                   <ToggleAction action={toggleProductActive.bind(null, p.id)} checked={p.isActive} label={p.isActive ? "Hide from store" : "Publish to store"} />
                 </td>
                 <td className={`${td} whitespace-nowrap text-right`}>
-                  <Link href={`/admin/products/${p.id}`} className="mr-1 text-xs font-medium text-ink/70 hover:text-maroon">Edit</Link>
+                  <Link href={`/admin/products/${p.id}`} className="mr-1 text-xs font-medium text-ink/70 hover:text-accent-deep">Edit</Link>
                   <ActionButton action={duplicateProduct.bind(null, p.id)}>Duplicate</ActionButton>
                   <ActionButton action={deleteProduct.bind(null, p.id)} confirm={`Delete “${p.name}”? Its reviews will be removed too. Past orders keep their line items.`} className="text-sindoor hover:bg-sindoor/10 hover:text-sindoor">
                     Delete

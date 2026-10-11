@@ -14,8 +14,8 @@ export default async function CheckoutPage() {
   const u = s ? db.select().from(users).where(eq(users.id, s.uid)).get() : null;
   const c = getSetting("commerce");
   return (
-    <section className="container pb-28 pt-32">
-      <h1 className="mb-10 font-display text-5xl tracking-tight md:text-6xl">Checkout</h1>
+    <section className="container py-10 md:py-14">
+      <h1 className="mb-8 text-3xl font-semibold md:text-4xl">Checkout</h1>
       <CheckoutForm
         states={INDIAN_STATES}
         codEnabled={c.codEnabled}

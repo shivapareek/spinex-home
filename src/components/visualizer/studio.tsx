@@ -259,7 +259,7 @@ export function Studio({
                 look={look}
                 rotate={rotate}
                 flip={flip}
-                className={cn("pointer-events-auto cursor-grab touch-none transition-[height] duration-200 active:cursor-grabbing", active && "outline-dashed outline-1 outline-offset-8 outline-gold/80")}
+                className={cn("pointer-events-auto cursor-grab touch-none transition-[height] duration-200 active:cursor-grabbing", active && "outline-dashed outline-1 outline-offset-8 outline-accent")}
                 wrapperProps={{
                   onPointerDown: (e) => { e.stopPropagation(); onDown(e); },
                   onPointerMove: onMove,
@@ -280,7 +280,7 @@ export function Studio({
             <button
               key={id}
               onClick={() => { act(); setHint(true); }}
-              className={cn("flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-xs font-medium ring-1 transition-all duration-500 ease-silk", on ? (full ? "bg-gold text-ink ring-gold" : "bg-ink text-ivory ring-ink") : full ? "bg-white/[0.06] text-ivory/70 ring-white/10 hover:text-ivory" : "bg-white text-ink/70 ring-ink/10 hover:ring-gold")}
+              className={cn("flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-xs font-medium ring-1 transition-all duration-500 ease-silk", on ? "bg-ink text-white ring-ink" : "bg-white text-ink/70 ring-line hover:ring-ink/40")}
             >
               <Icon className="h-4 w-4" weight={on ? "fill" : "light"} />
               {label}
@@ -303,10 +303,10 @@ export function Studio({
         </div>
 
         {/* Stage */}
-        <div className={cn("rounded-[2rem] p-1.5 ring-1", full ? "bg-white/[0.04] ring-white/10" : "bg-ink/[0.04] ring-ink/[0.06]")}>
+        <div>
           <div
             ref={stage}
-            className="relative aspect-[4/5] touch-none select-none overflow-hidden rounded-[calc(2rem-0.375rem)] bg-ink sm:aspect-[16/11]"
+            className="relative aspect-[4/5] touch-none select-none overflow-hidden rounded-2xl bg-surface sm:aspect-[16/10]"
             onPointerDown={() => setActive(false)}
           >
             <AnimatePresence mode="popLayout" initial={false}>
@@ -323,27 +323,27 @@ export function Studio({
 
             <AnimatePresence>
               {hint && (
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="pointer-events-none absolute left-1/2 top-4 flex -translate-x-1/2 items-center gap-2 rounded-full bg-ink/60 px-4 py-2 text-[11px] text-ivory backdrop-blur-md">
-                  <Hand className="h-4 w-4 animate-[float_2s_ease-in-out_infinite] text-gold" weight="light" />
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="pointer-events-none absolute left-1/2 top-4 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-medium text-ink shadow-card backdrop-blur-md">
+                  <Hand className="h-4 w-4 text-accent" />
                   Drag to place · pinch or scroll to resize
                 </motion.div>
               )}
             </AnimatePresence>
 
             {mode.type === "upload" && (
-              <button onClick={() => fileRef.current?.click()} className="absolute left-3 top-3 rounded-full bg-ink/60 px-3 py-1.5 text-[11px] text-ivory backdrop-blur">Change photo</button>
+              <button onClick={() => fileRef.current?.click()} className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-ink shadow-card">Change photo</button>
             )}
 
             {/* Floating toolbar */}
-            <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-ink/65 p-1 ring-1 ring-white/10 backdrop-blur-md">
+            <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-0.5 rounded-full bg-white/95 p-1 shadow-soft backdrop-blur-md">
               <ToolBtn label="Smaller" onClick={() => setScale((s) => clamp(s / 1.12, 0.4, 2.4))}><span className="text-base leading-none">−</span></ToolBtn>
-              <span className="w-12 text-center text-[11px] tabular-nums text-ivory/80">{Math.round(scale * 100)}%</span>
+              <span className="w-12 text-center text-xs font-medium tabular-nums text-ink">{Math.round(scale * 100)}%</span>
               <ToolBtn label="Larger" onClick={() => setScale((s) => clamp(s * 1.12, 0.4, 2.4))}><MagnifyingGlassPlus className="h-4 w-4" /></ToolBtn>
-              <span className="mx-0.5 h-5 w-px bg-white/15" />
+              <span className="mx-0.5 h-5 w-px bg-line" />
               <ToolBtn label="Tilt" onClick={() => setRotate((r) => (r >= 12 ? -12 : r + 4))}><ArrowsClockwise className="h-4 w-4" /></ToolBtn>
               <ToolBtn label="Mirror" onClick={() => setFlip((f) => !f)}><FlipHorizontal className="h-4 w-4" /></ToolBtn>
               <ToolBtn label="Reset" onClick={reset}><ArrowCounterClockwise className="h-4 w-4" /></ToolBtn>
-              <span className="mx-0.5 h-5 w-px bg-white/15" />
+              <span className="mx-0.5 h-5 w-px bg-line" />
               <ToolBtn label="Download image" onClick={() => snapshot(false)} disabled={busy}><DownloadSimple className="h-4 w-4" /></ToolBtn>
               <ToolBtn label="Share" onClick={() => snapshot(true)} disabled={busy}><ShareNetwork className="h-4 w-4" /></ToolBtn>
             </div>
@@ -351,10 +351,10 @@ export function Studio({
         </div>
 
         {!full && (
-          <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-ink/55">
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
             <p>Shown true-to-size at ~{idol.heightCm ?? 10} cm tall. Lighting is simulated.</p>
             {(idol.modelGlb || idol.modelUsdz) && (
-              <button onClick={() => setAr(true)} className="flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-ivory"><Cube className="h-4 w-4" /> View in AR</button>
+              <button onClick={() => setAr(true)} className="btn-primary h-9 px-4 text-xs"><Cube className="h-4 w-4" /> View in AR</button>
             )}
           </div>
         )}
@@ -362,40 +362,40 @@ export function Studio({
 
       {full && (
         <aside className="space-y-4">
-          <div className="rounded-[1.6rem] bg-white/[0.04] p-5 ring-1 ring-white/10">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gold/80">Now placing</p>
+          <div className="rounded-2xl border border-line p-5">
+            <p className="text-xs font-medium text-muted">Now placing</p>
             <div className="mt-3 flex items-center gap-4">
-              <span className="grid h-16 w-14 place-items-center rounded-2xl bg-white/[0.06]">{idol.cutout && <img src={idol.cutout} alt="" className="h-12 w-12 object-contain" />}</span>
+              <span className="grid h-16 w-14 place-items-center rounded-xl bg-surface">{idol.cutout && <img src={idol.cutout} alt="" className="h-12 w-12 object-contain" />}</span>
               <div className="min-w-0">
-                <p className="truncate font-display text-xl text-ivory">{idol.name}</p>
-                <p className="text-sm text-ivory/60">{inr(idol.price)} · ~{idol.heightCm ?? 10} cm</p>
+                <p className="truncate text-lg font-semibold">{idol.name}</p>
+                <p className="text-sm text-muted">{inr(idol.price)} · ~{idol.heightCm ?? 10} cm</p>
               </div>
             </div>
             <div className="mt-5 grid grid-cols-2 gap-2">
               <button
                 disabled={idol.stock <= 0}
                 onClick={() => add({ productId: idol.id, slug: idol.slug, name: idol.name, price: idol.price, image: idol.cutout, stock: idol.stock })}
-                className="flex h-11 items-center justify-center gap-2 rounded-full bg-gold text-sm font-semibold text-ink transition hover:bg-gold-bright active:scale-[0.98] disabled:opacity-50"
+                className="btn-primary h-11 px-3"
               >
                 <ShoppingBagOpen className="h-4 w-4" weight="bold" /> {idol.stock > 0 ? "Add to cart" : "Sold out"}
               </button>
-              <Link href={`/product/${idol.slug}`} className="flex h-11 items-center justify-center rounded-full text-sm text-ivory ring-1 ring-white/15 transition hover:bg-white/[0.06]">Details</Link>
+              <Link href={`/product/${idol.slug}`} className="btn-outline h-11 px-3">Details</Link>
             </div>
             {(idol.modelGlb || idol.modelUsdz) && (
-              <button onClick={() => setAr(true)} className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-full bg-white/[0.06] text-sm text-ivory ring-1 ring-white/10"><Cube className="h-4 w-4" /> View in AR</button>
+              <button onClick={() => setAr(true)} className="btn-outline mt-2 h-11 w-full"><Cube className="h-4 w-4" /> View in AR</button>
             )}
           </div>
-          <div className="rounded-[1.6rem] bg-white/[0.04] p-3 ring-1 ring-white/10">
-            <p className="px-2 pb-3 pt-2 text-[10px] uppercase tracking-[0.2em] text-gold/80">Choose an idol</p>
+          <div className="rounded-2xl border border-line p-3">
+            <p className="px-2 pb-3 pt-2 text-xs font-medium text-muted">Choose an idol</p>
             <div className="no-scrollbar grid max-h-[420px] grid-cols-4 gap-2 overflow-y-auto lg:grid-cols-3">
               {products.filter((p) => p.cutout).map((p) => (
                 <button
                   key={p.id}
                   onClick={() => { setIdol(p); setHint(false); }}
                   title={p.name}
-                  className={cn("grid aspect-square place-items-center rounded-2xl ring-1 transition-all duration-500 ease-silk", p.id === idol.id ? "bg-gold/20 ring-gold" : "bg-white/[0.03] ring-white/[0.08] hover:bg-white/[0.08]")}
+                  className={cn("relative aspect-square rounded-xl ring-1 transition-all duration-300", p.id === idol.id ? "bg-surface ring-2 ring-ink" : "bg-surface ring-transparent hover:ring-line")}
                 >
-                  <img src={p.cutout!} alt={p.name} loading="lazy" className="h-[78%] w-[78%] object-contain" />
+                  <img src={p.cutout!} alt={p.name} loading="lazy" className="absolute inset-[11%] h-[78%] w-[78%] object-contain" />
                 </button>
               ))}
             </div>
@@ -405,8 +405,8 @@ export function Studio({
 
       <AnimatePresence>
         {ar && (
-          <motion.div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 p-4 backdrop-blur-md" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="relative h-[80vh] w-full max-w-2xl overflow-hidden rounded-[2rem] bg-ivory">
+          <motion.div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <div className="relative h-[80vh] w-full max-w-2xl overflow-hidden rounded-3xl bg-white">
               <button onClick={() => setAr(false)} className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-white shadow" aria-label="Close"><X className="h-4 w-4" /></button>
               <ModelViewer glb={idol.modelGlb} usdz={idol.modelUsdz} alt={idol.name} ar />
             </div>
@@ -419,7 +419,7 @@ export function Studio({
 
 function ToolBtn({ children, label, onClick, disabled }: { children: React.ReactNode; label: string; onClick: () => void; disabled?: boolean }) {
   return (
-    <button onClick={onClick} disabled={disabled} title={label} aria-label={label} className="grid h-9 w-9 place-items-center rounded-full text-ivory/85 transition hover:bg-white/15 hover:text-ivory active:scale-90 disabled:opacity-40">
+    <button onClick={onClick} disabled={disabled} title={label} aria-label={label} className="grid h-9 w-9 place-items-center rounded-full text-ink/80 transition hover:bg-surface hover:text-ink active:scale-90 disabled:opacity-40">
       {children}
     </button>
   );

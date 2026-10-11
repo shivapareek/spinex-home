@@ -2,12 +2,13 @@
 
 import { useActionState } from "react";
 import { sendEnquiry } from "@/app/(store)/actions";
+import { Check } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 
 export function EnquiryForm({ type }: { type: "bulk" | "contact" }) {
   const [state, action, pending] = useActionState(sendEnquiry, null);
-  const field = "h-12 w-full rounded-2xl bg-white px-4 text-sm ring-1 ring-ink/10 outline-none placeholder:text-ink/35 focus:ring-2 focus:ring-gold";
-  if (state?.ok) return <div className="rounded-[2rem] bg-tulsi/10 px-6 py-10 text-center text-tulsi"><p className="font-display text-2xl">Dhanyavaad!</p><p className="mt-2 text-sm">{state.message}</p></div>;
+  const field = "field";
+  if (state?.ok) return <div className="rounded-2xl border border-tulsi/20 bg-tulsi/5 px-6 py-10 text-center"><span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-tulsi/10"><Check className="h-6 w-6 text-tulsi" weight="bold" /></span><p className="mt-4 text-lg font-semibold">Thank you!</p><p className="mt-1 text-sm text-muted">{state.message}</p></div>;
   return (
     <form action={action} className="grid gap-3 sm:grid-cols-2">
       <input type="hidden" name="type" value={type} />
@@ -26,7 +27,7 @@ export function EnquiryForm({ type }: { type: "bulk" | "contact" }) {
       )}
       <textarea name="message" rows={4} placeholder={type === "bulk" ? "Which idols are you interested in?" : "How can we help?"} className={cn(field, "h-auto py-3 sm:col-span-2")} />
       {state?.error && <p className="text-sm text-sindoor sm:col-span-2">{state.error}</p>}
-      <button disabled={pending} className="h-14 rounded-full bg-ink text-sm font-semibold text-ivory transition hover:bg-maroon disabled:opacity-60 sm:col-span-2">{pending ? "Sending…" : type === "bulk" ? "Request catalogue pricing" : "Send message"}</button>
+      <button disabled={pending} className="btn-primary h-12 sm:col-span-2">{pending ? "Sending…" : type === "bulk" ? "Request catalogue pricing" : "Send message"}</button>
     </form>
   );
 }

@@ -82,7 +82,7 @@ function FrameSpinner({ frames, name }: { frames: string[]; name: string }) {
       onPointerCancel={() => (drag.current = null)}
     >
       <img src={frames[i]} alt={`${name} — ${Math.round((i / n) * 360)}°`} draggable={false} className="h-full w-full object-contain transition-transform duration-500 ease-silk" style={{ transform: `scale(${zoom})` }} />
-      {!ready && <div className="absolute inset-x-10 bottom-20 h-1 overflow-hidden rounded-full bg-ink/10"><div className="h-full bg-gold transition-all" style={{ width: `${(loaded / n) * 100}%` }} /></div>}
+      {!ready && <div className="absolute inset-x-10 bottom-20 h-1 overflow-hidden rounded-full bg-ink/10"><div className="h-full bg-accent transition-all" style={{ width: `${(loaded / n) * 100}%` }} /></div>}
       <Dial deg={(i / n) * 360} />
       <div className="absolute bottom-4 right-4 flex gap-1 rounded-full bg-white/80 p-1 shadow-soft ring-1 ring-ink/5 backdrop-blur">
         <IconBtn label={auto ? "Pause" : "Auto-rotate"} onClick={() => setAuto((a) => !a)}>{auto ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}</IconBtn>
@@ -153,8 +153,8 @@ function TiltTurntable({ src, name }: { src: string | null; name: string }) {
     >
       {/* turntable */}
       <div className="absolute bottom-[9%] left-1/2 h-[16%] w-[70%] -translate-x-1/2 [transform-style:preserve-3d]" style={{ transform: "translateX(-50%) rotateX(72deg)" }}>
-        <motion.div style={{ rotate: sRing }} className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,#94701F,#E9CC7A,#C9A24A,#F3E6C2,#94701F,#E9CC7A,#94701F)] p-[3px] shadow-[0_0_60px_rgba(201,162,74,0.45)]">
-          <div className="h-full w-full rounded-full bg-[repeating-conic-gradient(from_0deg,#F7F0E3_0deg_6deg,#EFE4CF_6deg_12deg)]" />
+        <motion.div style={{ rotate: sRing }} className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,#d4d4d2,#ffffff,#e4e4e1,#ffffff,#d4d4d2)] p-[2px] shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)]">
+          <div className="h-full w-full rounded-full bg-[repeating-conic-gradient(from_0deg,#ffffff_0deg_6deg,#f1f1ef_6deg_12deg)]" />
         </motion.div>
       </div>
       <motion.div style={{ x: shadowX }} className="absolute bottom-[14%] left-1/2 h-6 w-[38%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(40,20,10,0.35),transparent)] blur-[3px]" />
@@ -189,7 +189,7 @@ function Dial({ deg }: { deg: number }) {
     <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/80 py-1 pl-1 pr-3 text-[11px] font-medium tabular-nums text-ink shadow-soft ring-1 ring-ink/5 backdrop-blur">
       <svg viewBox="0 0 24 24" className="h-7 w-7">
         <circle cx="12" cy="12" r="10" fill="none" stroke="#14080A" strokeOpacity=".12" strokeWidth="2" />
-        <circle cx="12" cy="12" r="10" fill="none" stroke="#C9A24A" strokeWidth="2" strokeDasharray={`${(deg / 360) * 62.8} 62.8`} transform="rotate(-90 12 12)" />
+        <circle cx="12" cy="12" r="10" fill="none" stroke="#EA580C" strokeWidth="2" strokeDasharray={`${(deg / 360) * 62.8} 62.8`} transform="rotate(-90 12 12)" />
       </svg>
       {Math.round(deg)}°
     </div>
@@ -198,15 +198,15 @@ function Dial({ deg }: { deg: number }) {
 
 function Hint({ text }: { text: string }) {
   return (
-    <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-ink/70 px-3 py-1.5 text-[11px] text-ivory backdrop-blur">
-      <ArrowsLeftRight className="h-3.5 w-3.5 text-gold" /> {text}
+    <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-medium text-ink shadow-card">
+      <ArrowsLeftRight className="h-3.5 w-3.5 text-accent" /> {text}
     </div>
   );
 }
 
 function IconBtn({ children, label, onClick }: { children: React.ReactNode; label: string; onClick: () => void }) {
   return (
-    <button onClick={onClick} aria-label={label} title={label} className={cn("grid h-8 w-8 place-items-center rounded-full text-ink/70 transition hover:bg-ink hover:text-ivory")}>
+    <button onClick={onClick} aria-label={label} title={label} className={cn("grid h-8 w-8 place-items-center rounded-full text-ink/70 transition hover:bg-ink hover:text-white")}>
       {children}
     </button>
   );

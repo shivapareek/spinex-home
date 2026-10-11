@@ -48,7 +48,7 @@ export default async function HomeEditor() {
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Eyebrow" className="sm:col-span-2"><Input name="hero.eyebrow" defaultValue={home.hero.eyebrow} /></Field>
               <Field label="Title"><Input name="hero.title" defaultValue={home.hero.title} required /></Field>
-              <Field label="Title accent" hint="Shown in gold italic after the title"><Input name="hero.titleAccent" defaultValue={home.hero.titleAccent} /></Field>
+              <Field label="Title accent" hint="Highlighted words shown after the title"><Input name="hero.titleAccent" defaultValue={home.hero.titleAccent} /></Field>
               <Field label="Subtitle" className="sm:col-span-2"><Textarea name="hero.subtitle" defaultValue={home.hero.subtitle} className="min-h-[80px]" /></Field>
               <Field label="Shloka (Devanagari)"><Input name="hero.shloka" defaultValue={home.hero.shloka} lang="hi" /></Field>
               <Field label="Shloka meaning"><Input name="hero.shlokaMeaning" defaultValue={home.hero.shlokaMeaning} /></Field>
@@ -164,10 +164,10 @@ export default async function HomeEditor() {
               <p className="text-[11px] text-ink/45">Messages rotate in order. Press Enter after each.</p>
             </div>
           </Card>
-          <div className="rounded-[1.5rem] bg-ink p-5 text-ivory">
-            <p className="text-sm text-ivory/70">Changes go live as soon as you save.</p>
-            <SubmitButton variant="gold" className="mt-4 w-full">Save homepage</SubmitButton>
-            <Link href="/" target="_blank" className="mt-3 block text-center text-xs text-gold-bright/80 hover:text-gold-bright">Open homepage ↗</Link>
+          <div className="rounded-2xl border border-line bg-white p-5">
+            <p className="text-sm text-muted">Changes go live as soon as you save.</p>
+            <SubmitButton className="mt-4 w-full">Save homepage</SubmitButton>
+            <Link href="/" target="_blank" className="mt-3 block text-center text-xs font-medium text-ink/70 hover:text-ink">Open homepage ↗</Link>
           </div>
         </aside>
       </ActionForm>

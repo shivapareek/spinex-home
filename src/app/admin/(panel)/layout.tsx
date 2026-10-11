@@ -17,9 +17,9 @@ export default async function PanelLayout({ children }: { children: React.ReactN
     enquiries: count(db.select({ c: sql<number>`count(*)` }).from(enquiries).where(eq(enquiries.status, "new")).get()),
   };
   return (
-    <div className="min-h-[100dvh] bg-[#F6F1E7] text-ink">
+    <div className="min-h-[100dvh] bg-surface text-ink">
       <AdminSidebar user={{ name: session.name, email: session.email, role: session.role }} badges={badges} />
-      <main className="lg:pl-[272px]">
+      <main className="lg:pl-[256px]">
         <div className="mx-auto max-w-[1280px] px-4 pb-24 pt-20 md:px-8 lg:pt-10">{children}</div>
       </main>
       <Toaster position="bottom-right" toastOptions={{ style: { borderRadius: 16, fontFamily: "var(--font-sans)" } }} />

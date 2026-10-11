@@ -34,8 +34,8 @@ export function ProductPicker({ name, products, defaultValue = [], max = 12 }: {
           {selected.map((slug, i) => {
             const p = bySlug.get(slug);
             return (
-              <li key={slug} className="group relative overflow-hidden rounded-2xl bg-gradient-to-b from-ivory to-gold-pale/40 p-2 ring-1 ring-ink/[0.07]">
-                <span className="absolute left-2 top-2 z-10 rounded-full bg-ink px-2 py-0.5 text-[10px] text-ivory">{i + 1}</span>
+              <li key={slug} className="group relative overflow-hidden rounded-2xl bg-surface p-2 ring-1 ring-line">
+                <span className="absolute left-2 top-2 z-10 rounded-full bg-ink px-2 py-0.5 text-[10px] text-white">{i + 1}</span>
                 <div className="aspect-square">
                   {p?.image ? <img src={p.image} alt="" className="h-full w-full object-contain drop-shadow-[0_10px_14px_rgba(20,10,12,0.25)]" /> : <div className="grid h-full place-items-center text-[11px] text-ink/40">No cutout</div>}
                 </div>
@@ -59,11 +59,11 @@ export function ProductPicker({ name, products, defaultValue = [], max = 12 }: {
       {selected.length < max && (
         <div className="mt-4">
           {!open ? (
-            <button type="button" onClick={() => setOpen(true)} className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-maroon ring-1 ring-maroon/20 transition duration-300 ease-silk hover:bg-maroon hover:text-ivory">
+            <button type="button" onClick={() => setOpen(true)} className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-ink ring-1 ring-line transition duration-300 ease-silk hover:bg-ink-3 hover:text-white">
               <Plus weight="light" className="h-3.5 w-3.5" /> Add product
             </button>
           ) : (
-            <div className="rounded-2xl bg-ivory/50 p-3 ring-1 ring-ink/[0.06]">
+            <div className="rounded-2xl bg-surface p-3 ring-1 ring-line">
               <div className="flex items-center gap-2">
                 <div className="relative flex-1">
                   <MagnifyingGlass weight="light" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/40" />
@@ -76,7 +76,7 @@ export function ProductPicker({ name, products, defaultValue = [], max = 12 }: {
                 {available.map((p) => (
                   <li key={p.slug}>
                     <button type="button" onClick={() => setSelected((s) => [...s, p.slug])} className="flex w-full items-center gap-3 rounded-xl px-2 py-1.5 text-left text-sm transition hover:bg-white">
-                      <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-white ring-1 ring-ink/[0.06]">
+                      <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-white ring-1 ring-line">
                         {p.image && <img src={p.image} alt="" className="h-full w-full object-contain" />}
                       </span>
                       <span className="min-w-0 flex-1 truncate">{p.name}{!p.isActive && <span className="ml-1 text-[10px] text-sindoor">(hidden)</span>}</span>

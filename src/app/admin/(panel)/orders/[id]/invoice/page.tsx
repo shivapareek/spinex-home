@@ -79,21 +79,21 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
       `}</style>
 
       <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3">
-        <Link href={`/admin/orders/${o.id}`} className="text-xs font-medium text-ink/50 transition hover:text-maroon">← Order #{o.orderNumber}</Link>
+        <Link href={`/admin/orders/${o.id}`} className="text-xs font-medium text-ink/50 transition hover:text-accent-deep">← Order #{o.orderNumber}</Link>
         <PrintButton />
       </div>
 
-      <article id="spx-invoice" className="mx-auto max-w-[860px] rounded-[1.5rem] bg-white p-6 text-ink shadow-[0_20px_50px_-30px_rgba(20,10,12,0.25)] ring-1 ring-ink/[0.06] sm:p-10">
-        <header className="flex flex-col gap-6 border-b-2 border-maroon pb-6 sm:flex-row sm:items-start sm:justify-between">
+      <article id="spx-invoice" className="mx-auto max-w-[860px] rounded-2xl border border-line bg-white p-6 text-ink sm:p-10">
+        <header className="flex flex-col gap-6 border-b-2 border-ink pb-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="font-display text-3xl tracking-tight text-maroon">{site.name}</p>
+            <p className="text-2xl font-bold tracking-tight text-ink">{site.name}</p>
             <p className="mt-2 text-sm font-semibold">{site.legalName}</p>
             <p className="max-w-xs whitespace-pre-line text-xs leading-relaxed text-ink/65">{site.address}</p>
             <p className="mt-1 text-xs text-ink/65">{site.email} · {site.phone}</p>
             {site.gstin && <p className="mt-1 text-xs"><span className="text-ink/55">GSTIN:</span> <span className="font-mono font-semibold">{site.gstin}</span></p>}
           </div>
           <div className="sm:text-right">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gold-deep">Tax Invoice</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-ink/60">Tax Invoice</p>
             <dl className="mt-3 grid grid-cols-[auto_auto] gap-x-4 gap-y-1 text-xs sm:justify-end">
               <dt className="text-ink/55">Invoice no.</dt><dd className="font-semibold">INV-{o.orderNumber}</dd>
               <dt className="text-ink/55">Invoice date</dt><dd>{formatDate(o.createdAt)}</dd>
@@ -125,7 +125,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
         <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:px-0">
           <table className="mt-6 w-full min-w-[600px] border-collapse text-xs">
             <thead>
-              <tr className="border-y border-ink/15 bg-ivory/70">
+              <tr className="border-y border-ink/15 bg-surface">
                 <th className={th}>#</th>
                 <th className={th}>Description</th>
                 <th className={`${th} text-right`}>Qty</th>
@@ -174,9 +174,9 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
             ) : (
               <div className="flex justify-between"><dt className="text-ink/60">IGST @ {GST_RATE}%</dt><dd className="tabular-nums">{inr(tax, { decimals: true })}</dd></div>
             )}
-            <div className="mt-2 flex items-baseline justify-between border-t-2 border-maroon pt-2.5">
+            <div className="mt-2 flex items-baseline justify-between border-t-2 border-ink pt-2.5">
               <dt className="font-semibold">Invoice total</dt>
-              <dd className="font-display text-2xl tabular-nums text-maroon">{inr(grand, { decimals: true })}</dd>
+              <dd className="text-xl font-bold tabular-nums text-ink">{inr(grand, { decimals: true })}</dd>
             </div>
             {grand !== o.total && <p className="text-[10px] text-sindoor">Note: differs from recorded order total {inr(o.total, { decimals: true })}.</p>}
           </dl>

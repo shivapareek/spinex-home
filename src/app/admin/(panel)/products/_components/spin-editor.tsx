@@ -80,9 +80,9 @@ export function SpinFramesEditor({ name, defaultValue }: { name: string; default
         <SpinPreview frames={frames} />
 
         {/* Video → frames */}
-        <div className="rounded-2xl bg-ivory/60 p-5 ring-1 ring-ink/[0.06]">
+        <div className="rounded-2xl bg-surface p-5 ring-1 ring-line">
           <div className="flex items-center gap-2">
-            <VideoCamera weight="light" className="h-5 w-5 text-maroon" />
+            <VideoCamera weight="light" className="h-5 w-5 text-accent-deep" />
             <p className="text-sm font-semibold text-ink">Create 360° from video</p>
           </div>
           <p className="mt-1 text-xs leading-relaxed text-ink/55">
@@ -95,10 +95,10 @@ export function SpinFramesEditor({ name, defaultValue }: { name: string; default
             onClick={() => vidInput.current?.click()}
             className={cn(
               "mt-4 flex w-full items-center gap-3 rounded-xl border border-dashed px-4 py-3 text-left text-sm transition-all duration-300 ease-silk",
-              video ? "border-gold bg-white" : "border-ink/20 bg-white/60 hover:border-gold",
+              video ? "border-accent bg-white" : "border-ink/20 bg-white/60 hover:border-ink/40",
             )}
           >
-            <FilmStrip weight="light" className="h-5 w-5 shrink-0 text-gold-deep" />
+            <FilmStrip weight="light" className="h-5 w-5 shrink-0 text-accent-deep" />
             <span className="min-w-0 flex-1 truncate">{video ? video.name : "Choose a turntable video…"}</span>
             {video && <span className="shrink-0 text-[11px] text-ink/45">{(video.size / 1048576).toFixed(1)} MB</span>}
           </button>
@@ -123,7 +123,7 @@ export function SpinFramesEditor({ name, defaultValue }: { name: string; default
               </select>
             </label>
             <label className="flex cursor-pointer items-end gap-2 pb-2.5 text-xs text-ink/70">
-              <input type="checkbox" checked={replace} onChange={(e) => setReplace(e.target.checked)} disabled={busy || frames.length === 0} className="h-4 w-4 accent-maroon" />
+              <input type="checkbox" checked={replace} onChange={(e) => setReplace(e.target.checked)} disabled={busy || frames.length === 0} className="h-4 w-4 accent-ink" />
               Replace current frames
             </label>
           </div>
@@ -139,7 +139,7 @@ export function SpinFramesEditor({ name, defaultValue }: { name: string; default
               </div>
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/[0.08]">
                 <div
-                  className={cn("h-full rounded-full transition-[width] duration-300 ease-silk", phase.kind === "extract" ? "bg-gold" : "bg-maroon")}
+                  className={cn("h-full rounded-full transition-[width] duration-300 ease-silk", phase.kind === "extract" ? "bg-accent" : "bg-ink")}
                   style={{ width: `${(phase.done / Math.max(1, phase.total)) * 100}%` }}
                 />
               </div>
@@ -191,11 +191,11 @@ export function SpinFramesEditor({ name, defaultValue }: { name: string; default
           />
         </div>
         {frames.length > 0 ? (
-          <div className="grid max-h-[248px] grid-cols-6 gap-2 overflow-y-auto rounded-2xl bg-ivory/40 p-2 ring-1 ring-ink/[0.05] sm:grid-cols-9 lg:grid-cols-12">
+          <div className="grid max-h-[248px] grid-cols-6 gap-2 overflow-y-auto rounded-2xl bg-surface p-2 ring-1 ring-line sm:grid-cols-9 lg:grid-cols-12">
             {frames.map((u, i) => (
               <div key={u + i} className="group relative aspect-square overflow-hidden rounded-lg bg-white ring-1 ring-ink/10">
                 <img src={u} alt={`Frame ${i + 1}`} loading="lazy" className="h-full w-full object-contain" />
-                <span className="absolute bottom-0.5 left-0.5 rounded bg-ink/70 px-1 text-[9px] tabular-nums text-ivory">{i + 1}</span>
+                <span className="absolute bottom-0.5 left-0.5 rounded bg-ink/70 px-1 text-[9px] tabular-nums text-white">{i + 1}</span>
                 <button
                   type="button"
                   onClick={() => setFrames((f) => f.filter((_, k) => k !== i))}
@@ -263,14 +263,14 @@ function SpinPreview({ frames }: { frames: string[] }) {
           setDragging(false);
         }}
         className={cn(
-          "relative aspect-square w-full touch-pan-y select-none overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_50%_40%,#fff_0%,#F7F0E3_60%,#EFE4CF_100%)] ring-1 ring-ink/[0.06]",
+          "relative aspect-square w-full touch-pan-y select-none overflow-hidden rounded-2xl bg-surface ring-1 ring-line",
           n > 1 && (dragging ? "cursor-grabbing" : "cursor-grab"),
         )}
       >
         {n === 0 ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center text-ink/45">
-            <ArrowsClockwise weight="light" className="h-8 w-8 text-gold" />
-            <p className="font-display text-lg text-ink/70">360° preview</p>
+            <ArrowsClockwise weight="light" className="h-8 w-8 text-accent" />
+            <p className="font-semibold text-lg text-ink/70">360° preview</p>
             <p className="text-xs">Add frames to spin the idol here.</p>
           </div>
         ) : (
@@ -286,7 +286,7 @@ function SpinPreview({ frames }: { frames: string[] }) {
         )}
         <div className="absolute inset-x-0 bottom-3 mx-auto h-3 w-1/2 rounded-full bg-ink/10 blur-md" />
         {n > 1 && !dragging && (
-          <span className="pointer-events-none absolute left-1/2 top-3 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/85 px-3 py-1 text-[11px] text-ink/60 ring-1 ring-ink/[0.06] backdrop-blur">
+          <span className="pointer-events-none absolute left-1/2 top-3 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/85 px-3 py-1 text-[11px] text-ink/60 ring-1 ring-line backdrop-blur">
             <HandGrabbing weight="light" className="h-3.5 w-3.5" /> Drag to rotate
           </span>
         )}
@@ -305,7 +305,7 @@ function SpinPreview({ frames }: { frames: string[] }) {
               setAuto(false);
               setIdx(Number(e.target.value));
             }}
-            className="h-1 flex-1 accent-maroon"
+            className="h-1 flex-1 accent-ink"
             aria-label="Frame"
           />
           <span className="w-14 text-right text-[11px] tabular-nums text-ink/50">{cur + 1}/{n}</span>

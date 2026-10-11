@@ -35,12 +35,12 @@ export function SectionsManager({ name, defaultValue }: { name: string; defaultV
     <div>
       <input type="hidden" name={name} value={JSON.stringify(rows)} />
       <p className="mb-3 text-xs text-ink/50">The hero always comes first. Order and toggle everything below it.</p>
-      <ol className="divide-y divide-ink/[0.05] overflow-hidden rounded-2xl ring-1 ring-ink/[0.06]">
+      <ol className="divide-y divide-ink/[0.05] overflow-hidden rounded-2xl ring-1 ring-line">
         {rows.map((r, i) => {
           const meta = SECTION_LABELS[r.key] ?? { label: r.key, hint: "" };
           return (
-            <li key={r.key} className={cn("flex items-center gap-3 px-3 py-2.5 transition duration-300 ease-silk", r.enabled ? "bg-white" : "bg-ivory/60")}>
-              <span className="w-5 text-center font-display text-sm text-ink/35">{i + 1}</span>
+            <li key={r.key} className={cn("flex items-center gap-3 px-3 py-2.5 transition duration-300 ease-silk", r.enabled ? "bg-white" : "bg-surface")}>
+              <span className="w-5 text-center font-semibold text-sm text-ink/35">{i + 1}</span>
               <div className="min-w-0 flex-1">
                 <p className={cn("truncate text-sm font-medium", r.enabled ? "text-ink" : "text-ink/40 line-through decoration-ink/20")}>{meta.label}</p>
                 <p className="truncate text-[11px] text-ink/45">{meta.hint}</p>
@@ -51,13 +51,13 @@ export function SectionsManager({ name, defaultValue }: { name: string; defaultV
                 aria-checked={r.enabled}
                 aria-label={`Show ${meta.label}`}
                 onClick={() => setRows((rs) => rs.map((x, j) => (j === i ? { ...x, enabled: !x.enabled } : x)))}
-                className={cn("relative h-5 w-9 shrink-0 rounded-full transition duration-300 ease-silk", r.enabled ? "bg-maroon" : "bg-ink/15")}
+                className={cn("relative h-5 w-9 shrink-0 rounded-full transition duration-300 ease-silk", r.enabled ? "bg-ink" : "bg-ink/15")}
               >
                 <span className={cn("absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform duration-300 ease-silk", r.enabled && "translate-x-4")} />
               </button>
               <span className="flex gap-1">
-                <button type="button" onClick={() => move(i, -1)} disabled={i === 0} className="grid h-7 w-7 place-items-center rounded-full ring-1 ring-ink/10 transition hover:bg-ivory disabled:opacity-30" aria-label="Move up"><ArrowUp weight="light" className="h-3.5 w-3.5" /></button>
-                <button type="button" onClick={() => move(i, 1)} disabled={i === rows.length - 1} className="grid h-7 w-7 place-items-center rounded-full ring-1 ring-ink/10 transition hover:bg-ivory disabled:opacity-30" aria-label="Move down"><ArrowDown weight="light" className="h-3.5 w-3.5" /></button>
+                <button type="button" onClick={() => move(i, -1)} disabled={i === 0} className="grid h-7 w-7 place-items-center rounded-full ring-1 ring-ink/10 transition hover:bg-surface disabled:opacity-30" aria-label="Move up"><ArrowUp weight="light" className="h-3.5 w-3.5" /></button>
+                <button type="button" onClick={() => move(i, 1)} disabled={i === rows.length - 1} className="grid h-7 w-7 place-items-center rounded-full ring-1 ring-ink/10 transition hover:bg-surface disabled:opacity-30" aria-label="Move down"><ArrowDown weight="light" className="h-3.5 w-3.5" /></button>
               </span>
             </li>
           );

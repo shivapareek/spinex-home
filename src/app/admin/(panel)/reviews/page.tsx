@@ -60,7 +60,7 @@ export default async function ReviewsPage({ searchParams }: { searchParams: SP }
           ) : (
             <ul className="space-y-3">
               {rows.map(({ r, productName, images, cutout }) => (
-                <li key={r.id} className="rounded-[1.5rem] bg-white p-5 ring-1 ring-ink/[0.06]">
+                <li key={r.id} className="rounded-2xl bg-white p-5 ring-1 ring-line">
                   <div className="flex items-start gap-4">
                     <Thumb src={images?.[0] ?? cutout} alt={productName ?? ""} className="h-12 w-12" />
                     <div className="min-w-0 flex-1">
@@ -69,12 +69,12 @@ export default async function ReviewsPage({ searchParams }: { searchParams: SP }
                         {r.isApproved ? <Badge tone="green">Published</Badge> : <Badge tone="gold">Pending</Badge>}
                         {r.userId ? <Badge tone="blue">Account</Badge> : null}
                       </div>
-                      {r.title && <p className="mt-2 font-display text-lg leading-snug text-ink">{r.title}</p>}
+                      {r.title && <p className="mt-2 font-semibold text-lg leading-snug text-ink">{r.title}</p>}
                       {r.body && <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-ink/70">{r.body}</p>}
                       <p className="mt-3 text-xs text-ink/45">
                         <span className="font-medium text-ink/70">{r.name}</span>
                         {r.city ? ` · ${r.city}` : ""} · {formatDate(r.createdAt)} · on{" "}
-                        {productName ? <Link href={`/admin/products/${r.productId}`} className="text-maroon hover:underline">{productName}</Link> : <span className="italic">deleted product</span>}
+                        {productName ? <Link href={`/admin/products/${r.productId}`} className="text-accent-deep hover:underline">{productName}</Link> : <span className="italic">deleted product</span>}
                       </p>
                     </div>
                   </div>

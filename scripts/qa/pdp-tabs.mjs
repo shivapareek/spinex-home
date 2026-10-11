@@ -1,0 +1,15 @@
+import { chromium } from "playwright";
+const [url, out] = process.argv.slice(2);
+const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto(url, { waitUntil: "networkidle" });
+await p.getByRole("tab", { name: /3D|360/ }).click();
+await p.waitForTimeout(1500);
+await p.screenshot({ path: out + "-3d.png" });
+await p.getByRole("tab", { name: /In your space/ }).click();
+await p.waitForTimeout(1500);
+await p.screenshot({ path: out + "-space.png" });
+await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45));
+await p.waitForTimeout(1200);
+await p.screenshot({ path: out + "-mid.png" });
+await b.close();

@@ -75,12 +75,12 @@ export function MediaLibrary({
         onClick={() => inputRef.current?.click()}
         disabled={busy}
         className={cn(
-          "mb-6 flex w-full flex-col items-center justify-center gap-2 rounded-[1.5rem] border border-dashed px-6 py-10 text-center transition duration-300 ease-silk",
-          drag ? "border-gold bg-gold/10" : "border-ink/20 bg-white/60 hover:border-gold hover:bg-gold/5",
+          "mb-6 flex w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed px-6 py-10 text-center transition duration-300 ease-silk",
+          drag ? "border-accent bg-accent-soft" : "border-ink/20 bg-white/60 hover:border-ink/40 hover:bg-accent-soft",
         )}
       >
-        {busy ? <Spinner className="h-7 w-7 animate-spin text-gold-deep" /> : <CloudArrowUp weight="light" className="h-8 w-8 text-gold-deep" />}
-        <span className="font-display text-lg text-ink">{busy ? "Uploading…" : "Drop files here or click to upload"}</span>
+        {busy ? <Spinner className="h-7 w-7 animate-spin text-accent-deep" /> : <CloudArrowUp weight="light" className="h-8 w-8 text-accent-deep" />}
+        <span className="font-semibold text-lg text-ink">{busy ? "Uploading…" : "Drop files here or click to upload"}</span>
         <span className="text-xs text-ink/45">JPG, PNG, WebP, AVIF, SVG, GLB, USDZ or PDF · up to 40 MB each · images are optimised to WebP</span>
       </button>
       <input
@@ -96,8 +96,8 @@ export function MediaLibrary({
       />
 
       {items.length === 0 ? (
-        <div className="rounded-[1.5rem] border border-dashed border-ink/15 bg-white/50 px-6 py-16 text-center">
-          <p className="font-display text-xl text-ink">{filtered ? "No files match" : "Your library is empty"}</p>
+        <div className="rounded-2xl border border-dashed border-ink/15 bg-white/50 px-6 py-16 text-center">
+          <p className="font-semibold text-xl text-ink">{filtered ? "No files match" : "Your library is empty"}</p>
           <p className="mx-auto mt-2 max-w-md text-sm text-ink/50">
             {filtered ? "Try a different filter or search term." : "Uploads from products, categories and scenes appear here automatically."}
           </p>
@@ -110,8 +110,8 @@ export function MediaLibrary({
                 type="button"
                 onClick={() => setSelectedId(m.id)}
                 className={cn(
-                  "group block w-full overflow-hidden rounded-2xl bg-white text-left ring-1 transition duration-300 ease-silk hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(20,10,12,0.35)]",
-                  selected?.id === m.id ? "ring-2 ring-gold" : "ring-ink/[0.06]",
+                  "group block w-full overflow-hidden rounded-2xl bg-white text-left ring-1 transition duration-300 ease-silk hover:-translate-y-0.5 hover:shadow-soft",
+                  selected?.id === m.id ? "ring-2 ring-ink" : "ring-line",
                 )}
               >
                 <span className="flex aspect-square items-center justify-center bg-[conic-gradient(#f3ede2_25%,#fff_0_50%,#f3ede2_0_75%,#fff_0)] bg-[length:16px_16px]">
@@ -119,7 +119,7 @@ export function MediaLibrary({
                     <img src={m.url} alt={m.alt ?? ""} loading="lazy" className="h-full w-full object-contain" />
                   ) : (
                     <span className="flex flex-col items-center gap-2 px-3 text-center">
-                      {m.mime.startsWith("model/") || /\.(glb|usdz)$/i.test(m.url) ? <Cube weight="light" className="h-8 w-8 text-maroon" /> : <File weight="light" className="h-8 w-8 text-maroon" />}
+                      {m.mime.startsWith("model/") || /\.(glb|usdz)$/i.test(m.url) ? <Cube weight="light" className="h-8 w-8 text-accent-deep" /> : <File weight="light" className="h-8 w-8 text-accent-deep" />}
                       <span className="break-all text-[11px] text-ink/60">{m.filename}</span>
                     </span>
                   )}
@@ -169,33 +169,33 @@ function Details({
         role="dialog"
         aria-label={item.filename}
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-[1.5rem] bg-white p-5 shadow-2xl sm:max-w-3xl sm:rounded-[1.5rem] sm:p-6"
+        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl bg-white p-5 shadow-2xl sm:max-w-3xl sm:rounded-2xl sm:p-6"
       >
         <div className="mb-4 flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="truncate font-display text-xl">{item.filename}</p>
+            <p className="truncate font-semibold text-xl">{item.filename}</p>
             <p className="text-xs text-ink/50">
               {[item.mime, fmtSize(item.size), item.width && item.height ? `${item.width}×${item.height}` : null, formatDate(item.createdAt)].filter(Boolean).join(" · ")}
             </p>
           </div>
-          <button type="button" onClick={onClose} className="rounded-full p-2 text-ink/50 transition hover:bg-ivory hover:text-ink" aria-label="Close">
+          <button type="button" onClick={onClose} className="rounded-full p-2 text-ink/50 transition hover:bg-surface hover:text-ink" aria-label="Close">
             <X weight="light" className="h-5 w-5" />
           </button>
         </div>
         <div className="grid gap-5 md:grid-cols-[1fr_280px]">
-          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-[conic-gradient(#f3ede2_25%,#fff_0_50%,#f3ede2_0_75%,#fff_0)] bg-[length:16px_16px] ring-1 ring-ink/[0.06]">
-            {item.isImage ? <img src={item.url} alt={item.alt ?? ""} className="h-full w-full object-contain" /> : <File weight="light" className="h-14 w-14 text-maroon" />}
+          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-[conic-gradient(#f3ede2_25%,#fff_0_50%,#f3ede2_0_75%,#fff_0)] bg-[length:16px_16px] ring-1 ring-line">
+            {item.isImage ? <img src={item.url} alt={item.alt ?? ""} className="h-full w-full object-contain" /> : <File weight="light" className="h-14 w-14 text-accent-deep" />}
           </div>
           <div className="space-y-4">
             <div>
               <span className="mb-1.5 block text-xs font-medium text-ink/70">File URL</span>
               <div className="flex gap-2">
                 <input readOnly value={item.url} onFocus={(e) => e.currentTarget.select()} className={cn(inputClass, "font-mono text-xs")} />
-                <button type="button" onClick={copy} className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ink text-ivory transition hover:bg-maroon" aria-label="Copy URL">
+                <button type="button" onClick={copy} className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ink text-white transition hover:bg-ink-3" aria-label="Copy URL">
                   {copied ? <Check weight="light" className="h-4 w-4" /> : <Copy weight="light" className="h-4 w-4" />}
                 </button>
               </div>
-              <a href={item.url} target="_blank" rel="noreferrer" className="mt-1.5 inline-block text-xs text-maroon hover:underline">Open in new tab ↗</a>
+              <a href={item.url} target="_blank" rel="noreferrer" className="mt-1.5 inline-block text-xs text-accent-deep hover:underline">Open in new tab ↗</a>
             </div>
             {item.isImage && (
               <ActionForm action={updateAlt.bind(null, item.id)} className="space-y-2">

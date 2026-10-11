@@ -61,7 +61,7 @@ export function Repeater({
       <input type="hidden" name={name} value={serialised} />
       {rows.length === 0 && <p className="rounded-2xl border border-dashed border-ink/15 px-4 py-6 text-center text-xs text-ink/45">{emptyText}</p>}
       {rows.map((r, i) => (
-        <div key={r._k} className="rounded-2xl bg-ivory/50 p-3 ring-1 ring-ink/[0.06]">
+        <div key={r._k} className="rounded-2xl bg-surface p-3 ring-1 ring-line">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink/40">#{i + 1}</span>
             <span className="flex items-center gap-1">
@@ -90,7 +90,7 @@ export function Repeater({
         <button
           type="button"
           onClick={add}
-          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-maroon ring-1 ring-maroon/20 transition duration-300 ease-silk hover:bg-maroon hover:text-ivory"
+          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-ink ring-1 ring-line transition duration-300 ease-silk hover:bg-ink-3 hover:text-white"
         >
           <Plus weight="light" className="h-3.5 w-3.5" /> {addLabel}
         </button>

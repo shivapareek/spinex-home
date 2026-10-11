@@ -186,7 +186,7 @@ export function MediaInput({
         {urls.map((u, i) => (
           <div key={u + i} className={cn("group relative overflow-hidden rounded-2xl bg-[conic-gradient(#f3ede2_25%,#fff_0_50%,#f3ede2_0_75%,#fff_0)] bg-[length:16px_16px] ring-1 ring-ink/10", aspect === "wide" && !multiple ? "aspect-[16/9]" : "aspect-square")}>
             {isImg(u) ? <img src={u} alt="" className="h-full w-full object-contain" /> : <div className="flex h-full items-center justify-center p-2 text-center text-[11px] text-ink/60 break-all">{u.split("/").pop()}</div>}
-            {multiple && i === 0 && <span className="absolute left-2 top-2 rounded-full bg-ink px-2 py-0.5 text-[10px] text-ivory">Cover</span>}
+            {multiple && i === 0 && <span className="absolute left-2 top-2 rounded-full bg-ink px-2 py-0.5 text-[10px] text-white">Cover</span>}
             <div className="absolute inset-x-2 bottom-2 flex justify-between opacity-0 transition group-hover:opacity-100">
               {multiple ? (
                 <span className="flex gap-1">
@@ -208,7 +208,7 @@ export function MediaInput({
             className={cn(
               "flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed text-xs text-ink/55 transition",
               aspect === "wide" && !multiple ? "aspect-[16/9]" : "aspect-square",
-              drag ? "border-gold bg-gold/10" : "border-ink/20 bg-ivory/50 hover:border-gold hover:bg-gold/5",
+              drag ? "border-accent bg-accent-soft" : "border-ink/20 bg-surface hover:border-ink/40 hover:bg-accent-soft",
             )}
           >
             {busy ? <Spinner className="h-5 w-5 animate-spin" /> : <UploadSimple className="h-5 w-5" weight="light" />}
@@ -217,7 +217,7 @@ export function MediaInput({
         )}
       </div>
       {!multiple && urls[0] && (
-        <button type="button" onClick={() => inputRef.current?.click()} className="mt-2 text-xs font-medium text-maroon hover:underline">
+        <button type="button" onClick={() => inputRef.current?.click()} className="mt-2 text-xs font-medium text-accent-deep hover:underline">
           Replace
         </button>
       )}
@@ -265,7 +265,7 @@ export function MarkdownField({ name, defaultValue = "", rows = 14 }: { name: st
   const [tab, setTab] = useState<"write" | "preview">("write");
   return (
     <div className="overflow-hidden rounded-xl ring-1 ring-ink/10">
-      <div className="flex items-center gap-1 border-b border-ink/[0.06] bg-ivory/60 px-2 py-1.5">
+      <div className="flex items-center gap-1 border-b border-ink/[0.06] bg-surface px-2 py-1.5">
         {(["write", "preview"] as const).map((t) => (
           <button key={t} type="button" onClick={() => setTab(t)} className={cn("rounded-full px-3 py-1 text-xs capitalize transition", tab === t ? "bg-white text-ink shadow-sm ring-1 ring-ink/10" : "text-ink/50 hover:text-ink")}>
             {t}

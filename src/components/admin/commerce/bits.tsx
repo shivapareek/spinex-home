@@ -36,12 +36,12 @@ export function FilterTabs({ tabs }: { tabs: { label: string; href: string; acti
           href={t.href}
           className={cn(
             "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-medium capitalize transition-all duration-300 ease-silk",
-            t.active ? "bg-ink text-ivory" : "bg-white text-ink/60 ring-1 ring-ink/10 hover:text-ink hover:ring-ink/25",
+            t.active ? "bg-ink text-white" : "bg-white text-ink/60 ring-1 ring-ink/10 hover:text-ink hover:ring-ink/25",
           )}
         >
           {t.label}
           {t.count != null && (
-            <span className={cn("rounded-full px-1.5 text-[10px] tabular-nums", t.active ? "bg-white/15 text-gold-bright" : "bg-ink/[0.06] text-ink/50")}>{t.count}</span>
+            <span className={cn("rounded-full px-1.5 text-[10px] tabular-nums", t.active ? "bg-white/20 text-white" : "bg-ink/[0.06] text-ink/50")}>{t.count}</span>
           )}
         </Link>
       ))}
@@ -51,7 +51,7 @@ export function FilterTabs({ tabs }: { tabs: { label: string; href: string; acti
 
 export function Stars({ value, className }: { value: number; className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-0.5 text-gold", className)} aria-label={`${value} out of 5`}>
+    <span className={cn("inline-flex items-center gap-0.5 text-accent", className)} aria-label={`${value} out of 5`}>
       {[1, 2, 3, 4, 5].map((i) => (
         <Star key={i} weight={i <= value ? "fill" : "light"} className={cn("h-3.5 w-3.5", i > value && "text-ink/20")} />
       ))}

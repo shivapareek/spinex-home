@@ -11,10 +11,10 @@ function ChartTooltip({ active, payload }: { active?: boolean; payload?: { paylo
   if (!active || !payload?.length) return null;
   const p = payload[0].payload;
   return (
-    <div className="rounded-2xl bg-ink px-4 py-3 text-ivory shadow-lift">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-bright/80">{p.label}</p>
-      <p className="mt-1 font-display text-xl">{rupee(p.revenue)}</p>
-      <p className="text-[11px] text-ivory/55">
+    <div className="rounded-xl border border-line bg-white px-4 py-3 text-ink shadow-soft">
+      <p className="text-[11px] font-medium text-muted">{p.label}</p>
+      <p className="mt-1 font-semibold text-xl">{rupee(p.revenue)}</p>
+      <p className="text-[11px] text-muted">
         {p.orders} {p.orders === 1 ? "order" : "orders"}
       </p>
     </div>
@@ -29,16 +29,16 @@ export function RevenueChart({ data }: { data: RevenuePoint[] }) {
         <AreaChart data={data} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="spxRevenueFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#C9A24A" stopOpacity={0.45} />
-              <stop offset="100%" stopColor="#C9A24A" stopOpacity={0.02} />
+              <stop offset="0%" stopColor="#EA580C" stopOpacity={0.18} />
+              <stop offset="100%" stopColor="#EA580C" stopOpacity={0.02} />
             </linearGradient>
           </defs>
-          <CartesianGrid vertical={false} stroke="#140A0C" strokeOpacity={0.06} />
+          <CartesianGrid vertical={false} stroke="#111111" strokeOpacity={0.06} />
           <XAxis
             dataKey="label"
             tickLine={false}
             axisLine={false}
-            tick={{ fill: "#140A0C", fillOpacity: 0.45, fontSize: 11 }}
+            tick={{ fill: "#111111", fillOpacity: 0.45, fontSize: 11 }}
             interval="preserveStartEnd"
             minTickGap={24}
           />
@@ -46,19 +46,19 @@ export function RevenueChart({ data }: { data: RevenuePoint[] }) {
             tickLine={false}
             axisLine={false}
             width={52}
-            tick={{ fill: "#140A0C", fillOpacity: 0.45, fontSize: 11 }}
+            tick={{ fill: "#111111", fillOpacity: 0.45, fontSize: 11 }}
             tickFormatter={compact}
             allowDecimals={false}
             domain={[0, empty ? 1000 : "auto"]}
           />
-          <Tooltip content={<ChartTooltip />} cursor={{ stroke: "#5E1224", strokeOpacity: 0.25, strokeDasharray: "4 4" }} />
+          <Tooltip content={<ChartTooltip />} cursor={{ stroke: "#EA580C", strokeOpacity: 0.25, strokeDasharray: "4 4" }} />
           <Area
             type="monotone"
             dataKey="revenue"
-            stroke="#5E1224"
+            stroke="#EA580C"
             strokeWidth={2}
             fill="url(#spxRevenueFill)"
-            activeDot={{ r: 5, fill: "#5E1224", stroke: "#F7F0E3", strokeWidth: 2 }}
+            activeDot={{ r: 5, fill: "#EA580C", stroke: "#FFFFFF", strokeWidth: 2 }}
             isAnimationActive
             animationDuration={900}
           />
@@ -66,8 +66,8 @@ export function RevenueChart({ data }: { data: RevenuePoint[] }) {
       </ResponsiveContainer>
       {empty && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="rounded-2xl bg-white/85 px-5 py-3 text-center ring-1 ring-ink/[0.06] backdrop-blur">
-            <p className="font-display text-lg text-ink">Awaiting your first sale</p>
+          <div className="rounded-2xl bg-white/85 px-5 py-3 text-center ring-1 ring-line backdrop-blur">
+            <p className="font-semibold text-lg text-ink">Awaiting your first sale</p>
             <p className="text-xs text-ink/50">Revenue will trace here day by day.</p>
           </div>
         </div>

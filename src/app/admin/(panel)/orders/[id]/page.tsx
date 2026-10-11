@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return { title: o ? `Order #${o.n}` : "Order" };
 }
 
-const iconLink = "inline-flex h-9 w-9 items-center justify-center rounded-full bg-ivory text-ink/70 ring-1 ring-ink/[0.06] transition hover:bg-white hover:text-maroon hover:ring-gold/50";
+const iconLink = "inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface text-ink/70 ring-1 ring-line transition hover:bg-white hover:text-accent-deep hover:ring-ink/20";
 
 export default async function OrderDetail({ params }: { params: Promise<{ id: string }> }) {
   await requireAdmin();
@@ -58,7 +58,7 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
                   <Thumb src={it.image} alt={it.name} className="h-14 w-14" />
                   <div className="min-w-0 flex-1">
                     {it.productId ? (
-                      <Link href={`/admin/products/${it.productId}`} className="block truncate text-sm font-medium hover:text-maroon">{it.name}</Link>
+                      <Link href={`/admin/products/${it.productId}`} className="block truncate text-sm font-medium hover:text-accent-deep">{it.name}</Link>
                     ) : (
                       <p className="truncate text-sm font-medium">{it.name}</p>
                     )}
@@ -84,14 +84,14 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
               {o.codFee > 0 && <div className="flex justify-between"><dt className="text-ink/55">COD fee</dt><dd className="tabular-nums">{inr(o.codFee)}</dd></div>}
               <div className="flex items-baseline justify-between border-t border-ink/[0.06] pt-3">
                 <dt className="font-medium">Total</dt>
-                <dd className="font-display text-2xl tabular-nums">{inr(o.total)}</dd>
+                <dd className="font-semibold text-2xl tabular-nums">{inr(o.total)}</dd>
               </div>
             </dl>
           </Card>
 
           {o.customerNote && (
             <Card title="Customer note">
-              <p className="whitespace-pre-line rounded-2xl bg-gold/10 px-4 py-3 text-sm leading-relaxed text-ink/80">{o.customerNote}</p>
+              <p className="whitespace-pre-line rounded-2xl bg-accent-soft px-4 py-3 text-sm leading-relaxed text-ink/80">{o.customerNote}</p>
             </Card>
           )}
 
@@ -102,7 +102,7 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
               <ol className="relative ml-1.5 border-l border-ink/10">
                 {history.map((h, i) => (
                   <li key={i} className="relative pb-5 pl-6 last:pb-0">
-                    <span className={cn("absolute -left-[5px] top-1.5 h-[9px] w-[9px] rounded-full ring-4 ring-white", i === 0 ? "bg-maroon" : "bg-ink/25")} />
+                    <span className={cn("absolute -left-[5px] top-1.5 h-[9px] w-[9px] rounded-full ring-4 ring-white", i === 0 ? "bg-ink" : "bg-ink/25")} />
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge tone={orderStatusTone[h.status] ?? "neutral"}>{h.status}</Badge>
                       <span className="text-[11px] text-ink/45">{formatDate(h.at, true)}</span>
@@ -141,7 +141,7 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
               <a href={`tel:${o.phone}`} className={iconLink} aria-label="Call"><Phone weight="light" className="h-4 w-4" /></a>
               <a href={`mailto:${o.email}?subject=${encodeURIComponent(`Your Spinex Home order #${o.orderNumber}`)}`} className={iconLink} aria-label="Email"><EnvelopeSimple weight="light" className="h-4 w-4" /></a>
               <a href={waLink(o.phone, `Namaste ${a?.name ?? ""}, this is Spinex Home about your order #${o.orderNumber}.`)} target="_blank" rel="noreferrer" className={iconLink} aria-label="WhatsApp"><WhatsappLogo weight="light" className="h-4 w-4" /></a>
-              <Link href={`/admin/customers/${encodeURIComponent(o.email.toLowerCase())}`} className="ml-auto text-xs font-medium text-maroon hover:underline">Customer history →</Link>
+              <Link href={`/admin/customers/${encodeURIComponent(o.email.toLowerCase())}`} className="ml-auto text-xs font-medium text-accent-deep hover:underline">Customer history →</Link>
             </div>
           </Card>
 

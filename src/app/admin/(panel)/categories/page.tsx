@@ -22,9 +22,9 @@ export default function CategoriesPage() {
       <PageHeader title="Categories" description="Group your idols into collections shown across the store." actions={<LinkButton href="/admin/categories/new">New category</LinkButton>} />
       <Table head={["Category", "Slug", "Products", "Status", ""]} empty="No categories yet.">
         {rows.map(({ c, count }) => (
-          <tr key={c.id} className="transition hover:bg-ivory/40">
+          <tr key={c.id} className="transition hover:bg-surface">
             <td className={td}>
-              <Link href={`/admin/categories/${c.id}`} className="flex items-center gap-3 font-medium hover:text-maroon">
+              <Link href={`/admin/categories/${c.id}`} className="flex items-center gap-3 font-medium hover:text-accent-deep">
                 <Thumb src={c.image} /> {c.name}
               </Link>
             </td>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Heart } from "@phosphor-icons/react";
 import { useHydrated, useWishlist } from "@/lib/client/cart";
 import { ProductCard, type CardProduct } from "@/components/store/product-card";
 
@@ -17,14 +18,15 @@ export function WishlistGrid() {
   if (!items) return <div className="h-64" />;
   if (!items.length)
     return (
-      <div className="mt-12 rounded-[2rem] border border-dashed border-ink/15 px-6 py-24 text-center">
-        <p className="font-display text-2xl">Nothing saved yet</p>
-        <p className="mt-2 text-sm text-ink/55">Tap the heart on any idol to keep it here.</p>
-        <Link href="/shop" className="mt-6 inline-flex h-12 items-center rounded-full bg-ink px-6 text-sm text-ivory">Browse idols</Link>
+      <div className="mt-8 rounded-2xl border border-line px-6 py-20 text-center">
+        <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-surface"><Heart className="h-6 w-6 text-muted" /></span>
+        <p className="mt-4 text-lg font-semibold">Nothing saved yet</p>
+        <p className="mt-1 text-sm text-muted">Tap the heart on any idol to save it here.</p>
+        <Link href="/shop" className="btn-primary mt-6">Browse idols</Link>
       </div>
     );
   return (
-    <div className="mt-12 grid grid-cols-2 gap-x-3 gap-y-10 md:grid-cols-3 xl:grid-cols-4">
+    <div className="mt-8 grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-5 xl:grid-cols-4">
       {items.map((p) => <ProductCard key={p.id} p={p} />)}
     </div>
   );

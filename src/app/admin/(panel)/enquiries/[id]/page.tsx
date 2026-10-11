@@ -60,7 +60,7 @@ export default async function EnquiryDetail({ params }: { params: Promise<{ id: 
           <Card title="Reply">
             <div className="grid gap-2">
               <a href={waLink(e.phone, greeting)} target="_blank" rel="noreferrer" className={cn(buttonClass("primary"), "w-full")}>
-                <WhatsappLogo weight="light" className="h-4 w-4 text-gold-bright" /> WhatsApp
+                <WhatsappLogo weight="light" className="h-4 w-4 text-accent" /> WhatsApp
               </a>
               <a href={`tel:${e.phone}`} className={cn(buttonClass("secondary"), "w-full")}>
                 <Phone weight="light" className="h-4 w-4" /> Call {e.phone}
@@ -73,10 +73,10 @@ export default async function EnquiryDetail({ params }: { params: Promise<{ id: 
             </div>
           </Card>
           <Card title="Status">
-            <div className="grid grid-cols-3 gap-1.5 rounded-full bg-ivory/70 p-1 ring-1 ring-ink/[0.06]">
+            <div className="grid grid-cols-3 gap-1.5 rounded-full bg-surface p-1 ring-1 ring-line">
               {STATUSES.map((s) =>
                 s.key === e.status ? (
-                  <span key={s.key} className="rounded-full bg-ink py-1.5 text-center text-xs font-medium text-ivory">{s.label}</span>
+                  <span key={s.key} className="rounded-full bg-ink py-1.5 text-center text-xs font-medium text-white">{s.label}</span>
                 ) : (
                   <ActionButton key={s.key} action={setEnquiryStatus.bind(null, e.id, s.key)} className="h-auto rounded-full py-1.5">{s.label}</ActionButton>
                 ),

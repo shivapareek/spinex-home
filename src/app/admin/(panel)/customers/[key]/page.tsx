@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   return { title: decodeURIComponent(key) };
 }
 
-const iconLink = "inline-flex h-9 w-9 items-center justify-center rounded-full bg-ivory text-ink/70 ring-1 ring-ink/[0.06] transition hover:bg-white hover:text-maroon hover:ring-gold/50";
+const iconLink = "inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface text-ink/70 ring-1 ring-line transition hover:bg-white hover:text-accent-deep hover:ring-ink/20";
 
 export default async function CustomerDetail({ params }: { params: Promise<{ key: string }> }) {
   await requireAdmin();
@@ -48,11 +48,11 @@ export default async function CustomerDetail({ params }: { params: Promise<{ key
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0">
-          <h2 className="mb-3 font-display text-xl">Order history</h2>
+          <h2 className="mb-3 font-semibold text-xl">Order history</h2>
           <Table head={["Order", "Date", "Total", "Payment", "Status"]} empty="This customer hasn't placed an order yet.">
             {list.map((o) => (
-              <tr key={o.id} className="transition hover:bg-ivory/40">
-                <td className={td}><Link href={`/admin/orders/${o.id}`} className="font-medium hover:text-maroon">#{o.orderNumber}</Link></td>
+              <tr key={o.id} className="transition hover:bg-surface">
+                <td className={td}><Link href={`/admin/orders/${o.id}`} className="font-medium hover:text-accent-deep">#{o.orderNumber}</Link></td>
                 <td className={`${td} whitespace-nowrap text-ink/60`}>{formatDate(o.createdAt, true)}</td>
                 <td className={`${td} font-medium tabular-nums`}>{inr(o.total)}</td>
                 <td className={td}><Badge tone={orderStatusTone[o.paymentStatus]}>{o.paymentMethod === "cod" ? "COD" : "Online"} · {o.paymentStatus}</Badge></td>

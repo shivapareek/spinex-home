@@ -35,19 +35,19 @@ export function ProductMedia({
 
   return (
     <div>
-      <div className="mb-3 flex gap-1 rounded-full bg-ink/[0.04] p-1 ring-1 ring-ink/[0.06]" role="tablist">
+      <div className="mb-3 flex gap-1 rounded-full bg-surface p-1" role="tablist">
         {tabs.map(({ id, label, Icon }) => (
           <button
             key={id}
             role="tab"
             aria-selected={tab === id}
             onClick={() => setTab(id)}
-            className={cn("relative flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-xs font-medium transition-colors sm:text-sm", tab === id ? "text-ivory" : "text-ink/60 hover:text-ink")}
+            className={cn("relative flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2 text-xs font-medium transition-colors sm:text-sm", tab === id ? "text-ink" : "text-muted hover:text-ink")}
           >
-            {tab === id && <motion.span layoutId="pm-tab" className="absolute inset-0 rounded-full bg-ink" transition={{ type: "spring", stiffness: 320, damping: 30 }} />}
+            {tab === id && <motion.span layoutId="pm-tab" className="absolute inset-0 rounded-full bg-white shadow-card" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
             <Icon className="relative h-4 w-4" weight={tab === id ? "fill" : "light"} />
             <span className="relative">{label}</span>
-            {id === "space" && tab !== id && <span className="relative hidden h-1.5 w-1.5 animate-pulse rounded-full bg-sindoor sm:block" />}
+            {id === "space" && tab !== id && <span className="relative hidden rounded-full bg-accent-soft px-1.5 py-0.5 text-[10px] font-semibold text-accent sm:block">New</span>}
           </button>
         ))}
       </div>
@@ -58,21 +58,19 @@ export function ProductMedia({
             <div className="grid gap-3 md:grid-cols-[76px_1fr]">
               <div className="no-scrollbar order-2 flex gap-2 overflow-x-auto md:order-1 md:flex-col">
                 {gallery.map((g, i) => (
-                  <button key={g + i} onClick={() => setImg(i)} className={cn("grid h-[76px] w-[76px] shrink-0 place-items-center overflow-hidden rounded-2xl bg-white ring-1 transition", i === img ? "ring-2 ring-gold" : "ring-ink/[0.07] hover:ring-ink/20")}>
+                  <button key={g + i} onClick={() => setImg(i)} className={cn("grid h-[76px] w-[76px] shrink-0 place-items-center overflow-hidden rounded-xl border-2 bg-surface transition", i === img ? "border-ink" : "border-transparent hover:border-line")}>
                     <img src={g} alt="" className="h-full w-full object-contain" />
                   </button>
                 ))}
               </div>
-              <div className="order-1 rounded-[2rem] bg-ink/[0.03] p-1.5 ring-1 ring-ink/[0.06] md:order-2">
+              <div className="order-1 md:order-2">
                 <ZoomImage src={gallery[img]} alt={product.name} />
               </div>
             </div>
           )}
           {tab === "spin" && (
-            <div className="rounded-[2rem] bg-ink/[0.03] p-1.5 ring-1 ring-ink/[0.06]">
-              <div className="relative aspect-square overflow-hidden rounded-[calc(2rem-0.375rem)] bg-[radial-gradient(circle_at_50%_40%,#FFFDF8,#EFE4CF)]">
-                <Viewer360 frames={spinFrames} glb={product.modelGlb} usdz={product.modelUsdz} cutout={product.cutout} name={product.name} />
-              </div>
+            <div className="relative aspect-square overflow-hidden rounded-2xl bg-surface">
+              <Viewer360 frames={spinFrames} glb={product.modelGlb} usdz={product.modelUsdz} cutout={product.cutout} name={product.name} />
             </div>
           )}
           {tab === "space" && <Studio variant="embed" products={[product]} scenes={scenes} initialScene={defaultScene} />}
@@ -86,7 +84,7 @@ function ZoomImage({ src, alt }: { src: string; alt: string }) {
   const [z, setZ] = useState<{ x: number; y: number } | null>(null);
   return (
     <div
-      className="relative aspect-square cursor-zoom-in overflow-hidden rounded-[calc(2rem-0.375rem)] bg-white"
+      className="relative aspect-square cursor-zoom-in overflow-hidden rounded-2xl bg-surface"
       onPointerMove={(e) => {
         if (e.pointerType !== "mouse") return;
         const r = e.currentTarget.getBoundingClientRect();

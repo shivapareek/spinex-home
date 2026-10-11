@@ -53,7 +53,7 @@ export default async function MediaPage({ searchParams }: { searchParams: Promis
               href={href(f.key)}
               className={cn(
                 "whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-medium transition duration-300 ease-silk",
-                type === f.key ? "bg-ink text-ivory" : "bg-white text-ink/60 ring-1 ring-ink/10 hover:text-ink",
+                type === f.key ? "bg-ink text-white" : "bg-white text-ink/60 ring-1 ring-ink/10 hover:text-ink",
               )}
             >
               {f.label} <span className="ml-1 opacity-60">{counts[f.key]}</span>

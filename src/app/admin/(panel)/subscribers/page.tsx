@@ -50,8 +50,8 @@ export default async function SubscribersPage({ searchParams }: { searchParams: 
           <div className="mb-5"><SearchForm q={q} placeholder="Search email" /></div>
           <Table head={["Email", "Subscribed", ""]} empty={`No subscribers match “${q}”.`}>
             {rows.map((s) => (
-              <tr key={s.id} className="transition hover:bg-ivory/40">
-                <td className={`${td} font-medium`}><a href={`mailto:${s.email}`} className="break-all hover:text-maroon">{s.email}</a></td>
+              <tr key={s.id} className="transition hover:bg-surface">
+                <td className={`${td} font-medium`}><a href={`mailto:${s.email}`} className="break-all hover:text-accent-deep">{s.email}</a></td>
                 <td className={`${td} whitespace-nowrap text-ink/55`}>{formatDate(s.createdAt, true)}</td>
                 <td className={`${td} text-right`}>
                   <ActionButton action={deleteSubscriber.bind(null, s.id)} confirm={`Remove ${s.email} from the list?`} className="text-sindoor hover:bg-sindoor/10 hover:text-sindoor">

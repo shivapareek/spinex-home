@@ -27,12 +27,12 @@ export default async function PagesList() {
       ) : (
         <Table head={["Page", "Public URL", "Status", "Footer", "Updated", ""]}>
           {rows.map((p) => (
-            <tr key={p.id} className="transition hover:bg-ivory/40">
+            <tr key={p.id} className="transition hover:bg-surface">
               <td className={td}>
-                <Link href={`/admin/cms/pages/${p.id}`} className="font-medium hover:text-maroon">{p.title}</Link>
+                <Link href={`/admin/cms/pages/${p.id}`} className="font-medium hover:text-accent-deep">{p.title}</Link>
               </td>
               <td className={td}>
-                <a href={`/p/${p.slug}`} target="_blank" rel="noreferrer" className="text-ink/50 hover:text-maroon">/p/{p.slug} ↗</a>
+                <a href={`/p/${p.slug}`} target="_blank" rel="noreferrer" className="text-ink/50 hover:text-accent-deep">/p/{p.slug} ↗</a>
               </td>
               <td className={td}>{p.isPublished ? <Badge tone="green">Published</Badge> : <Badge>Draft</Badge>}</td>
               <td className={td}>{p.showInFooter ? <Badge tone="gold">In footer</Badge> : <span className="text-xs text-ink/35">—</span>}</td>

@@ -10,11 +10,11 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 const round = (v: number) => Math.round(v * 1000) / 1000;
 
 const KIND_TINT: Record<string, string> = {
-  car: "from-[#2a1d1f] via-[#3b2a2c] to-[#140A0C]",
-  temple: "from-[#5E1224] via-[#7A2236] to-[#3A0A15]",
-  desk: "from-[#efe5d2] via-[#e2d2b4] to-[#c8b08a]",
-  shelf: "from-[#f3ead9] via-[#e7d9bf] to-[#d5bf98]",
-  photo: "from-[#f3ede2] via-[#ebe2d1] to-[#ddd0b8]",
+  car: "from-neutral-600 to-neutral-800",
+  temple: "from-orange-100 to-orange-200",
+  desk: "from-neutral-100 to-neutral-200",
+  shelf: "from-stone-100 to-stone-200",
+  photo: "from-neutral-50 to-neutral-200",
 };
 
 /**
@@ -100,7 +100,7 @@ export function AnchorPicker({
         ) : (
           <div className={cn("relative aspect-[16/10] w-full bg-gradient-to-b", KIND_TINT[kind] ?? KIND_TINT.photo)}>
             <div className="absolute inset-x-0 bottom-0 h-[28%] bg-black/10" />
-            <p className={cn("absolute left-4 top-4 text-[11px] font-semibold uppercase tracking-[0.16em]", kind === "car" || kind === "temple" ? "text-ivory/60" : "text-ink/45")}>
+            <p className={cn("absolute left-4 top-4 text-[11px] font-semibold uppercase tracking-[0.16em]", kind === "car" ? "text-white/70" : "text-ink/45")}>
               {kind === "photo" ? "Upload a photo to place the idol" : `Illustrated ${kind} scene · preview`}
             </p>
           </div>
@@ -116,7 +116,7 @@ export function AnchorPicker({
         />
         {/* Anchor marker */}
         <span className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${x * 100}%`, top: `${y * 100}%` }}>
-          <span className="block h-4 w-4 rounded-full border-2 border-white bg-gold shadow-[0_0_0_3px_rgba(201,162,74,0.35)]" />
+          <span className="block h-4 w-4 rounded-full border-2 border-white bg-accent shadow-[0_0_0_3px_rgba(234,88,12,0.3)]" />
         </span>
       </div>
 
@@ -125,7 +125,7 @@ export function AnchorPicker({
           <span className="mb-1.5 flex items-center justify-between text-xs font-medium text-ink/70">
             Idol size <span className="font-mono text-[11px] text-ink/50">{Math.round(scale * 100)}% of scene height</span>
           </span>
-          <input type="range" min={0.05} max={0.8} step={0.01} value={scale} onChange={(e) => setScale(Number(e.target.value))} className="w-full accent-maroon" />
+          <input type="range" min={0.05} max={0.8} step={0.01} value={scale} onChange={(e) => setScale(Number(e.target.value))} className="w-full accent-ink" />
           <span className="mt-1 block text-[11px] text-ink/45">Height of a 10 cm idol. Taller idols scale up from this.</span>
         </label>
         <NumBox label="X" value={x} onChange={(v) => setX(round(clamp(v, 0, 1)))} />

@@ -62,13 +62,13 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: SP
               ]}
             />
           </div>
-          <Table head={["From", "Type", "Details", "Received", "Status"]} empty={<span>No enquiries match. <Link href="/admin/enquiries" className="text-maroon underline">Clear filters</Link></span>}>
+          <Table head={["From", "Type", "Details", "Received", "Status"]} empty={<span>No enquiries match. <Link href="/admin/enquiries" className="text-accent-deep underline">Clear filters</Link></span>}>
             {rows.map((e) => (
-              <tr key={e.id} className="transition hover:bg-ivory/40">
+              <tr key={e.id} className="transition hover:bg-surface">
                 <td className={td}>
-                  <Link href={`/admin/enquiries/${e.id}`} className="block hover:text-maroon">
+                  <Link href={`/admin/enquiries/${e.id}`} className="block hover:text-accent-deep">
                     <span className="flex items-center gap-2 font-medium">
-                      {e.status === "new" && <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-label="New" />}
+                      {e.status === "new" && <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-label="New" />}
                       {e.name}
                     </span>
                     <span className="block text-[11px] text-ink/45">{e.phone}{e.company ? ` · ${e.company}` : ""}</span>

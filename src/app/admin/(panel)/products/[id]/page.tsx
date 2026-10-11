@@ -117,8 +117,8 @@ export default async function ProductEdit({ params }: { params: Promise<{ id: st
                 <legend className="mb-2 text-xs font-medium text-ink/70">Placements</legend>
                 <div className="grid grid-cols-2 gap-2">
                   {PLACEMENTS.map((pl) => (
-                    <label key={pl.key} className="flex cursor-pointer items-center gap-2.5 rounded-xl bg-ivory/60 px-3.5 py-2.5 text-sm ring-1 ring-ink/[0.06] transition has-[:checked]:bg-gold/10 has-[:checked]:ring-gold/50">
-                      <input type="checkbox" name="placements" value={pl.key} defaultChecked={placements.has(pl.key)} className="h-4 w-4 accent-maroon" />
+                    <label key={pl.key} className="flex cursor-pointer items-center gap-2.5 rounded-xl bg-surface px-3.5 py-2.5 text-sm ring-1 ring-line transition has-[:checked]:bg-white has-[:checked]:ring-ink">
+                      <input type="checkbox" name="placements" value={pl.key} defaultChecked={placements.has(pl.key)} className="h-4 w-4 accent-ink" />
                       {pl.label}
                     </label>
                   ))}

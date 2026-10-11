@@ -24,10 +24,10 @@ export default async function FaqsPage() {
           ) : (
             <ol className="space-y-2">
               {rows.map((f, i) => (
-                <li key={f.id} className="rounded-2xl bg-white ring-1 ring-ink/[0.06]">
+                <li key={f.id} className="rounded-2xl bg-white ring-1 ring-line">
                   <details className="group">
                     <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3.5 [&::-webkit-details-marker]:hidden">
-                      <span className="w-5 shrink-0 text-center font-display text-sm text-ink/35">{i + 1}</span>
+                      <span className="w-5 shrink-0 text-center font-semibold text-sm text-ink/35">{i + 1}</span>
                       <span className={`min-w-0 flex-1 text-sm font-medium ${f.isActive ? "text-ink" : "text-ink/40"}`}>{f.question}</span>
                       {!f.isActive && <Badge>Hidden</Badge>}
                       <CaretDown weight="light" className="h-4 w-4 shrink-0 text-ink/40 transition-transform duration-300 ease-silk group-open:rotate-180" />

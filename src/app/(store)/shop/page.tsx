@@ -1,8 +1,8 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { listCategories, listDeities, listProducts, type ProductFilter } from "@/lib/catalog";
 import { ProductCard } from "@/components/store/product-card";
-import { ShopFilters } from "@/components/store/shop-filters";
-import { Eyebrow } from "@/components/store/reveal";
+import { ShopSidebar, ShopToolbar } from "@/components/store/shop-filters";
 import { PLACEMENTS } from "@/lib/utils";
 
 export const metadata = { title: "Shop all idols", description: "Car dashboard idols, home mandir idols and desk décor — Ganesh, Mahadev, Hanuman, Krishna and more." };
@@ -22,37 +22,38 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
     sort: (sp.sort as ProductFilter["sort"]) ?? "featured",
   });
   const categories = listCategories();
+  const deities = listDeities();
   const cat = categories.find((c) => c.slug === sp.category);
   const place = PLACEMENTS.find((p) => p.key === sp.placement);
-  const title = cat?.name ?? (place ? `Idols for your ${place.label.toLowerCase()}` : sp.deity ? `${sp.deity} idols` : sp.q ? `Results for “${sp.q}”` : "All idols");
+  const title = cat?.name ?? (place ? `${place.label} idols` : sp.deity ? `${sp.deity} idols` : sp.q ? `Results for “${sp.q}”` : "All idols");
+  const desc = cat?.description ?? (place ? `Idols chosen to look right on your ${place.label.toLowerCase()}.` : "Handpicked god idols for your car, home mandir and desk.");
 
   return (
-    <>
-      <section className="relative overflow-hidden bg-ink pb-16 pt-36 text-ivory">
-        <div className="pointer-events-none absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-[radial-gradient(closest-side,rgba(201,162,74,0.25),transparent)]" />
-        <div className="container relative">
-          <Eyebrow dark>The collection · {products.length} idols</Eyebrow>
-          <h1 className="mt-5 max-w-3xl font-display text-5xl leading-[1] tracking-tight md:text-7xl">{title}</h1>
-          {cat?.description && <p className="mt-5 max-w-lg text-ivory/60">{cat.description}</p>}
+    <div className="container pb-24 pt-8">
+      <nav className="text-xs text-muted" aria-label="Breadcrumb">
+        <Link href="/" className="hover:text-ink">Home</Link> <span className="mx-1">/</span> <span className="text-ink">Shop</span>
+      </nav>
+      <header className="mb-8 mt-4 border-b border-line pb-8">
+        <h1 className="text-3xl font-semibold md:text-4xl">{title}</h1>
+        <p className="mt-2 max-w-xl text-[15px] text-muted">{desc}</p>
+      </header>
+      <div className="grid gap-10 lg:grid-cols-[220px_1fr]">
+        <Suspense><ShopSidebar categories={categories} deities={deities} /></Suspense>
+        <div>
+          <Suspense><ShopToolbar count={products.length} categories={categories} deities={deities} /></Suspense>
+          {products.length ? (
+            <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-5">
+              {products.map((p, i) => <ProductCard key={p.id} p={p} priority={i < 6} />)}
+            </div>
+          ) : (
+            <div className="mt-10 rounded-2xl border border-dashed border-line px-6 py-20 text-center">
+              <p className="text-lg font-semibold">No idols match these filters</p>
+              <p className="mt-1 text-sm text-muted">Try removing a filter or search for another deity.</p>
+              <Link href="/shop" className="btn-outline mt-6">Clear filters</Link>
+            </div>
+          )}
         </div>
-      </section>
-      <section className="container pb-28 pt-8">
-        <div className="sticky top-20 z-20 -mx-4 bg-ivory/90 px-4 py-4 backdrop-blur-xl md:static md:mx-0 md:bg-transparent md:px-0 md:backdrop-blur-none">
-          <Suspense>
-            <ShopFilters categories={categories} deities={listDeities()} />
-          </Suspense>
-        </div>
-        {products.length ? (
-          <div className="mt-10 grid grid-cols-2 gap-x-3 gap-y-10 md:grid-cols-3 md:gap-x-5 xl:grid-cols-4">
-            {products.map((p, i) => <ProductCard key={p.id} p={p} priority={i < 4} />)}
-          </div>
-        ) : (
-          <div className="mt-16 rounded-[2rem] border border-dashed border-ink/15 px-6 py-24 text-center">
-            <p className="font-display text-3xl">No idols match these filters.</p>
-            <p className="mt-2 text-sm text-ink/55">Try removing a filter or searching for another deity.</p>
-          </div>
-        )}
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

@@ -47,12 +47,12 @@ export default async function CouponsPage() {
             const s = state(c, now);
             const pct = c.usageLimit ? Math.min(100, (c.usedCount / c.usageLimit) * 100) : 0;
             return (
-              <tr key={c.id} className="transition hover:bg-ivory/40">
+              <tr key={c.id} className="transition hover:bg-surface">
                 <td className={td}>
                   <Link href={`/admin/coupons/${c.id}`} className="group flex items-center gap-3">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gold/15 text-gold-deep"><Ticket weight="light" className="h-[18px] w-[18px]" /></span>
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent-deep"><Ticket weight="light" className="h-[18px] w-[18px]" /></span>
                     <span className="min-w-0">
-                      <span className="block font-mono text-[13px] font-semibold tracking-wide group-hover:text-maroon">{c.code}</span>
+                      <span className="block font-mono text-[13px] font-semibold tracking-wide group-hover:text-accent-deep">{c.code}</span>
                       {c.description && <span className="block max-w-[220px] truncate text-[11px] text-ink/45">{c.description}</span>}
                     </span>
                   </Link>
@@ -63,7 +63,7 @@ export default async function CouponsPage() {
                   <span className="tabular-nums">{c.usedCount}{c.usageLimit != null ? ` / ${c.usageLimit}` : ""}</span>
                   {c.usageLimit != null && (
                     <span className="mt-1 block h-1 w-20 overflow-hidden rounded-full bg-ink/[0.07]">
-                      <span className="block h-full rounded-full bg-maroon" style={{ width: `${pct}%` }} />
+                      <span className="block h-full rounded-full bg-ink" style={{ width: `${pct}%` }} />
                     </span>
                   )}
                 </td>
@@ -79,7 +79,7 @@ export default async function CouponsPage() {
                 <td className={td}><Badge tone={s.tone}>{s.label}</Badge></td>
                 <td className={td}><ToggleAction action={toggleCoupon.bind(null, c.id)} checked={c.isActive} label={c.isActive ? "Pause coupon" : "Activate coupon"} /></td>
                 <td className={`${td} whitespace-nowrap text-right`}>
-                  <Link href={`/admin/coupons/${c.id}`} className="mr-1 text-xs font-medium text-ink/70 hover:text-maroon">Edit</Link>
+                  <Link href={`/admin/coupons/${c.id}`} className="mr-1 text-xs font-medium text-ink/70 hover:text-accent-deep">Edit</Link>
                   <ActionButton action={deleteCoupon.bind(null, c.id)} confirm={`Delete coupon ${c.code}? Customers will no longer be able to use it.`} className="text-sindoor hover:bg-sindoor/10 hover:text-sindoor">
                     Delete
                   </ActionButton>

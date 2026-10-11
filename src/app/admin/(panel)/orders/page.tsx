@@ -82,19 +82,19 @@ export default async function OrdersPage({ searchParams }: { searchParams: SP })
             head={["Order", "Date", "Customer", "Items", "Total", "Payment", "Status"]}
             empty={
               <div>
-                <p className="font-display text-lg text-ink">No orders match</p>
+                <p className="font-semibold text-lg text-ink">No orders match</p>
                 <p className="mt-1">
                   {q ? <>Nothing found for “{q}”. </> : null}
-                  <Link href="/admin/orders" className="text-maroon underline">Show all orders</Link>
+                  <Link href="/admin/orders" className="text-accent-deep underline">Show all orders</Link>
                 </p>
               </div>
             }
           >
             {rows.map(({ o, items }) => (
-              <tr key={o.id} className="transition hover:bg-ivory/40">
+              <tr key={o.id} className="transition hover:bg-surface">
                 <td className={td}>
-                  <Link href={`/admin/orders/${o.id}`} className="font-medium hover:text-maroon">#{o.orderNumber}</Link>
-                  {o.couponCode && <p className="text-[11px] text-gold-deep">{o.couponCode}</p>}
+                  <Link href={`/admin/orders/${o.id}`} className="font-medium hover:text-accent-deep">#{o.orderNumber}</Link>
+                  {o.couponCode && <p className="text-[11px] text-accent-deep">{o.couponCode}</p>}
                 </td>
                 <td className={`${td} whitespace-nowrap text-ink/60`}>{formatDate(o.createdAt, true)}</td>
                 <td className={td}>

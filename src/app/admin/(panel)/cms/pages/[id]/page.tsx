@@ -47,14 +47,14 @@ export default async function PageEdit({ params }: { params: Promise<{ id: strin
         <div className="space-y-6">
           <Card title="URL">
             <Field label="Slug" hint="Leave blank to generate from the title">
-              <div className="flex items-center rounded-xl bg-ivory/60 ring-1 ring-ink/10 focus-within:ring-2 focus-within:ring-gold">
+              <div className="flex items-center rounded-xl bg-surface ring-1 ring-ink/10 focus-within:ring-2 focus-within:ring-ink/20">
                 <span className="pl-3.5 text-sm text-ink/40">/p/</span>
                 <input name="slug" defaultValue={p?.slug} className="w-full bg-transparent px-1 py-2.5 text-sm text-ink outline-none" placeholder="about" />
               </div>
             </Field>
             {p && (
               <p className="mt-3 break-all text-xs text-ink/50">
-                Public URL: <a href={`/p/${p.slug}`} target="_blank" rel="noreferrer" className="text-maroon hover:underline">/p/{p.slug}</a>
+                Public URL: <a href={`/p/${p.slug}`} target="_blank" rel="noreferrer" className="text-accent-deep hover:underline">/p/{p.slug}</a>
               </p>
             )}
           </Card>

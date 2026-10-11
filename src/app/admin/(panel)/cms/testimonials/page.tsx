@@ -30,16 +30,16 @@ export default async function TestimonialsPage() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {rows.map((t) => (
-            <article key={t.id} className="flex flex-col rounded-[1.5rem] bg-white p-5 ring-1 ring-ink/[0.06] transition duration-300 ease-silk hover:shadow-[0_20px_50px_-30px_rgba(20,10,12,0.3)]">
+            <article key={t.id} className="flex flex-col rounded-2xl bg-white p-5 ring-1 ring-line transition duration-300 ease-silk hover:shadow-soft">
               <div className="flex items-center justify-between gap-2">
                 <Stars n={t.rating} />
                 {t.isActive ? <Badge tone="green">Live</Badge> : <Badge>Hidden</Badge>}
               </div>
-              <Link href={`/admin/cms/testimonials/${t.id}`} className="mt-3 line-clamp-4 flex-1 font-display text-lg leading-snug text-ink hover:text-maroon">
+              <Link href={`/admin/cms/testimonials/${t.id}`} className="mt-3 line-clamp-4 flex-1 font-semibold text-lg leading-snug text-ink hover:text-accent-deep">
                 “{t.quote}”
               </Link>
               <div className="mt-4 flex items-center gap-3">
-                <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-full bg-maroon text-xs font-medium text-ivory">
+                <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-full bg-ink text-xs font-medium text-white">
                   {t.avatar ? <img src={t.avatar} alt="" className="h-full w-full object-cover" /> : t.name.slice(0, 1).toUpperCase()}
                 </span>
                 <div className="min-w-0 flex-1">

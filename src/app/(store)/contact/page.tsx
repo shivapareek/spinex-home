@@ -14,19 +14,21 @@ export default function Contact() {
     { Icon: MapPin, t: "Address", v: s.address },
   ];
   return (
-    <section className="container grid gap-14 pb-28 pt-36 lg:grid-cols-[0.9fr_1.1fr]">
+    <section className="container grid gap-10 py-12 md:py-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
       <div>
-        <h1 className="font-display text-5xl tracking-tight md:text-6xl">We're here to help.</h1>
-        <p className="mt-4 max-w-md text-ink/60">Questions about an idol, your order or a bulk requirement — reach us the way you like.</p>
-        <ul className="mt-10 space-y-3">
+        <p className="eyebrow">Contact</p>
+        <h1 className="mt-2 text-3xl font-semibold md:text-4xl">We are here to help</h1>
+        <p className="mt-3 max-w-md text-[15px] leading-7 text-muted">Have a question about an idol, your order or a bulk order? Reach us whichever way is easiest for you.</p>
+        <ul className="mt-8 space-y-3">
           {items.map(({ Icon, t, v, href }) => {
-            const inner = <><Icon className="h-5 w-5 text-maroon" weight="light" /><span><span className="block text-xs text-ink/50">{t}</span><span className="block text-sm">{v}</span></span></>;
-            return <li key={t}>{href ? <a href={href} className="flex items-center gap-4 rounded-2xl bg-white px-5 py-4 ring-1 ring-ink/[0.06] transition hover:ring-gold">{inner}</a> : <div className="flex items-center gap-4 rounded-2xl bg-white px-5 py-4 ring-1 ring-ink/[0.06]">{inner}</div>}</li>;
+            const inner = <><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface"><Icon className="h-5 w-5 text-ink" /></span><span className="min-w-0"><span className="block text-xs text-muted">{t}</span><span className="block break-words text-sm font-medium">{v}</span></span></>;
+            return <li key={t}>{href ? <a href={href} className="flex items-center gap-4 rounded-2xl border border-line bg-white px-4 py-3.5 transition hover:border-ink/40">{inner}</a> : <div className="flex items-center gap-4 rounded-2xl border border-line bg-white px-4 py-3.5">{inner}</div>}</li>;
           })}
         </ul>
       </div>
-      <div className="rounded-[2rem] bg-ivory-2/60 p-6 ring-1 ring-ink/[0.06] md:p-8">
-        <h2 className="mb-6 font-display text-3xl">Send a message</h2>
+      <div className="rounded-2xl border border-line bg-white p-5 md:p-8">
+        <h2 className="text-xl font-semibold md:text-2xl">Send us a message</h2>
+        <p className="mb-6 mt-1 text-sm text-muted">We usually reply within one working day.</p>
         <EnquiryForm type="contact" />
       </div>
     </section>

@@ -32,7 +32,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
             aria-current={tab === t.key ? "page" : undefined}
             className={cn(
               "inline-flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition duration-300 ease-silk",
-              tab === t.key ? "bg-ink text-ivory" : "bg-white text-ink/60 ring-1 ring-ink/10 hover:text-ink",
+              tab === t.key ? "bg-ink text-white" : "bg-white text-ink/60 ring-1 ring-ink/10 hover:text-ink",
             )}
           >
             <t.icon weight="light" className="h-4 w-4" /> {t.label}
@@ -156,8 +156,8 @@ function Payments() {
         </div>
       </Card>
       <div className="space-y-6">
-        <div className="rounded-[1.5rem] bg-ivory p-5 text-sm text-ink/70 ring-1 ring-gold/25">
-          <p className="mb-2 flex items-center gap-2 font-medium text-ink"><Info weight="light" className="h-4 w-4 text-gold-deep" /> Where to find your keys</p>
+        <div className="rounded-2xl bg-surface p-5 text-sm text-ink/70 ring-1 ring-accent/20">
+          <p className="mb-2 flex items-center gap-2 font-medium text-ink"><Info weight="light" className="h-4 w-4 text-accent-deep" /> Where to find your keys</p>
           <ol className="list-decimal space-y-1.5 pl-5 text-[13px]">
             <li>Log in to the Razorpay Dashboard.</li>
             <li>Go to <span className="font-medium text-ink">Settings → API Keys</span>.</li>

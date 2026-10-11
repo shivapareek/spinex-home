@@ -4,10 +4,12 @@ export const metadata = { title: "Track your order" };
 
 export default function TrackPage() {
   return (
-    <section className="container flex min-h-[80dvh] max-w-xl flex-col justify-center pb-24 pt-36">
-      <h1 className="font-display text-5xl tracking-tight">Track your order</h1>
-      <p className="mt-3 text-ink/60">Enter your order number and the email or phone you used at checkout.</p>
-      <TrackForm />
+    <section className="container flex min-h-[70dvh] items-center justify-center py-12 md:py-20">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-white p-6 sm:p-8">
+        <h1 className="text-2xl font-semibold md:text-3xl">Track your order</h1>
+        <p className="mt-1.5 text-[15px] text-muted">Enter your order number and the email or phone number you used at checkout.</p>
+        <TrackForm />
+      </div>
     </section>
   );
 }

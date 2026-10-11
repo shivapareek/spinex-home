@@ -2,12 +2,15 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-[100dvh] place-items-center bg-ink px-6 text-center text-ivory">
+    <main className="grid min-h-[100dvh] place-items-center bg-white px-6 text-center">
       <div>
-        <p className="font-deva text-7xl text-gold">४०४</p>
-        <h1 className="mt-6 font-display text-4xl tracking-tight md:text-6xl">This path leads nowhere.</h1>
-        <p className="mx-auto mt-4 max-w-md text-ivory/55">Even the wisest pilgrims take a wrong turn. Let us guide you back.</p>
-        <Link href="/" className="mt-8 inline-flex h-12 items-center rounded-full bg-gold px-6 text-sm font-semibold text-ink">Return home</Link>
+        <p className="text-sm font-semibold text-accent">404</p>
+        <h1 className="mt-3 text-3xl font-semibold md:text-4xl">Page not found</h1>
+        <p className="mx-auto mt-3 max-w-md text-[15px] text-muted">The page you are looking for does not exist or has moved.</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link href="/" className="btn-primary">Go to home</Link>
+          <Link href="/shop" className="btn-outline">Shop idols</Link>
+        </div>
       </div>
     </main>
   );

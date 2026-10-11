@@ -28,9 +28,9 @@ export default async function TeamPage() {
                 const me = u.id === session.uid;
                 const lastAdmin = u.role === "admin" && u.isActive && activeAdmins <= 1;
                 return (
-                  <li key={u.id} className={`rounded-[1.5rem] bg-white p-5 ring-1 ring-ink/[0.06] ${u.isActive ? "" : "opacity-70"}`}>
+                  <li key={u.id} className={`rounded-2xl bg-white p-5 ring-1 ring-line ${u.isActive ? "" : "opacity-70"}`}>
                     <div className="flex flex-wrap items-center gap-4">
-                      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-full font-display text-lg ${u.role === "admin" ? "bg-maroon text-gold-bright" : "bg-ivory text-maroon ring-1 ring-ink/[0.06]"}`}>
+                      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-full font-semibold text-lg ${u.role === "admin" ? "bg-ink text-white" : "bg-surface text-accent-deep ring-1 ring-line"}`}>
                         {u.name.slice(0, 1).toUpperCase()}
                       </span>
                       <div className="min-w-0 flex-1">

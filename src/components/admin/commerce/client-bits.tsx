@@ -33,7 +33,7 @@ export function ToggleAction({ action, checked, label }: { action: () => Promise
           }
         });
       }}
-      className={cn("relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors duration-300 ease-silk disabled:opacity-60", on ? "bg-maroon" : "bg-ink/15")}
+      className={cn("relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors duration-300 ease-silk disabled:opacity-60", on ? "bg-ink" : "bg-ink/15")}
     >
       <span className={cn("absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform duration-300 ease-silk", on && "translate-x-4")} />
     </button>

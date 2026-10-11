@@ -102,10 +102,10 @@ export default async function CustomersPage({ searchParams }: { searchParams: SP
           </div>
           <Table head={["Customer", "Phone", "Type", "Orders", "Total spent", "Last order"]} empty={`No customers match “${q}”.`}>
             {shown.map((r) => (
-              <tr key={r.email} className="transition hover:bg-ivory/40">
+              <tr key={r.email} className="transition hover:bg-surface">
                 <td className={td}>
-                  <Link href={`/admin/customers/${encodeURIComponent(r.email)}`} className="flex items-center gap-3 hover:text-maroon">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-maroon/10 font-display text-sm text-maroon">{(r.name || r.email).slice(0, 1).toUpperCase()}</span>
+                  <Link href={`/admin/customers/${encodeURIComponent(r.email)}`} className="flex items-center gap-3 hover:text-accent-deep">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-surface font-semibold text-sm text-accent-deep">{(r.name || r.email).slice(0, 1).toUpperCase()}</span>
                     <span className="min-w-0">
                       <span className="block max-w-[220px] truncate font-medium">{r.name}</span>
                       <span className="block max-w-[220px] truncate text-[11px] text-ink/45">{r.email}</span>

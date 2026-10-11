@@ -118,8 +118,8 @@ export default async function Dashboard() {
       <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_380px]">
         <div className="min-w-0">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-display text-xl text-ink">Recent orders</h2>
-            <Link href="/admin/orders" className="inline-flex items-center gap-1 text-xs font-medium text-maroon hover:underline">
+            <h2 className="font-semibold text-xl text-ink">Recent orders</h2>
+            <Link href="/admin/orders" className="inline-flex items-center gap-1 text-xs font-medium text-accent-deep hover:underline">
               All orders <ArrowRight weight="light" className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -127,16 +127,16 @@ export default async function Dashboard() {
             head={["Order", "Customer", "Total", "Payment", "Status"]}
             empty={
               <div>
-                <Receipt weight="light" className="mx-auto h-8 w-8 text-gold" />
-                <p className="mt-3 font-display text-lg text-ink">No orders yet</p>
+                <Receipt weight="light" className="mx-auto h-8 w-8 text-accent" />
+                <p className="mt-3 font-semibold text-lg text-ink">No orders yet</p>
                 <p className="mx-auto mt-1 max-w-xs text-sm text-ink/50">When a devotee checks out, their order will appear here instantly.</p>
               </div>
             }
           >
             {recent.map((o) => (
-              <tr key={o.id} className="transition hover:bg-ivory/40">
+              <tr key={o.id} className="transition hover:bg-surface">
                 <td className={td}>
-                  <Link href={`/admin/orders/${o.id}`} className="font-medium hover:text-maroon">#{o.orderNumber}</Link>
+                  <Link href={`/admin/orders/${o.id}`} className="font-medium hover:text-accent-deep">#{o.orderNumber}</Link>
                   <p className="text-[11px] text-ink/45">{formatDate(o.createdAt, true)}</p>
                 </td>
                 <td className={td}>
@@ -167,7 +167,7 @@ export default async function Dashboard() {
               <ul className="-my-2 divide-y divide-ink/[0.05]">
                 {lowStock.map((p) => (
                   <li key={p.id}>
-                    <Link href={`/admin/products/${p.id}`} className="flex items-center gap-3 py-2.5 transition hover:text-maroon">
+                    <Link href={`/admin/products/${p.id}`} className="flex items-center gap-3 py-2.5 transition hover:text-accent-deep">
                       <Thumb src={p.images[0] ?? p.cutout} className="h-10 w-10" />
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm">{p.name}</span>
@@ -179,7 +179,7 @@ export default async function Dashboard() {
                 ))}
                 {lowStockCount > lowStock.length && (
                   <li className="pt-3">
-                    <Link href="/admin/products?status=low" className="text-xs font-medium text-maroon hover:underline">
+                    <Link href="/admin/products?status=low" className="text-xs font-medium text-accent-deep hover:underline">
                       View all {lowStockCount} →
                     </Link>
                   </li>
@@ -190,26 +190,26 @@ export default async function Dashboard() {
 
           <Card title="Top sellers" description="By units sold, all time">
             {top.length === 0 ? (
-              <div className="flex items-center gap-3 rounded-2xl bg-ivory/60 px-4 py-4 text-sm text-ink/55">
-                <Trophy weight="light" className="h-5 w-5 shrink-0 text-gold-deep" /> Bestsellers will rank here after your first orders.
+              <div className="flex items-center gap-3 rounded-2xl bg-surface px-4 py-4 text-sm text-ink/55">
+                <Trophy weight="light" className="h-5 w-5 shrink-0 text-accent-deep" /> Bestsellers will rank here after your first orders.
               </div>
             ) : (
               <ol className="space-y-3">
                 {top.map((t, i) => (
                   <li key={`${t.productId}-${t.name}`} className="flex items-center gap-3">
-                    <span className="w-4 font-display text-sm text-gold-deep">{i + 1}</span>
+                    <span className="w-4 font-semibold text-sm text-accent-deep">{i + 1}</span>
                     <Thumb src={t.image} className="h-10 w-10" />
                     <span className="min-w-0 flex-1">
                       <span className="flex items-baseline justify-between gap-2">
                         {t.productId ? (
-                          <Link href={`/admin/products/${t.productId}`} className="truncate text-sm hover:text-maroon">{t.name}</Link>
+                          <Link href={`/admin/products/${t.productId}`} className="truncate text-sm hover:text-accent-deep">{t.name}</Link>
                         ) : (
                           <span className="truncate text-sm">{t.name}</span>
                         )}
                         <span className="shrink-0 text-xs tabular-nums text-ink/50">{Number(t.qty)} sold</span>
                       </span>
                       <span className="mt-1.5 block h-1 overflow-hidden rounded-full bg-ink/[0.06]">
-                        <span className="block h-full rounded-full bg-gradient-to-r from-maroon to-gold" style={{ width: `${(Number(t.qty) / topMax) * 100}%` }} />
+                        <span className="block h-full rounded-full bg-accent" style={{ width: `${(Number(t.qty) / topMax) * 100}%` }} />
                       </span>
                     </span>
                   </li>
@@ -226,12 +226,12 @@ export default async function Dashboard() {
                 { href: "/admin/coupons/new", label: "New coupon", icon: Ticket },
                 { href: "/admin/settings", label: "Settings", icon: GearSix },
               ].map(({ href, label, icon: Icon }) => (
-                <Link key={href} href={href} className="group flex items-center gap-2.5 rounded-2xl bg-ivory/60 px-3.5 py-3 text-[13px] text-ink/75 ring-1 ring-ink/[0.04] transition-all duration-300 ease-silk hover:bg-white hover:text-maroon hover:ring-gold/40">
-                  <Icon weight="light" className="h-[18px] w-[18px] text-gold-deep" /> {label}
+                <Link key={href} href={href} className="group flex items-center gap-2.5 rounded-2xl bg-surface px-3.5 py-3 text-[13px] text-ink/75 ring-1 ring-line transition-all duration-300 ease-silk hover:bg-white hover:text-ink hover:ring-ink/20">
+                  <Icon weight="light" className="h-[18px] w-[18px] text-muted group-hover:text-accent" /> {label}
                 </Link>
               ))}
-              <Link href="/" target="_blank" className="col-span-2 flex items-center justify-center gap-2 rounded-2xl bg-ink px-3.5 py-3 text-[13px] text-ivory transition-all duration-300 ease-silk hover:bg-maroon">
-                <ArrowSquareOut weight="light" className="h-4 w-4 text-gold" /> View storefront
+              <Link href="/" target="_blank" className="col-span-2 flex items-center justify-center gap-2 rounded-2xl bg-ink px-3.5 py-3 text-[13px] text-white transition-all duration-300 ease-silk hover:bg-ink-3">
+                <ArrowSquareOut weight="light" className="h-4 w-4 text-accent" /> View storefront
               </Link>
             </div>
           </Card>

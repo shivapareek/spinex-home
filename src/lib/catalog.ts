@@ -104,7 +104,7 @@ export function listCategories() {
       slug: categories.slug,
       description: categories.description,
       image: categories.image,
-      count: sql<number>`(select count(*) from products where products.category_id = ${categories.id} and products.is_active = 1)`,
+      count: sql<number>`(select count(*) from products p where p.category_id = "categories"."id" and p.is_active = 1)`,
     })
     .from(categories)
     .where(eq(categories.isActive, true))

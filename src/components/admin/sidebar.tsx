@@ -60,31 +60,32 @@ export function AdminSidebar({ user, badges }: { user: { name: string; email: st
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between bg-ink px-4 lg:hidden">
-        <Link href="/admin" className="font-display text-lg text-ivory">Spinex <span className="text-gold">Admin</span></Link>
-        <button onClick={() => setOpen(!open)} className="rounded-full p-2 text-ivory" aria-label="Toggle menu">
+      <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b border-line bg-white px-4 lg:hidden">
+        <Link href="/admin" className="flex items-center gap-2">
+          <LogoMark />
+          <span className="text-[15px] font-semibold tracking-tight text-ink">Spinex <span className="font-normal text-muted">Admin</span></span>
+        </Link>
+        <button onClick={() => setOpen(!open)} className="-mr-2 grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-surface" aria-label="Toggle menu">
           {open ? <X className="h-5 w-5" /> : <List className="h-5 w-5" />}
         </button>
       </div>
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-[272px] flex-col bg-ink text-ivory transition-transform duration-500 ease-silk lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-[256px] flex-col border-r border-line bg-white text-ink transition-transform duration-500 ease-silk lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="flex items-center gap-3 px-6 pb-6 pt-7">
-          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-gold-bright to-gold-deep shadow-aura">
-            <svg viewBox="0 0 24 24" className="h-5 w-5 text-ink" fill="currentColor"><path d="M12 3c-.8 2.4-3.2 3.6-3.2 6.4a3.2 3.2 0 0 0 6.4 0C15.2 6.6 12.8 5.4 12 3Z" /><path d="M5 16h14M7 19h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
-          </span>
+        <div className="flex h-16 shrink-0 items-center gap-2.5 px-5">
+          <LogoMark />
           <div>
-            <p className="font-display text-lg leading-none">Spinex Home</p>
-            <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-gold/80">Control room</p>
+            <p className="text-[15px] font-semibold leading-none tracking-tight">Spinex Home</p>
+            <p className="mt-1 text-[11px] text-muted">Admin</p>
           </div>
         </div>
-        <nav className="no-scrollbar flex-1 space-y-6 overflow-y-auto px-3 pb-6">
+        <nav className="no-scrollbar flex-1 space-y-5 overflow-y-auto px-3 pb-6 pt-2">
           {NAV.map((g) => (
             <div key={g.group}>
-              <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-ivory/30">{g.group}</p>
+              <p className="px-3 pb-1.5 text-[11px] font-medium text-muted">{g.group}</p>
               <ul className="space-y-0.5">
                 {g.items.map((it) => {
                   const Icon = it.icon;
@@ -95,13 +96,13 @@ export function AdminSidebar({ user, badges }: { user: { name: string; email: st
                       <Link
                         href={it.href}
                         className={cn(
-                          "group flex items-center gap-3 rounded-xl px-3 py-2 text-[13.5px] transition-all duration-300 ease-silk",
-                          on ? "bg-white/[0.08] text-ivory shadow-inset" : "text-ivory/55 hover:bg-white/[0.04] hover:text-ivory",
+                          "group flex items-center gap-3 rounded-lg px-3 py-2 text-[13.5px] transition-colors",
+                          on ? "bg-surface font-medium text-ink" : "text-ink/70 hover:bg-surface hover:text-ink",
                         )}
                       >
-                        <Icon className={cn("h-[18px] w-[18px]", on ? "text-gold" : "text-ivory/40 group-hover:text-ivory/70")} weight={on ? "fill" : "light"} />
+                        <Icon className={cn("h-[18px] w-[18px]", on ? "text-accent" : "text-muted group-hover:text-ink")} weight={on ? "fill" : "regular"} />
                         <span className="flex-1">{it.label}</span>
-                        {n > 0 && <span className="rounded-full bg-gold px-1.5 py-px text-[10px] font-bold text-ink">{n}</span>}
+                        {n > 0 && <span className="rounded-full bg-accent px-1.5 py-px text-[10px] font-semibold text-white">{n}</span>}
                       </Link>
                     </li>
                   );
@@ -110,25 +111,36 @@ export function AdminSidebar({ user, badges }: { user: { name: string; email: st
             </div>
           ))}
         </nav>
-        <div className="border-t border-white/[0.06] p-3">
-          <Link href="/" target="_blank" className="flex items-center gap-3 rounded-xl px-3 py-2 text-[13px] text-ivory/55 transition hover:bg-white/[0.04] hover:text-ivory">
-            <ArrowSquareOut className="h-[18px] w-[18px]" weight="light" /> View store
+        <div className="border-t border-line p-3">
+          <Link href="/" target="_blank" className="flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] text-ink/70 transition hover:bg-surface hover:text-ink">
+            <ArrowSquareOut className="h-[18px] w-[18px] text-muted" /> View store
           </Link>
-          <div className="mt-2 flex items-center gap-3 rounded-2xl bg-white/[0.04] px-3 py-3">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-maroon font-display text-sm text-gold-bright">{user.name.slice(0, 1)}</span>
+          <div className="mt-1 flex items-center gap-3 rounded-lg px-3 py-2.5">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-surface text-sm font-semibold text-ink">{user.name.slice(0, 1)}</span>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[13px] text-ivory">{user.name}</p>
-              <p className="truncate text-[11px] capitalize text-ivory/40">{user.role}</p>
+              <p className="truncate text-[13px] font-medium text-ink">{user.name}</p>
+              <p className="truncate text-[11px] capitalize text-muted">{user.role}</p>
             </div>
             <form action={adminLogout}>
-              <button className="rounded-full p-2 text-ivory/50 transition hover:bg-white/10 hover:text-ivory" aria-label="Sign out">
+              <button className="grid h-8 w-8 place-items-center rounded-full text-muted transition hover:bg-surface hover:text-ink" aria-label="Sign out">
                 <SignOut className="h-4 w-4" />
               </button>
             </form>
           </div>
         </div>
       </aside>
-      {open && <div className="fixed inset-0 z-30 bg-ink/50 lg:hidden" onClick={() => setOpen(false)} />}
+      {open && <div className="fixed inset-0 z-30 bg-black/30 lg:hidden" onClick={() => setOpen(false)} />}
     </>
+  );
+}
+
+function LogoMark() {
+  return (
+    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-ink">
+      <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent" fill="currentColor" aria-hidden>
+        <path d="M12 2.5c-.9 2.7-3.6 4-3.6 7.2a3.6 3.6 0 0 0 7.2 0c0-3.2-2.7-4.5-3.6-7.2Z" />
+        <path d="M4.5 16.5h15M7 20h10" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" />
+      </svg>
+    </span>
   );
 }
