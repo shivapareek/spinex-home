@@ -29,7 +29,7 @@ Direct-to-customer store for **Spinex Enterprises** (car dashboard & home décor
 ```bash
 npm install
 cp .env.example .env      # set AUTH_SECRET and the admin password
-npm run db:seed           # creates data/spinex.db with the 23 catalogue products
+npm run db:seed           # creates data/spinex.db with the 16 catalogue products
 npm run dev               # http://localhost:3000  ·  admin: http://localhost:3000/admin
 ```
 

@@ -116,7 +116,7 @@ export const DEFAULT_HOME: HomeSettings = {
     shlokaMeaning: "O Lord of the curved trunk, radiant as a million suns",
     primaryCta: { label: "Shop all idols", href: "/shop" },
     secondaryCta: { label: "Try in your space", href: "/experience" },
-    featured: ["m1-ganesh-ji", "meditation-adiyogi", "krishna-ji-flute", "hanuman-ji-kitab", "golden-shivling"],
+    featured: ["m1-ganesh-ji", "bhari-adiyogi", "krishna-ji-flute", "hanuman-ji-kitab", "trishul-damru"],
     showDoorsIntro: true,
   },
   sections: (
@@ -141,7 +141,7 @@ export const DEFAULT_HOME: HomeSettings = {
     body:
       "Every Spinex idol is finished with care — fine painted details, gilded accents and a sealed surface — then checked and packed by our team before it leaves for your home.",
     stats: [
-      { value: "23", label: "Signature designs" },
+      { value: "16", label: "Signature designs" },
       { value: "4", label: "Spaces to place them" },
       { value: "100%", label: "GST-invoiced orders" },
       { value: "COD", label: "Available pan-India" },

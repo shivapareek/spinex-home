@@ -16,7 +16,7 @@ const SPACE_LINE: Record<string, string> = {
   desk: "Calm, meditative pieces for focus at work.",
   shelf: "Statement idols for the living room shelf.",
 };
-const SPACE_PICK: Record<string, string> = { car: "krishna-ji-flute", temple: "hanuman-ji-kitab", desk: "meditation-adiyogi", shelf: "radha-krishna-cow" };
+const SPACE_PICK: Record<string, string> = { car: "krishna-ji-flute", temple: "hanuman-ji-kitab", desk: "bhari-adiyogi", shelf: "radha-krishna-cow" };
 
 /** Big words on the left; the chosen space renders live on the right. */
 export function ChooseSpace({ scenes, idols }: { scenes: SceneData[]; idols: HeroIdol[] }) {

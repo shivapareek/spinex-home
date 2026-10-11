@@ -49,8 +49,8 @@ export default async function ProductEdit({ params }: { params: Promise<{ id: st
         <div className="min-w-0 space-y-6">
           <Card title="Basics">
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Product name" className="sm:col-span-2"><Input name="name" defaultValue={p?.name} required placeholder="e.g. Meditation Adiyogi" /></Field>
-              <Field label="URL slug" hint="Leave blank to generate from the name"><Input name="slug" defaultValue={p?.slug} placeholder="meditation-adiyogi" /></Field>
+              <Field label="Product name" className="sm:col-span-2"><Input name="name" defaultValue={p?.name} required placeholder="e.g. Bal Krishna with Flute" /></Field>
+              <Field label="URL slug" hint="Leave blank to generate from the name"><Input name="slug" defaultValue={p?.slug} placeholder="krishna-ji-flute" /></Field>
               <Field label="SKU"><Input name="sku" defaultValue={p?.sku ?? ""} placeholder="SPX-024" /></Field>
               <Field label="Category">
                 <Select name="categoryId" defaultValue={p?.categoryId ?? ""}>

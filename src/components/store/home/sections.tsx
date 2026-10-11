@@ -67,7 +67,7 @@ export function Statement({ idols }: { idols: HeroIdol[] }) {
     <section className="container py-20 md:py-32">
       <Reveal>
         <p className="font-display text-[34px] font-bold leading-[1.12] tracking-[-0.035em] text-ink/90 md:text-[64px] md:leading-[1.08]" style={{ fontVariationSettings: '"wdth" 90' }}>
-          Ganesh <Pic slug="m1-ganesh-ji" /> for new beginnings, Hanuman <Pic slug="hanuman-ji-kitab" /> for strength, Krishna <Pic slug="krishna-ji-flute" /> for joy, and Mahadev <Pic slug="meditation-adiyogi" /> for calm. <span className="text-ink/30">Every idol finished with care and packed to arrive safely.</span>
+          Ganesh <Pic slug="m1-ganesh-ji" /> for new beginnings, Hanuman <Pic slug="hanuman-ji-kitab" /> for strength, Krishna <Pic slug="krishna-ji-flute" /> for joy, and Mahadev <Pic slug="bhari-adiyogi" /> for calm. <span className="text-ink/30">Every idol finished with care and packed to arrive safely.</span>
         </p>
       </Reveal>
     </section>

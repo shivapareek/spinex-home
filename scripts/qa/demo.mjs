@@ -118,7 +118,7 @@ await wait(600);
 await p.goto(BASE + "/experience?scene=temple", { waitUntil: "networkidle" });
 await caption("Try in your space — koi bhi idol, koi bhi space, camera ya photo");
 await wait(1500);
-for (const n of ["Meditation Adiyogi", "Radha Krishna with Cow", "Ganesh Lakshmi Combo", "Floral Ring Ganesh Ji"]) {
+for (const n of ["Adiyogi Bust", "Radha Krishna with Cow", "Ganesh Lakshmi Combo", "Floral Ring Ganesh Ji"]) {
   const btn = p.locator(`button[title="${n}"]`);
   if (await btn.count()) { await btn.first().click(); await wait(1500); }
 }
