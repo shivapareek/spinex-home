@@ -12,7 +12,7 @@ export function Footer({ site, pages, categories }: { site: SiteSettings; pages:
     { href: site.whatsapp ? `https://wa.me/${site.whatsapp.replace(/\D/g, "")}` : "", Icon: WhatsappLogo, label: "WhatsApp" },
   ].filter((s) => s.href);
   return (
-    <footer className="border-t border-line bg-surface">
+    <footer className="border-t border-line bg-white">
       <div className="container">
         <ul className="grid grid-cols-2 gap-6 border-b border-line py-10 md:grid-cols-4">
           {[
@@ -40,6 +40,9 @@ export function Footer({ site, pages, categories }: { site: SiteSettings; pages:
             <Col title="Company" links={pages.map((p) => ({ href: `/p/${p.slug}`, label: p.title }))} />
           </div>
         </div>
+        <p className="select-none overflow-hidden whitespace-nowrap text-center font-display text-[clamp(84px,26vw,390px)] font-extrabold uppercase leading-[0.8] tracking-[-0.03em] text-ink" style={{ fontVariationSettings: '"wdth" 75' }} aria-hidden>
+          Spinex
+        </p>
         <div className="flex flex-col gap-4 border-t border-line py-6 text-xs text-muted md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} {site.legalName} · GSTIN {site.gstin}</p>
           {socials.length > 0 && (

@@ -1,122 +1,155 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Car, HandsPraying, Desktop, Couch, Truck, Money, Sparkle } from "@phosphor-icons/react";
+import { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowLeft, ArrowRight, Plus } from "@phosphor-icons/react";
 import type { HomeSettings } from "@/lib/settings";
-import { SceneBackground, IdolLayer, idolHeightFrac, type SceneData } from "@/components/visualizer/idol-in-scene";
-import { SCENE_LOOK } from "@/components/visualizer/scenes";
+import { useCart } from "@/lib/client/cart";
 import { cn, inr } from "@/lib/utils";
 
-export type HeroIdol = { slug: string; name: string; deity: string | null; price: number; cutout: string | null; heightCm: number | null };
+export type HeroIdol = { slug: string; name: string; deity: string | null; price: number; cutout: string | null; heightCm: number | null; id?: number; stock?: number };
 
-const SCENE_ICON: Record<string, React.ElementType> = { car: Car, temple: HandsPraying, desk: Desktop, shelf: Couch };
-const SHORT: Record<string, string> = { car: "Car", temple: "Mandir", desk: "Desk", shelf: "Home" };
-const EASE = [0.32, 0.72, 0, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
-export function Hero({ hero, idols, scenes }: { hero: HomeSettings["hero"]; idols: HeroIdol[]; scenes: SceneData[] }) {
-  const [idx, setIdx] = useState(0);
-  const [sceneIdx, setSceneIdx] = useState(0);
-  const [touched, setTouched] = useState(false);
-  const idol = idols[idx];
-  const scene = scenes[sceneIdx];
+/** Short, bold word shown huge behind the idol. */
+const BIG: Record<string, string> = {
+  Ganesh: "Ganesh",
+  Mahadev: "Mahadev",
+  Hanuman: "Hanuman",
+  Krishna: "Krishna",
+  "Radha Krishna": "Radhe",
+  "Khatu Shyam": "Shyam",
+  Buddha: "Buddha",
+  Kamdhenu: "Kamdhenu",
+  "Ganesh & Lakshmi": "Shubh",
+};
+
+export function Hero({ hero, idols }: { hero: HomeSettings["hero"]; idols: HeroIdol[]; scenes?: unknown }) {
+  const [i, setI] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const reduce = useReducedMotion();
+  const add = useCart((s) => s.add);
+  const idol = idols[i];
+  const word = (idol.deity && BIG[idol.deity]) || idol.deity || "Divine";
+
+  const go = useCallback((d: number) => {
+    setDir(d);
+    setI((x) => (x + d + idols.length) % idols.length);
+  }, [idols.length]);
 
   useEffect(() => {
-    if (touched || idols.length < 2) return;
-    const t = setInterval(() => {
-      setIdx((i) => {
-        const n = (i + 1) % idols.length;
-        if (n % 2 === 0) setSceneIdx((s) => (s + 1) % scenes.length);
-        return n;
-      });
-    }, 3800);
+    if (paused || reduce || idols.length < 2) return;
+    const t = setInterval(() => go(1), 4500);
     return () => clearInterval(t);
-  }, [touched, idols.length, scenes.length]);
+  }, [paused, reduce, go, idols.length]);
 
   return (
-    <section className="relative overflow-hidden bg-white">
-      <div className="container grid items-center gap-10 py-10 md:py-14 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:py-20">
-        {/* Copy */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE }}>
-          <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-medium text-ink shadow-card">
-            <Sparkle className="h-3.5 w-3.5 text-accent" weight="fill" /> {hero.eyebrow}
-          </span>
-          <h1 className="mt-6 text-[40px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink sm:text-5xl lg:text-[64px]">
-            {hero.title} <span className="text-accent">{hero.titleAccent}</span>
-          </h1>
-          <p className="mt-5 max-w-lg text-base leading-7 text-muted md:text-lg">{hero.subtitle}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link href={hero.primaryCta.href} className="btn-primary h-12 px-7">
-              {hero.primaryCta.label} <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link href={hero.secondaryCta.href} className="btn-outline h-12 px-7">
-              {hero.secondaryCta.label}
-            </Link>
-          </div>
-          <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted">
-            <li className="flex items-center gap-2"><Truck className="h-5 w-5 text-ink" /> Free shipping over ₹499</li>
-            <li className="flex items-center gap-2"><Money className="h-5 w-5 text-ink" /> Cash on Delivery</li>
-            <li className="flex items-center gap-2"><Sparkle className="h-5 w-5 text-ink" /> Preview in your space</li>
-          </ul>
-        </motion.div>
+    <section className="container pt-4 md:pt-6" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <div className="relative overflow-hidden rounded-[28px] bg-[#EFEEEA]">
+        {/* soft spotlight from above */}
+        <div className="pointer-events-none absolute left-1/2 top-[-30%] h-[120%] w-[70%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.95),rgba(255,255,255,0))]" />
 
-        {/* Live preview card */}
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: EASE }} className="rounded-[28px] border border-line bg-white p-3 shadow-soft">
-          <div className="flex items-center justify-center gap-3 px-2 pb-3 pt-1 sm:justify-between">
-            <p className="hidden text-sm font-medium sm:block">See how it looks in your…</p>
-            <div className="flex rounded-full bg-surface p-1" role="tablist" aria-label="Choose a space">
-              {scenes.map((s, i) => {
-                const Icon = SCENE_ICON[s.kind] ?? Couch;
-                const on = i === sceneIdx;
-                return (
-                  <button
-                    key={s.key}
-                    role="tab"
-                    aria-selected={on}
-                    aria-label={s.name}
-                    onClick={() => { setTouched(true); setSceneIdx(i); }}
-                    className={cn("relative flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors", on ? "text-ink" : "text-muted hover:text-ink")}
+        <div className="relative h-[min(78dvh,760px)] min-h-[560px]">
+          {/* giant word */}
+          <div className="pointer-events-none absolute inset-x-0 top-[9%] flex justify-center overflow-hidden md:top-[6%]" aria-hidden>
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.p key={word} className="flex whitespace-nowrap font-display text-[clamp(72px,19vw,290px)] font-extrabold uppercase leading-[0.85] tracking-[-0.035em] text-ink" style={{ fontVariationSettings: '"wdth" 75' }}>
+                {word.split("").map((ch, k) => (
+                  <motion.span
+                    key={k}
+                    className="inline-block"
+                    initial={reduce ? false : { y: "105%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={reduce ? undefined : { y: "-60%", opacity: 0, transition: { duration: 0.3, delay: k * 0.015 } }}
+                    transition={{ duration: 0.7, delay: k * 0.035, ease: EASE }}
                   >
-                    {on && <motion.span layoutId="hero-tab" className="absolute inset-0 rounded-full bg-white shadow-card" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
-                    <Icon className="relative h-4 w-4" weight={on ? "fill" : "regular"} />
-                    <span className="relative">{SHORT[s.kind] ?? s.name}</span>
-                  </button>
-                );
-              })}
+                    {ch}
+                  </motion.span>
+                ))}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+
+          {/* pedestal */}
+          <div className="absolute bottom-[23%] left-1/2 w-[min(64vw,340px)] -translate-x-1/2 md:bottom-[9%]" aria-hidden>
+            <div className="relative h-[86px] md:h-[110px]">
+              <div className="absolute inset-x-0 bottom-0 top-[22px] rounded-b-[50%_30px] bg-gradient-to-r from-[#DAD8D2] via-[#F7F6F3] to-[#D3D1CA]" />
+              <div className="absolute inset-x-0 top-0 h-[44px] rounded-[50%] bg-gradient-to-b from-white to-[#ECEAE5] shadow-[inset_0_-2px_6px_rgba(0,0,0,0.06)]" />
+            </div>
+            <div className="mx-auto mt-1 h-6 w-[115%] -translate-x-[6.5%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(0,0,0,0.18),transparent)] blur-[2px]" />
+          </div>
+
+          {/* idol */}
+          <div className="absolute inset-x-0 bottom-[calc(23%+66px)] flex h-[44%] justify-center md:bottom-[calc(9%+86px)] md:h-[56%]">
+            <AnimatePresence mode="popLayout" initial={false} custom={dir}>
+              <motion.img
+                key={idol.slug}
+                src={idol.cutout ?? ""}
+                alt={idol.name}
+                className="h-full w-auto max-w-[80vw] object-contain object-bottom drop-shadow-[0_24px_24px_rgba(0,0,0,0.22)]"
+                initial={reduce ? false : { opacity: 0, x: dir * 80, scale: 0.92 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={reduce ? undefined : { opacity: 0, x: dir * -80, scale: 0.92, transition: { duration: 0.35 } }}
+                transition={{ duration: 0.8, ease: EASE }}
+                draggable={false}
+              />
+            </AnimatePresence>
+          </div>
+
+          {/* copy, bottom-left */}
+          <div className="absolute bottom-6 left-6 hidden max-w-sm md:block lg:bottom-10 lg:left-10">
+            <h1 className="text-[34px] font-bold leading-[1.02] text-ink lg:text-[42px]">
+              {hero.title} <span className="text-accent">{hero.titleAccent}</span>
+            </h1>
+            <div className="mt-5 flex gap-2">
+              <Link href={hero.primaryCta.href} className="btn-primary">{hero.primaryCta.label} <ArrowRight className="h-4 w-4" /></Link>
+              <Link href={hero.secondaryCta.href} className="btn border border-ink/15 bg-white/70 text-ink hover:bg-white">{hero.secondaryCta.label}</Link>
             </div>
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-surface">
-            <AnimatePresence mode="popLayout" initial={false}>
-              <motion.div key={scene.key} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
-                <SceneBackground scene={scene} />
-              </motion.div>
-            </AnimatePresence>
-            <AnimatePresence mode="popLayout" initial={false}>
-              <motion.div key={idol.slug + scene.key} className="absolute inset-0" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease: EASE }}>
-                <IdolLayer src={idol.cutout ?? ""} alt={idol.name} x={scene.anchorX * 100} y={scene.anchorY * 100} heightPct={Math.min(46, idolHeightFrac(scene, idol, 1.2) * 100)} look={SCENE_LOOK[scene.kind]} />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-          <div className="flex items-center gap-3 px-2 pb-1 pt-3">
-            <div className="no-scrollbar flex flex-1 gap-2 overflow-x-auto">
-              {idols.map((d, i) => (
+
+          {/* product chip, bottom-right */}
+          <div className="absolute bottom-4 right-4 left-4 md:bottom-10 md:left-auto md:right-10 md:w-[300px]">
+            <div className="flex items-center gap-3 rounded-2xl bg-white/90 p-3 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.25)] backdrop-blur">
+              <div className="min-w-0 flex-1">
+                <Link href={`/product/${idol.slug}`} className="block truncate text-[15px] font-semibold hover:underline">{idol.name}</Link>
+                <p className="text-sm text-muted">{inr(idol.price)}</p>
+              </div>
+              {idol.id != null && (
                 <button
-                  key={d.slug}
-                  onClick={() => { setTouched(true); setIdx(i); }}
-                  aria-label={`Show ${d.name}`}
-                  className={cn("grid h-12 w-12 shrink-0 place-items-center rounded-xl border bg-surface transition", i === idx ? "border-ink" : "border-transparent hover:border-line")}
+                  onClick={() => add({ productId: idol.id!, slug: idol.slug, name: idol.name, price: idol.price, image: idol.cutout, stock: idol.stock ?? 99 })}
+                  className="grid h-10 w-10 place-items-center rounded-full bg-ink text-white transition hover:bg-accent"
+                  aria-label={`Add ${idol.name} to cart`}
                 >
-                  {d.cutout && <img src={d.cutout} alt="" className="h-9 w-9 object-contain" />}
+                  <Plus className="h-4 w-4" weight="bold" />
                 </button>
-              ))}
+              )}
             </div>
-            <Link href={`/product/${idol.slug}`} className="hidden shrink-0 text-right sm:block">
-              <span className="block max-w-[160px] truncate text-sm font-medium">{idol.name}</span>
-              <span className="block text-sm text-muted">{inr(idol.price)} · View →</span>
-            </Link>
+            <div className="mt-2 flex items-center justify-between gap-2">
+              <div className="flex gap-1">
+                {idols.map((d, k) => (
+                  <button key={d.slug} onClick={() => { setDir(k > i ? 1 : -1); setI(k); }} aria-label={`Show ${d.name}`} className="grid h-8 w-6 place-items-center">
+                    <span className={cn("h-1 rounded-full transition-all duration-500", k === i ? "w-6 bg-ink" : "w-2.5 bg-ink/20")} />
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-1">
+                <button onClick={() => go(-1)} className="grid h-9 w-9 place-items-center rounded-full bg-white/80 transition hover:bg-white" aria-label="Previous idol"><ArrowLeft className="h-4 w-4" /></button>
+                <button onClick={() => go(1)} className="grid h-9 w-9 place-items-center rounded-full bg-white/80 transition hover:bg-white" aria-label="Next idol"><ArrowRight className="h-4 w-4" /></button>
+              </div>
+            </div>
           </div>
-        </motion.div>
+        </div>
+      </div>
+
+      {/* mobile copy under the stage */}
+      <div className="pt-6 md:hidden">
+        <h1 className="text-[34px] font-bold leading-[1.02]">{hero.title} <span className="text-accent">{hero.titleAccent}</span></h1>
+        <div className="mt-5 flex gap-2">
+          <Link href={hero.primaryCta.href} className="btn-primary flex-1">{hero.primaryCta.label}</Link>
+          <Link href={hero.secondaryCta.href} className="btn-outline flex-1">{hero.secondaryCta.label}</Link>
+        </div>
       </div>
     </section>
   );

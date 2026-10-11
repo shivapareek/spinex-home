@@ -64,28 +64,29 @@ export function Header({ announcement }: { announcement: string[] }) {
           </AnimatePresence>
         </div>
       )}
-      <header className="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur-xl">
-        <div className="container flex h-16 items-center gap-6">
-          <button onClick={() => setMenu(true)} className="-ml-2 grid h-10 w-10 place-items-center rounded-full lg:hidden" aria-label="Open menu">
-            <List className="h-5 w-5" />
-          </button>
+      <header className="sticky top-0 z-40 border-b border-line bg-white/85 backdrop-blur-xl">
+        <div className="container grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <div className="flex items-center gap-1">
+            <button onClick={() => setMenu(true)} className="-ml-2 grid h-10 w-10 place-items-center rounded-full lg:hidden" aria-label="Open menu">
+              <List className="h-5 w-5" />
+            </button>
+            <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main">
+              {LINKS.slice(0, 4).map((l) => {
+                const on = l.href.includes("?") ? false : path.startsWith(l.href);
+                return (
+                  <Link key={l.href} href={l.href} className={cn("group relative flex items-center gap-1.5 px-3 py-2 text-[13.5px] transition-colors", on ? "text-ink" : "text-muted hover:text-ink")}>
+                    {l.label}
+                    {l.badge && <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-label={l.badge} />}
+                    <span className={cn("absolute inset-x-3 -bottom-[13px] h-[2px] origin-left bg-ink transition-transform duration-300", on ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100")} />
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
           <Logo />
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
-            {LINKS.map((l) => {
-              const on = l.href.includes("?") ? false : path.startsWith(l.href);
-              return (
-                <Link key={l.href} href={l.href} className={cn("flex items-center gap-1.5 rounded-full px-3 py-2 text-sm transition-colors", on ? "text-ink font-medium" : "text-muted hover:text-ink")}>
-                  {l.label}
-                  {l.badge && <span className="rounded-full bg-accent-soft px-1.5 py-0.5 text-[10px] font-semibold text-accent">{l.badge}</span>}
-                </Link>
-              );
-            })}
-          </nav>
-          <div className="ml-auto flex items-center gap-1">
-            <button onClick={openSearch} className="hidden h-10 w-64 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm text-muted transition hover:border-ink/30 md:flex" aria-label="Search">
-              <MagnifyingGlass className="h-4 w-4" />
-              <span className="flex-1 text-left">Search idols…</span>
-              <kbd className="rounded border border-line bg-white px-1.5 text-[10px]">⌘K</kbd>
+          <div className="flex items-center justify-end gap-1">
+            <button onClick={openSearch} className="hidden h-9 items-center gap-2 rounded-full border border-line px-3.5 text-[13px] text-muted transition hover:border-ink hover:text-ink md:flex" aria-label="Search">
+              <MagnifyingGlass className="h-4 w-4" /> Search
             </button>
             <button onClick={openSearch} className="grid h-10 w-10 place-items-center rounded-full hover:bg-surface md:hidden" aria-label="Search">
               <MagnifyingGlass className="h-5 w-5" />
@@ -97,9 +98,9 @@ export function Header({ announcement }: { announcement: string[] }) {
             <Link href="/account" aria-label="Account" className="hidden h-10 w-10 place-items-center rounded-full hover:bg-surface sm:grid">
               <User className="h-5 w-5" />
             </Link>
-            <button onClick={() => setOpen(true)} aria-label={`Cart, ${count} items`} className="relative grid h-10 w-10 place-items-center rounded-full hover:bg-surface">
-              <Bag className="h-5 w-5" />
-              {count > 0 && <Dot n={count} accent />}
+            <button onClick={() => setOpen(true)} aria-label={`Cart, ${count} items`} className="ml-1 flex h-9 items-center gap-2 rounded-full bg-ink pl-3 pr-1 text-[13px] font-medium text-white transition hover:bg-ink-3">
+              <Bag className="h-4 w-4" />
+              <span className="grid h-7 min-w-7 place-items-center rounded-full bg-white px-1.5 text-[11px] font-semibold text-ink">{count}</span>
             </button>
           </div>
         </div>

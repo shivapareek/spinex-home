@@ -108,8 +108,8 @@ export const DEFAULT_COMMERCE: CommerceSettings = {
 export const DEFAULT_HOME: HomeSettings = {
   hero: {
     eyebrow: "New: preview any idol in your own space",
-    title: "Divine idols for your",
-    titleAccent: "car, mandir & desk.",
+    title: "God idols for your",
+    titleAccent: "car, mandir and desk.",
     subtitle:
       "Beautifully finished god idols, made to sit on your car dashboard, in your home mandir or on your work desk. See exactly how they look before you buy.",
     shloka: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ",
@@ -120,7 +120,7 @@ export const DEFAULT_HOME: HomeSettings = {
     showDoorsIntro: true,
   },
   sections: (
-    ["bestsellers", "deities", "experience", "dashboard", "craft", "testimonials", "marketplaces", "bulk", "faq", "marquee", "newsletter"] as HomeSectionKey[]
+    ["experience", "bestsellers", "craft", "deities", "dashboard", "testimonials", "marketplaces", "bulk", "faq", "marquee", "newsletter"] as HomeSectionKey[]
   ).map((key) => ({ key, enabled: key !== "marquee" && key !== "newsletter" })),
   marquee: ["Ganesh Ji", "Mahadev", "Hanuman Ji", "Radha Krishna", "Khatu Shyam", "Lakshmi Ji", "Buddha", "Kamdhenu"],
   experience: {

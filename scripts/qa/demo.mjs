@@ -57,36 +57,28 @@ async function slowScroll(total, step = 12) {
 
 // 1. Hero
 await p.goto(BASE + "/", { waitUntil: "networkidle" });
-await wait(1200);
-await caption("Hero: clean white design + live preview card");
-await glide(300, 300, 900, 450, 40);
 await wait(1500);
-await caption("Space badlo: Car → Mandir → Desk");
-await p.getByRole("tab", { name: "Home Mandir" }).click();
-await wait(2200);
-await p.getByRole("tab", { name: "Work Desk" }).click();
-await wait(2000);
-await p.getByRole("tab", { name: "Car Dashboard" }).click();
-await wait(1200);
-await caption("Idol badlo — har idol us space mein live dikhta hai");
-for (const n of ["Show Bal Krishna with Flute", "Show Hanuman Ji Reading Ramayan", "Show Golden Shivling", "Show M1 Ganesh Ji"]) {
-  const btn = p.getByRole("button", { name: n });
-  if (await btn.count()) { await btn.click(); await wait(1700); }
-}
+await caption("Hero: idol pedestal par, peeche bada deity naam");
+for (let k = 0; k < 4; k++) { await p.getByRole("button", { name: "Next idol" }).click(); await wait(1700); }
 
-// 2. Scroll the homepage
-await caption("Homepage sections — sab kuch admin CMS se editable");
-await slowScroll(2600);
-await wait(800);
-await caption("Try before you buy — same idol, 4 spaces");
-for (const n of ["Meditation Adiyogi", "Khatu Shyam Darbar", "Bal Krishna with Flute"]) {
-  const btn = p.getByRole("button", { name: n, exact: true });
-  if (await btn.count()) { await btn.first().click(); await wait(1500); }
-}
-await slowScroll(2400);
-await caption("Bestsellers, car-dashboard story, craft, FAQ…");
-await slowScroll(3600, 16);
+// 2. Homepage sections
+await caption("Where will your idol live? Hover karo: Car, Mandir, Desk, Home");
+await slowScroll(820, 14);
 await wait(600);
+for (const w of ["Mandir", "Desk", "Home", "Car"]) {
+  const btn = p.getByRole("button", { name: w, exact: true });
+  if (await btn.count()) { await btn.first().hover(); await wait(1500); }
+}
+await caption("Collection: scroll karo, gallery side mein chalti hai");
+await slowScroll(2600, 10);
+await wait(500);
+await caption("Statement aur deity bento");
+await slowScroll(1500, 12);
+await wait(800);
+await slowScroll(1300, 12);
+await caption("Try in your space banner, bulk orders, FAQ");
+await slowScroll(2600, 14);
+await wait(800);
 
 // 3. Product page
 await p.goto(BASE + "/product/hanuman-ji-kitab", { waitUntil: "networkidle" });

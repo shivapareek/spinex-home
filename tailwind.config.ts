@@ -24,7 +24,7 @@ export default {
         tulsi: "#16A34A",
       },
       fontFamily: {
-        display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-bricolage)", "var(--font-geist-sans)", "system-ui", "sans-serif"],
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
         deva: ["var(--font-deva)", "system-ui", "sans-serif"],

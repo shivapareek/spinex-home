@@ -17,7 +17,7 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
   const footerPages = db.select({ slug: pages.slug, title: pages.title }).from(pages).where(and(eq(pages.isPublished, true), eq(pages.showInFooter, true))).orderBy(asc(pages.id)).all();
   const cats = listCategories();
   return (
-    <div className="grain">
+    <div className="store">
       <Header announcement={site.announcement.enabled ? site.announcement.items : []} />
       <main>{children}</main>
       <Footer site={site} pages={footerPages} categories={cats} />

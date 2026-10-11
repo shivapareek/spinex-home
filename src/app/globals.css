@@ -14,6 +14,9 @@
     text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4 { @apply tracking-tight; }
+  /* Storefront headings use the display face */
+  .store :is(h1, h2) { font-family: var(--font-bricolage), var(--font-geist-sans), sans-serif; font-variation-settings: "wdth" 92; letter-spacing: -0.025em; }
+  .store h3 { font-family: var(--font-bricolage), var(--font-geist-sans), sans-serif; letter-spacing: -0.02em; }
   ::selection { background: #FFE2CF; color: #111; }
   :focus-visible { outline: 2px solid #EA580C; outline-offset: 2px; border-radius: 6px; }
   input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }

@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Noto_Sans_Devanagari } from "next/font/google";
+import { Bricolage_Grotesque, Noto_Sans_Devanagari } from "next/font/google";
 import { getSetting } from "@/lib/settings";
 import "./globals.css";
 
+const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage", axes: ["opsz", "wdth"], display: "swap" });
 const deva = Noto_Sans_Devanagari({ subsets: ["devanagari"], weight: ["500"], variable: "--font-deva", display: "swap" });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,7 +23,7 @@ export const viewport: Viewport = { themeColor: "#FFFFFF" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${deva.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${display.variable} ${deva.variable}`}>
       <body>{children}</body>
     </html>
   );
