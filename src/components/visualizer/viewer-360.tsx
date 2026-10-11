@@ -123,6 +123,8 @@ function TiltTurntable({ src, name }: { src: string | null; name: string }) {
     return () => cancelAnimationFrame(raf);
   }, [rx, ry, ring]);
 
+  const sheenBg = useTransform(sheenX, (x) => `radial-gradient(circle at ${x} 35%, rgba(255,255,255,0.9), transparent 45%)`);
+
   if (!src) return null;
   return (
     <div
@@ -162,7 +164,7 @@ function TiltTurntable({ src, name }: { src: string | null; name: string }) {
         <motion.div
           className="pointer-events-none absolute inset-0 mix-blend-soft-light"
           style={{
-            background: useTransform(sheenX, (x) => `radial-gradient(circle at ${x} 35%, rgba(255,255,255,0.9), transparent 45%)`),
+            background: sheenBg,
             WebkitMaskImage: `url(${src})`,
             maskImage: `url(${src})`,
             WebkitMaskSize: "contain",

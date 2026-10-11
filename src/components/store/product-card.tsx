@@ -101,7 +101,7 @@ export function ProductCard({ p, className, priority }: { p: CardProduct; classN
           </div>
 
           {p.placements.length > 0 && (
-            <div className="pointer-events-none absolute bottom-3 left-3 z-[2] flex gap-1">
+            <div className="pointer-events-none absolute bottom-3 left-3 right-16 z-[2] hidden gap-1 overflow-hidden sm:flex">
               {p.placements.slice(0, 3).map((k) => {
                 const Icon = PLACE_ICON[k];
                 return Icon ? (
