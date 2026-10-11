@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { createContext, useContext, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
@@ -30,29 +30,42 @@ export function ActionForm({
 }) {
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
+  const [pending, start] = useTransition();
+  // onSubmit (not the `action` prop) so React doesn't reset typed values when a save fails
   return (
-    <form
-      ref={ref}
-      className={className}
-      action={async (fd) => {
-        if (confirm && !window.confirm(confirm)) return;
-        const res = await action(fd);
-        if (res?.error) toast.error(res.error);
-        else if (res) {
-          if (res.message) toast.success(res.message);
-          if (resetOnSuccess) ref.current?.reset();
-          if (res.redirect) router.push(res.redirect);
-          else router.refresh();
-        }
-      }}
-    >
-      {children}
-    </form>
+    <PendingContext.Provider value={pending}>
+      <form
+        ref={ref}
+        className={className}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (pending) return;
+          if (confirm && !window.confirm(confirm)) return;
+          const fd = new FormData(e.currentTarget);
+          start(async () => {
+            const res = await action(fd);
+            if (res?.error) toast.error(res.error);
+            else if (res) {
+              if (res.message) toast.success(res.message);
+              if (resetOnSuccess) ref.current?.reset();
+              if (res.redirect) router.push(res.redirect);
+              else router.refresh();
+            }
+          });
+        }}
+      >
+        {children}
+      </form>
+    </PendingContext.Provider>
   );
 }
 
+const PendingContext = createContext(false);
+
 export function SubmitButton({ children, variant = "primary", size = "md", className }: { children: React.ReactNode; variant?: Parameters<typeof buttonClass>[0]; size?: "sm" | "md"; className?: string }) {
-  const { pending } = useFormStatus();
+  const { pending: formPending } = useFormStatus();
+  const ctxPending = useContext(PendingContext);
+  const pending = formPending || ctxPending;
   return (
     <button type="submit" disabled={pending} className={cn(buttonClass(variant, size), className)}>
       {pending && <Spinner className="h-4 w-4 animate-spin" />}

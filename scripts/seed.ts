@@ -117,9 +117,9 @@ const FAQS = [
 ];
 
 const SCENES = [
-  { key: "car", name: "Car Dashboard", tagline: "Ride with blessings", kind: "car" as const, sortOrder: 1, anchorX: 0.56, anchorY: 0.69, baseScale: 0.3 },
+  { key: "car", name: "Car Dashboard", tagline: "Ride with blessings", kind: "car" as const, sortOrder: 1, anchorX: 0.5, anchorY: 0.69, baseScale: 0.3 },
   { key: "temple", name: "Home Mandir", tagline: "A sacred corner at home", kind: "temple" as const, sortOrder: 2, anchorX: 0.5, anchorY: 0.74, baseScale: 0.34 },
-  { key: "desk", name: "Work Desk", tagline: "Focus, with grace", kind: "desk" as const, sortOrder: 3, anchorX: 0.38, anchorY: 0.72, baseScale: 0.3 },
+  { key: "desk", name: "Work Desk", tagline: "Focus, with grace", kind: "desk" as const, sortOrder: 3, anchorX: 0.5, anchorY: 0.72, baseScale: 0.3 },
   { key: "shelf", name: "Living Room", tagline: "The heart of the home", kind: "shelf" as const, sortOrder: 4, anchorX: 0.5, anchorY: 0.6, baseScale: 0.26 },
 ];
 

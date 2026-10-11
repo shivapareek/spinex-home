@@ -93,9 +93,15 @@ export function Input({ className, ...p }: React.InputHTMLAttributes<HTMLInputEl
 export function Textarea({ className, ...p }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return <textarea className={cn(inputClass, "min-h-[110px] leading-relaxed", className)} {...p} />;
 }
+const SELECT_ARROW = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23140A0C' stroke-width='2'><path d='m6 9 6 6 6-6'/></svg>")`;
+
 export function Select({ className, children, ...p }: React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
-    <select className={cn(inputClass, "appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23140A0C%22 stroke-width=%222%22><path d=%22m6 9 6 6 6-6%22/></svg>')] bg-[right_0.9rem_center] bg-no-repeat pr-9", className)} {...p}>
+    <select
+      {...p}
+      className={cn(inputClass, "appearance-none bg-[right_0.9rem_center] bg-no-repeat pr-9", className)}
+      style={{ backgroundImage: SELECT_ARROW, ...p.style }}
+    >
       {children}
     </select>
   );

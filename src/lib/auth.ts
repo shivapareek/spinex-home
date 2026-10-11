@@ -67,14 +67,23 @@ export async function authenticate(email: string, password: string) {
 }
 
 /** Use at the top of every admin server action / page. */
-export async function requireAdmin() {
+/** Session plus a live DB check, so deactivated or demoted accounts lose access immediately. */
+async function activeSession() {
   const s = await getSession();
+  if (!s) return null;
+  const u = db.select({ isActive: users.isActive, role: users.role }).from(users).where(eq(users.id, s.uid)).get();
+  if (!u || !u.isActive) return null;
+  return { ...s, role: u.role };
+}
+
+export async function requireAdmin() {
+  const s = await activeSession();
   if (!s || (s.role !== "admin" && s.role !== "staff")) redirect("/admin/login");
   return s;
 }
 
 export async function requireCustomer() {
-  const s = await getSession();
+  const s = await activeSession();
   if (!s) redirect("/account/login");
   return s;
 }
