@@ -105,20 +105,20 @@ const SCENES = [
 ];
 
 /**
- * Realistic photo backdrops in public/scenes. When a photo exists it replaces the drawn
+ * Realistic photo backdrops bundled in public/scenes. When a photo exists it replaces the drawn
  * scene, with the anchor already on the empty spot in that photo (no manual adjusting). Re-running the
  * seed re-applies these spots; a scene the admin gave a different photo is left alone.
  */
 const SCENE_PHOTOS: Record<string, { anchorX: number; anchorY: number; baseScale: number }> = {
-  car: { anchorX: 0.5, anchorY: 0.56, baseScale: 0.3 },
-  temple: { anchorX: 0.5, anchorY: 0.785, baseScale: 0.3 },
-  desk: { anchorX: 0.5, anchorY: 0.62, baseScale: 0.32 },
-  shelf: { anchorX: 0.47, anchorY: 0.68, baseScale: 0.24 },
+  car: { anchorX: 0.47, anchorY: 0.39, baseScale: 0.28 },
+  temple: { anchorX: 0.475, anchorY: 0.765, baseScale: 0.28 },
+  desk: { anchorX: 0.5, anchorY: 0.62, baseScale: 0.3 },
+  shelf: { anchorX: 0.495, anchorY: 0.578, baseScale: 0.24 },
 };
-/** public/scenes/<key>.jpg, .jpeg, .png or .webp — whichever exists. */
+/** public/scenes/<key>.webp (bundled), or a .png/.jpg/.jpeg with the same name. */
 const scenePhoto = (key: string) => {
   const ph = SCENE_PHOTOS[key];
-  const ext = ph && ["jpg", "jpeg", "png", "webp"].find((e) => existsSync(join(process.cwd(), "public", "scenes", `${key}.${e}`)));
+  const ext = ph && ["webp", "png", "jpg", "jpeg"].find((e) => existsSync(join(process.cwd(), "public", "scenes", `${key}.${e}`)));
   return ext ? { ...ph, image: `/scenes/${key}.${ext}` } : null;
 };
 
