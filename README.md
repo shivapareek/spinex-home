@@ -7,7 +7,7 @@ Direct-to-customer store for **Spinex Enterprises** (car dashboard & home décor
 **Storefront**
 - Cinematic hero: temple-doors intro, rotating mandala, and a live "Darshan portal" that previews the idol on a car dashboard, in a home mandir or on a desk.
 - **Darshan Studio** (`/experience`, also on every product page): place any idol in 4 illustrated scenes, in admin-uploaded photo scenes, on the **live phone camera**, or on **your own photo**. Drag, pinch or scroll to resize, tilt, mirror, then download or share a high-res image. Idols are scaled from their real height (`heightCm`).
-  - **Realistic scenes:** put photos in `public/scenes/` named `car`, `temple`, `desk`, `shelf` (`.png`, `.jpg` or `.webp`) and run `npm run db:seed` (or `db:reset`). Each photo replaces that drawn scene everywhere. Fine-tune where the idol stands in Admin → Visualizer scenes.
+  - **Realistic scenes:** put photos in `public/scenes/` named `car`, `temple`, `desk`, `shelf` (`.png`, `.jpg` or `.webp`) and run `npm run db:seed` (or `db:reset`). Each photo replaces that drawn scene everywhere, with the idol already placed on the empty spot of the bundled photos. Only a different photo of your own needs its spot set once in Admin → Visualizer scenes.
 - **360° viewer**: real photographic 360° when spin frames are uploaded, a GLB 3D model with **AR** ("place in your space" on Android and iOS) when a model is uploaded, and a 3D tilt turntable preview otherwise.
 - Shop with deity, placement, category and price filters; ⌘K search; wishlist; cart drawer with a free-shipping meter.
 - Checkout with server-side pricing, stock reservation, coupons, **Cash on Delivery** and **Razorpay** (UPI, cards, netbanking) with signature verification.

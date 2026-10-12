@@ -106,13 +106,14 @@ const SCENES = [
 
 /**
  * Realistic photo backdrops in public/scenes. When a photo exists it replaces the drawn
- * scene, with the anchor on the empty spot in that photo. Scenes the admin already gave a photo keep it.
+ * scene, with the anchor already on the empty spot in that photo (no manual adjusting). Re-running the
+ * seed re-applies these spots; a scene the admin gave a different photo is left alone.
  */
 const SCENE_PHOTOS: Record<string, { anchorX: number; anchorY: number; baseScale: number }> = {
-  car: { anchorX: 0.5, anchorY: 0.58, baseScale: 0.3 },
-  temple: { anchorX: 0.5, anchorY: 0.75, baseScale: 0.28 },
+  car: { anchorX: 0.5, anchorY: 0.56, baseScale: 0.3 },
+  temple: { anchorX: 0.5, anchorY: 0.785, baseScale: 0.3 },
   desk: { anchorX: 0.5, anchorY: 0.62, baseScale: 0.32 },
-  shelf: { anchorX: 0.47, anchorY: 0.64, baseScale: 0.24 },
+  shelf: { anchorX: 0.47, anchorY: 0.68, baseScale: 0.24 },
 };
 /** public/scenes/<key>.jpg, .jpeg, .png or .webp — whichever exists. */
 const scenePhoto = (key: string) => {
@@ -161,7 +162,7 @@ async function main() {
     const row = db.select().from(scenes).where(eq(scenes.key, s.key)).get();
     const photo = scenePhoto(s.key);
     if (!row) db.insert(scenes).values({ ...s, ...photo }).run();
-    else if (photo && !row.image) db.update(scenes).set(photo).where(eq(scenes.key, s.key)).run();
+    else if (photo && (!row.image || row.image.startsWith("/scenes/"))) db.update(scenes).set(photo).where(eq(scenes.key, s.key)).run();
   }
   if (!db.select().from(coupons).where(eq(coupons.code, "WELCOME10")).get()) {
     db.insert(coupons).values({ code: "WELCOME10", description: "10% off your first order (up to ₹100)", type: "percent", value: 10, minOrder: P(199), maxDiscount: P(100), createdAt: now }).run();
