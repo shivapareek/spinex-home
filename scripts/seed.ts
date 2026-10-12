@@ -105,18 +105,20 @@ const SCENES = [
 ];
 
 /**
- * Realistic photo backdrops shipped in public/scenes. When a photo exists it replaces the drawn
+ * Realistic photo backdrops in public/scenes. When a photo exists it replaces the drawn
  * scene, with the anchor on the empty spot in that photo. Scenes the admin already gave a photo keep it.
  */
-const SCENE_PHOTOS: Record<string, { image: string; anchorX: number; anchorY: number; baseScale: number }> = {
-  car: { image: "/scenes/car.jpg", anchorX: 0.5, anchorY: 0.58, baseScale: 0.3 },
-  temple: { image: "/scenes/temple.jpg", anchorX: 0.5, anchorY: 0.75, baseScale: 0.28 },
-  desk: { image: "/scenes/desk.jpg", anchorX: 0.5, anchorY: 0.62, baseScale: 0.32 },
-  shelf: { image: "/scenes/shelf.jpg", anchorX: 0.47, anchorY: 0.64, baseScale: 0.24 },
+const SCENE_PHOTOS: Record<string, { anchorX: number; anchorY: number; baseScale: number }> = {
+  car: { anchorX: 0.5, anchorY: 0.58, baseScale: 0.3 },
+  temple: { anchorX: 0.5, anchorY: 0.75, baseScale: 0.28 },
+  desk: { anchorX: 0.5, anchorY: 0.62, baseScale: 0.32 },
+  shelf: { anchorX: 0.47, anchorY: 0.64, baseScale: 0.24 },
 };
+/** public/scenes/<key>.jpg, .jpeg, .png or .webp — whichever exists. */
 const scenePhoto = (key: string) => {
   const ph = SCENE_PHOTOS[key];
-  return ph && existsSync(join(process.cwd(), "public", ph.image)) ? ph : null;
+  const ext = ph && ["jpg", "jpeg", "png", "webp"].find((e) => existsSync(join(process.cwd(), "public", "scenes", `${key}.${e}`)));
+  return ext ? { ...ph, image: `/scenes/${key}.${ext}` } : null;
 };
 
 async function main() {
