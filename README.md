@@ -26,14 +26,21 @@ Direct-to-customer store for **Spinex Enterprises** (car dashboard & home décor
 
 ## Run locally
 
+Requirements: **Node.js 20.9 or newer** (22 LTS recommended), npm. Works on Windows, macOS and Linux.
+
 ```bash
 npm install
-cp .env.example .env      # set AUTH_SECRET and the admin password
 npm run db:seed           # creates data/spinex.db with the 16 catalogue products
 npm run dev               # http://localhost:3000  ·  admin: http://localhost:3000/admin
 ```
 
-Default admin (from `.env`): `admin@spinexhome.in` / `Spinex@2026`. **Change the password after your first login** (Admin → Team).
+Default admin: `admin@spinexhome.in` / `Spinex@2026`. **Change the password after your first login** (Admin → Team).
+
+Optional: copy `.env.example` to `.env` to set your own `AUTH_SECRET`, admin email/password and Razorpay keys. Without it, safe development defaults are used.
+
+Useful commands:
+- `npm run db:reset` deletes the local database and seeds it fresh.
+- `npm run build && npm start` runs the production build on http://localhost:3000.
 
 ## Production
 
