@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 type Deity = { deity: string; count: number; image: string };
 
 /** Asymmetric bento: one large tile + four smaller, each with its own tint. */
-export function DeityBento({ deities }: { deities: Deity[] }) {
+export function DeityBento({ deities, title }: { deities: Deity[]; title: string }) {
   const list = deities.slice(0, 5);
   const layout = [
     "col-span-2 row-span-2 bg-[#F3EDE4] md:col-span-2 md:row-span-2",
@@ -22,7 +22,7 @@ export function DeityBento({ deities }: { deities: Deity[] }) {
   return (
     <section className="container py-20 md:py-28">
       <div className="mb-10 flex items-end justify-between gap-6">
-        <h2 className="max-w-lg text-3xl font-bold md:text-[44px] md:leading-[1.05]">Find your deity.</h2>
+        <h2 className="max-w-lg text-3xl font-bold md:text-[44px] md:leading-[1.05]">{title}</h2>
         <Link href="/shop" className="group hidden items-center gap-1.5 text-sm font-semibold md:inline-flex">All idols <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></Link>
       </div>
       <div className="grid auto-rows-[180px] grid-cols-2 gap-3 md:auto-rows-[230px] md:grid-cols-4 md:gap-4">
@@ -53,13 +53,15 @@ export function DeityBento({ deities }: { deities: Deity[] }) {
 }
 
 /** A sentence with small idol images set inline between the words. */
-export function Statement({ idols }: { idols: HeroIdol[] }) {
-  const pick = (slug: string) => idols.find((d) => d.slug === slug) ?? idols[0];
+export function Statement({ idols, copy }: { idols: HeroIdol[]; copy: HomeSettings["statement"] }) {
+  const items = copy.items.filter((it) => it.word.trim());
+  if (!items.length && !copy.tail.trim()) return null;
   const Pic = ({ slug }: { slug: string }) => {
-    const d = pick(slug);
+    const d = idols.find((x) => x.slug === slug);
+    if (!d?.cutout) return null;
     return (
       <span className="mx-1 inline-grid h-[0.95em] w-[1.25em] translate-y-[0.08em] place-items-center overflow-hidden rounded-full bg-surface align-baseline md:mx-2">
-        {d?.cutout && <img src={d.cutout} alt={d.name} className="h-[85%] w-[85%] object-contain" />}
+        <img src={d.cutout} alt={d.name} className="h-[85%] w-[85%] object-contain" />
       </span>
     );
   };
@@ -67,7 +69,14 @@ export function Statement({ idols }: { idols: HeroIdol[] }) {
     <section className="container py-20 md:py-32">
       <Reveal>
         <p className="font-display text-[34px] font-bold leading-[1.12] tracking-[-0.035em] text-ink/90 md:text-[64px] md:leading-[1.08]" style={{ fontVariationSettings: '"wdth" 90' }}>
-          Ganesh <Pic slug="m1-ganesh-ji" /> for new beginnings, Hanuman <Pic slug="hanuman-ji-kitab" /> for strength, Krishna <Pic slug="krishna-ji-flute" /> for joy, and Mahadev <Pic slug="bhari-adiyogi" /> for calm. <span className="text-ink/30">Every idol finished with care and packed to arrive safely.</span>
+          {items.map((it, i) => (
+            <span key={i}>
+              {i > 0 && (i === items.length - 1 ? ", and " : ", ")}
+              {it.word} <Pic slug={it.productSlug} /> {it.phrase}
+            </span>
+          ))}
+          {items.length > 0 && ". "}
+          {copy.tail && <span className="text-ink/30">{copy.tail}</span>}
         </p>
       </Reveal>
     </section>
@@ -75,31 +84,30 @@ export function Statement({ idols }: { idols: HeroIdol[] }) {
 }
 
 /** Full-bleed scene with a floating card: invites people to try the visualizer. */
-export function TryBanner({ copy, idol, scene }: { copy: HomeSettings["dashboard"]; idol: HeroIdol | null; scene: SceneData | undefined }) {
+export function TryBanner({ copy, idol, scene }: { copy: HomeSettings["tryBanner"]; idol: HeroIdol | null; scene: SceneData | undefined }) {
   if (!idol || !scene) return null;
   return (
     <section className="container py-10 md:py-16">
       <div className="relative overflow-hidden rounded-[28px]">
         <IdolInScene scene={scene} idol={idol} className="aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]" scale={1.5} />
         <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-white p-6 sm:inset-x-auto sm:bottom-6 sm:left-6 sm:max-w-sm md:bottom-10 md:left-10 md:p-8">
-          <h2 className="text-2xl font-bold leading-tight md:text-[32px]">Not sure how it looks? Try it on your dashboard.</h2>
-          <p className="mt-3 text-[15px] leading-6 text-muted">Open your phone camera, place any idol on your dash, and see the real size before you order.</p>
+          <h2 className="text-2xl font-bold leading-tight md:text-[32px]">{copy.title}</h2>
+          {copy.body && <p className="mt-3 text-[15px] leading-6 text-muted">{copy.body}</p>}
           <div className="mt-6 flex flex-wrap gap-2">
             <Link href="/experience?scene=car" className="btn-accent"><Camera className="h-4 w-4" /> Try in your space</Link>
             <Link href="/shop?placement=car" className="btn-outline">Car idols</Link>
           </div>
         </div>
-        <span className="sr-only">{copy.title}</span>
       </div>
     </section>
   );
 }
 
-export function Testimonials({ items }: { items: Testimonial[] }) {
+export function Testimonials({ items, title }: { items: Testimonial[]; title: string }) {
   if (!items.length) return null;
   return (
     <section className="container py-20 md:py-28">
-      <h2 className="mb-10 text-3xl font-bold md:text-[44px]">What customers say.</h2>
+      <h2 className="mb-10 text-3xl font-bold md:text-[44px]">{title}</h2>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {items.map((t) => (
           <figure key={t.id} className="rounded-2xl bg-surface p-6">
@@ -153,13 +161,13 @@ export function Bulk({ copy }: { copy: HomeSettings["bulk"] }) {
   );
 }
 
-export function Faqs({ faqs }: { faqs: Faq[] }) {
+export function Faqs({ faqs, title = "Good to know." }: { faqs: Faq[]; title?: string }) {
   if (!faqs.length) return null;
   return (
     <section className="container py-20 md:py-28">
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <h2 className="text-3xl font-bold md:text-[44px] md:leading-[1.05]">Good to know.</h2>
+          <h2 className="text-3xl font-bold md:text-[44px] md:leading-[1.05]">{title}</h2>
           <p className="mt-3 text-[15px] text-muted">More questions? <Link href="/contact" className="font-semibold text-ink underline underline-offset-4">Contact us</Link></p>
         </div>
         <div className="space-y-2">

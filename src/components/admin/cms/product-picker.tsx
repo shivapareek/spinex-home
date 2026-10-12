@@ -8,7 +8,7 @@ import { inputClass } from "../ui";
 export type PickerProduct = { slug: string; name: string; image: string | null; isActive: boolean };
 
 /** Ordered multi-select of products, stored as a JSON array of slugs in a hidden input. */
-export function ProductPicker({ name, products, defaultValue = [], max = 12 }: { name: string; products: PickerProduct[]; defaultValue?: string[]; max?: number }) {
+export function ProductPicker({ name, products, defaultValue = [], max = 12, emptyText = "No products selected yet." }: { name: string; products: PickerProduct[]; defaultValue?: string[]; max?: number; emptyText?: string }) {
   const bySlug = useMemo(() => new Map(products.map((p) => [p.slug, p])), [products]);
   const [selected, setSelected] = useState<string[]>(defaultValue);
   const [q, setQ] = useState("");
@@ -28,7 +28,7 @@ export function ProductPicker({ name, products, defaultValue = [], max = 12 }: {
     <div>
       <input type="hidden" name={name} value={JSON.stringify(selected)} />
       {selected.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-ink/15 px-4 py-6 text-center text-xs text-ink/45">No products selected — add a few idols for the hero carousel.</p>
+        <p className="rounded-2xl border border-dashed border-ink/15 px-4 py-6 text-center text-xs text-ink/45">{emptyText}</p>
       ) : (
         <ol className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {selected.map((slug, i) => {

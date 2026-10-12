@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * 360° product viewer.
  *  - spinFrames (≥ 8): true photographic 360° — drag to scrub frames, with inertia & auto-spin
  *  - modelGlb: interactive 3D model (orbit, zoom, AR)
- *  - otherwise: "Darshan 3D" — depth-tilt of the cut-out on a rotating gilded turntable
+ *  - otherwise: 3D preview, a depth-tilt of the cut-out on a rotating turntable
  */
 export function Viewer360({ frames, glb, usdz, cutout, name }: { frames: string[]; glb?: string | null; usdz?: string | null; cutout: string | null; name: string }) {
   if (frames.length >= 8) return <FrameSpinner frames={frames} name={name} />;

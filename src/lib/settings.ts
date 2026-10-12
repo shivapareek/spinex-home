@@ -31,41 +31,33 @@ export type CommerceSettings = {
 };
 
 export type HomeSection = { key: HomeSectionKey; enabled: boolean };
-export type HomeSectionKey =
-  | "marquee"
-  | "deities"
-  | "experience"
-  | "bestsellers"
-  | "dashboard"
-  | "craft"
-  | "testimonials"
-  | "marketplaces"
-  | "bulk"
-  | "faq"
-  | "newsletter";
+/** Homepage blocks below the hero, in the order the gallery layout uses by default. */
+export const HOME_SECTION_KEYS = ["spaces", "collection", "statement", "deities", "tryBanner", "testimonials", "marketplaces", "bulk", "faq"] as const;
+export type HomeSectionKey = (typeof HOME_SECTION_KEYS)[number];
+export type SpaceKind = "car" | "temple" | "desk" | "shelf";
 
 export type HomeSettings = {
   hero: {
-    eyebrow: string;
     title: string;
     titleAccent: string;
-    subtitle: string;
-    shloka: string;
-    shlokaMeaning: string;
     primaryCta: { label: string; href: string };
     secondaryCta: { label: string; href: string };
-    /** Product slugs shown in the hero darshan carousel */
+    /** Idols that rotate on the hero pedestal, in order */
     featured: string[];
-    showDoorsIntro: boolean;
   };
   sections: HomeSection[];
-  marquee: string[];
-  experience: { eyebrow: string; title: string; subtitle: string };
-  dashboard: { eyebrow: string; title: string; body: string; productSlug: string };
-  craft: { eyebrow: string; title: string; body: string; stats: { value: string; label: string }[] };
-  marketplaces: { title: string; items: { name: string; rating: string; note: string; url: string }[] };
+  /** "Where will your idol live?" — big words + live scene */
+  spaces: { title: string; items: Record<SpaceKind, { line: string; productSlug: string }> };
+  /** Sideways-scrolling collection; empty productSlugs = automatic (featured first) */
+  collection: { title: string; productSlugs: string[] };
+  /** Sentence with small idol images between the words */
+  statement: { items: { word: string; productSlug: string; phrase: string }[]; tail: string };
+  deities: { title: string };
+  tryBanner: { title: string; body: string; productSlug: string };
+  testimonials: { title: string };
+  marketplaces: { title: string; items: { name: string; url: string }[] };
   bulk: { title: string; body: string };
-  newsletter: { title: string; body: string };
+  faq: { title: string };
 };
 
 export const DEFAULT_SITE: SiteSettings = {
@@ -107,63 +99,67 @@ export const DEFAULT_COMMERCE: CommerceSettings = {
 
 export const DEFAULT_HOME: HomeSettings = {
   hero: {
-    eyebrow: "New: preview any idol in your own space",
     title: "God idols for your",
     titleAccent: "car, mandir and desk.",
-    subtitle:
-      "Beautifully finished god idols, made to sit on your car dashboard, in your home mandir or on your work desk. See exactly how they look before you buy.",
-    shloka: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ",
-    shlokaMeaning: "O Lord of the curved trunk, radiant as a million suns",
     primaryCta: { label: "Shop all idols", href: "/shop" },
     secondaryCta: { label: "Try in your space", href: "/experience" },
     featured: ["m1-ganesh-ji", "bhari-adiyogi", "krishna-ji-flute", "hanuman-ji-kitab", "trishul-damru"],
-    showDoorsIntro: true,
   },
-  sections: (
-    ["experience", "bestsellers", "craft", "deities", "dashboard", "testimonials", "marketplaces", "bulk", "faq", "marquee", "newsletter"] as HomeSectionKey[]
-  ).map((key) => ({ key, enabled: key !== "marquee" && key !== "newsletter" })),
-  marquee: ["Ganesh Ji", "Mahadev", "Hanuman Ji", "Radha Krishna", "Khatu Shyam", "Lakshmi Ji", "Buddha", "Kamdhenu"],
-  experience: {
-    eyebrow: "Try before you buy",
-    title: "See it in your space before it arrives.",
-    subtitle: "Pick an idol, choose a car dashboard, home mandir or desk — or use your phone camera — and see the real size and look.",
+  sections: HOME_SECTION_KEYS.map((key) => ({ key, enabled: true })),
+  spaces: {
+    title: "Where will your idol live?",
+    items: {
+      car: { line: "Small, steady idols that ride along on every drive.", productSlug: "krishna-ji-flute" },
+      temple: { line: "Radiant forms for your pooja ghar and daily aarti.", productSlug: "hanuman-ji-kitab" },
+      desk: { line: "Calm, meditative pieces for focus at work.", productSlug: "bhari-adiyogi" },
+      shelf: { line: "Statement idols for the living room shelf.", productSlug: "radha-krishna-cow" },
+    },
   },
-  dashboard: {
-    eyebrow: "Car dashboard idols",
-    title: "Compact. Stable. Made to ride with you.",
-    body:
-      "Our dashboard idols are sized to sit neatly on the dash without blocking your view, with flat, stable bases built for daily drives.",
+  collection: { title: "The collection, chosen by our customers.", productSlugs: [] },
+  statement: {
+    items: [
+      { word: "Ganesh", productSlug: "m1-ganesh-ji", phrase: "for new beginnings" },
+      { word: "Hanuman", productSlug: "hanuman-ji-kitab", phrase: "for strength" },
+      { word: "Krishna", productSlug: "krishna-ji-flute", phrase: "for joy" },
+      { word: "Mahadev", productSlug: "bhari-adiyogi", phrase: "for calm" },
+    ],
+    tail: "Every idol finished with care and packed to arrive safely.",
+  },
+  deities: { title: "Find your deity." },
+  tryBanner: {
+    title: "Not sure how it looks? Try it on your dashboard.",
+    body: "Open your phone camera, place any idol on your dash, and see the real size before you order.",
     productSlug: "krishna-ji-flute",
   },
-  craft: {
-    eyebrow: "Why Spinex",
-    title: "Made with care, packed with care.",
-    body:
-      "Every Spinex idol is finished with care — fine painted details, gilded accents and a sealed surface — then checked and packed by our team before it leaves for your home.",
-    stats: [
-      { value: "16", label: "Signature designs" },
-      { value: "4", label: "Spaces to place them" },
-      { value: "100%", label: "GST-invoiced orders" },
-      { value: "COD", label: "Available pan-India" },
-    ],
-  },
+  testimonials: { title: "What customers say." },
   marketplaces: {
     title: "Also available on",
     items: [
-      { name: "Amazon", rating: "", note: "Spinex Home store", url: "" },
-      { name: "Flipkart", rating: "", note: "Spinex Home store", url: "" },
-      { name: "Meesho", rating: "", note: "Spinex Home store", url: "" },
+      { name: "Amazon", url: "" },
+      { name: "Flipkart", url: "" },
+      { name: "Meesho", url: "" },
     ],
   },
   bulk: {
     title: "Gifting & wholesale, made simple.",
-    body: "Corporate Diwali gifts, temple shops, car accessory stores — get catalogue pricing on bulk orders with GST invoice.",
+    body: "Corporate Diwali gifts, temple shops, car accessory stores. Get catalogue pricing on bulk orders with a GST invoice.",
   },
-  newsletter: {
-    title: "Get festive offers first",
-    body: "New idols and festival offers — once a month, never spam.",
-  },
+  faq: { title: "Good to know." },
 };
+
+/** Keep each known section exactly once, in saved order; unknown keys dropped, new ones appended (on). */
+export function normalizeSections(saved: { key: string; enabled: boolean }[] | undefined): HomeSection[] {
+  const seen = new Set<string>();
+  const out: HomeSection[] = [];
+  for (const s of saved ?? []) {
+    if ((HOME_SECTION_KEYS as readonly string[]).includes(s.key) && !seen.has(s.key)) {
+      seen.add(s.key);
+      out.push({ key: s.key as HomeSectionKey, enabled: !!s.enabled });
+    }
+  }
+  for (const k of HOME_SECTION_KEYS) if (!seen.has(k)) out.push({ key: k, enabled: true });
+  return out;
+}
 
 const DEFAULTS = { site: DEFAULT_SITE, commerce: DEFAULT_COMMERCE, home: DEFAULT_HOME } as const;
 type Keys = keyof typeof DEFAULTS;
@@ -181,7 +177,9 @@ function merge<T>(base: T, over: unknown): T {
 
 export function getSetting<K extends Keys>(key: K): ValueOf<K> {
   const row = db.select().from(settings).where(eq(settings.key, key)).get();
-  return merge(DEFAULTS[key] as ValueOf<K>, row?.value);
+  const value = merge(DEFAULTS[key] as ValueOf<K>, row?.value);
+  if (key === "home") (value as HomeSettings).sections = normalizeSections((value as HomeSettings).sections);
+  return value;
 }
 
 export function saveSetting<K extends Keys>(key: K, value: ValueOf<K>) {

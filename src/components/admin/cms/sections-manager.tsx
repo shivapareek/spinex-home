@@ -7,17 +7,15 @@ import { cn } from "@/lib/utils";
 type Section = { key: string; enabled: boolean };
 
 export const SECTION_LABELS: Record<string, { label: string; hint: string }> = {
-  marquee: { label: "Deity marquee", hint: "Scrolling strip of deity names" },
-  deities: { label: "Shop by deity", hint: "Category / deity tiles" },
-  experience: { label: "Darshan Studio", hint: "Interactive visualizer teaser" },
-  bestsellers: { label: "Bestsellers", hint: "Products marked as bestseller" },
-  dashboard: { label: "Made for the road", hint: "Dashboard idol spotlight" },
-  craft: { label: "The craft", hint: "Story + stats" },
-  testimonials: { label: "Testimonials", hint: "Active testimonials" },
-  marketplaces: { label: "Marketplaces", hint: "Amazon / Flipkart / Meesho trust strip" },
-  bulk: { label: "Bulk & gifting", hint: "Wholesale enquiry form" },
-  faq: { label: "FAQs", hint: "Active FAQs" },
-  newsletter: { label: "Newsletter", hint: "Email sign-up" },
+  spaces: { label: "Where will your idol live?", hint: "Car / Mandir / Desk / Home words with a live scene" },
+  collection: { label: "Collection", hint: "Products that slide sideways as you scroll" },
+  statement: { label: "Statement", hint: "Big sentence with small idol images" },
+  deities: { label: "Find your deity", hint: "Deity tiles" },
+  tryBanner: { label: "Try in your space banner", hint: "Car dashboard scene with a call to action" },
+  testimonials: { label: "Testimonials", hint: "Shows only when you have active testimonials" },
+  marketplaces: { label: "Marketplaces", hint: "Amazon / Flipkart / Meesho strip" },
+  bulk: { label: "Bulk & gifting", hint: "Saffron block for wholesale buyers" },
+  faq: { label: "FAQs", hint: "Questions from Admin → FAQs" },
 };
 
 /** Reorder + enable/disable homepage sections. Serialised as JSON array of {key, enabled}. */

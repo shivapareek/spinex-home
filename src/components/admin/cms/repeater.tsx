@@ -11,7 +11,9 @@ export type RepeaterField = {
   placeholder?: string;
   /** Tailwind col-span class on the sm+ grid (grid is 12 columns). */
   span?: string;
-  type?: "text" | "url" | "number";
+  type?: "text" | "url" | "number" | "select";
+  /** Options for type "select" */
+  options?: { value: string; label: string }[];
 };
 
 type Row = Record<string, string>;
@@ -74,13 +76,20 @@ export function Repeater({
             {fields.map((f) => (
               <label key={f.key} className={cn("block", f.span ?? "sm:col-span-12")}>
                 <span className="mb-1 block text-[11px] font-medium text-ink/55">{f.label}</span>
-                <input
-                  type={f.type ?? "text"}
-                  value={r[f.key] ?? ""}
-                  placeholder={f.placeholder}
-                  onChange={(e) => update(i, f.key, e.target.value)}
-                  className={cn(inputClass, "bg-white py-2")}
-                />
+                {f.type === "select" ? (
+                  <select value={r[f.key] ?? ""} onChange={(e) => update(i, f.key, e.target.value)} className={cn(inputClass, "bg-white py-2")}>
+                    <option value="">{f.placeholder ?? "None"}</option>
+                    {f.options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                ) : (
+                  <input
+                    type={f.type ?? "text"}
+                    value={r[f.key] ?? ""}
+                    placeholder={f.placeholder}
+                    onChange={(e) => update(i, f.key, e.target.value)}
+                    className={cn(inputClass, "bg-white py-2")}
+                  />
+                )}
               </label>
             ))}
           </div>

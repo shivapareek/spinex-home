@@ -6,36 +6,33 @@ import { z } from "zod";
 import { db } from "@/db";
 import { settings } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth";
-import { DEFAULT_HOME, getSetting, saveSetting, type HomeSectionKey, type HomeSettings } from "@/lib/settings";
-
-const SECTION_KEYS = DEFAULT_HOME.sections.map((s) => s.key) as [HomeSectionKey, ...HomeSectionKey[]];
+import { HOME_SECTION_KEYS, getSetting, normalizeSections, saveSetting, type HomeSettings } from "@/lib/settings";
 
 const str = z.string().trim();
 const cta = z.object({ label: str, href: str });
+const slug = str.max(120);
+const space = z.object({ line: str.max(140), productSlug: slug });
 const homeSchema = z.object({
   hero: z.object({
-    eyebrow: str,
-    title: str.min(1, "Hero title is required"),
-    titleAccent: str,
-    subtitle: str,
-    shloka: str,
-    shlokaMeaning: str,
+    title: str.min(1, "Hero heading is required").max(80),
+    titleAccent: str.max(80),
     primaryCta: cta,
     secondaryCta: cta,
-    featured: z.array(str.min(1)).max(24),
-    showDoorsIntro: z.boolean(),
+    featured: z.array(slug.min(1)).min(1, "Pick at least one idol for the hero").max(12),
   }),
-  sections: z.array(z.object({ key: z.enum(SECTION_KEYS), enabled: z.boolean() })),
-  marquee: z.array(str.min(1)).max(60),
-  experience: z.object({ eyebrow: str, title: str, subtitle: str }),
-  dashboard: z.object({ eyebrow: str, title: str, body: str, productSlug: str }),
-  craft: z.object({ eyebrow: str, title: str, body: str, stats: z.array(z.object({ value: str, label: str })).max(8) }),
-  marketplaces: z.object({
-    title: str,
-    items: z.array(z.object({ name: str.min(1, "Each marketplace needs a name"), rating: str, note: str, url: str })).max(8),
+  sections: z.array(z.object({ key: z.enum(HOME_SECTION_KEYS), enabled: z.boolean() })),
+  spaces: z.object({ title: str.max(80), items: z.object({ car: space, temple: space, desk: space, shelf: space }) }),
+  collection: z.object({ title: str.max(80), productSlugs: z.array(slug.min(1)).max(16) }),
+  statement: z.object({
+    items: z.array(z.object({ word: str.min(1, "Each statement part needs a word").max(30), productSlug: slug, phrase: str.max(60) })).max(6),
+    tail: str.max(160),
   }),
-  bulk: z.object({ title: str, body: str }),
-  newsletter: z.object({ title: str, body: str }),
+  deities: z.object({ title: str.max(80) }),
+  tryBanner: z.object({ title: str.max(100), body: str.max(240), productSlug: slug }),
+  testimonials: z.object({ title: str.max(80) }),
+  marketplaces: z.object({ title: str.max(60), items: z.array(z.object({ name: str.min(1, "Each marketplace needs a name").max(30), url: str.max(300) })).max(6) }),
+  bulk: z.object({ title: str.max(100), body: str.max(300) }),
+  faq: z.object({ title: str.max(80) }),
 });
 
 function json<T>(fd: FormData, name: string, fallback: T): T {
@@ -50,44 +47,32 @@ function json<T>(fd: FormData, name: string, fallback: T): T {
 export async function saveHome(fd: FormData) {
   await requireAdmin();
   const s = (name: string) => String(fd.get(name) ?? "");
-
-  // Keep every known section exactly once, in the submitted order; append any missing ones (disabled).
-  const submitted = json<{ key: string; enabled: boolean }[]>(fd, "sections", []);
-  const seen = new Set<string>();
-  const sections = submitted.filter((x) => SECTION_KEYS.includes(x.key as HomeSectionKey) && !seen.has(x.key) && seen.add(x.key));
-  for (const k of SECTION_KEYS) if (!seen.has(k)) sections.push({ key: k, enabled: false });
+  const space = (k: string) => ({ line: s(`spaces.${k}.line`), productSlug: s(`spaces.${k}.productSlug`) });
 
   const raw = {
     hero: {
-      eyebrow: s("hero.eyebrow"),
       title: s("hero.title"),
       titleAccent: s("hero.titleAccent"),
-      subtitle: s("hero.subtitle"),
-      shloka: s("hero.shloka"),
-      shlokaMeaning: s("hero.shlokaMeaning"),
       primaryCta: { label: s("hero.primaryCta.label"), href: s("hero.primaryCta.href") },
       secondaryCta: { label: s("hero.secondaryCta.label"), href: s("hero.secondaryCta.href") },
       featured: json<string[]>(fd, "hero.featured", []),
-      showDoorsIntro: fd.get("hero.showDoorsIntro") === "on",
     },
-    sections,
-    marquee: json<string[]>(fd, "marquee", []),
-    experience: { eyebrow: s("experience.eyebrow"), title: s("experience.title"), subtitle: s("experience.subtitle") },
-    dashboard: { eyebrow: s("dashboard.eyebrow"), title: s("dashboard.title"), body: s("dashboard.body"), productSlug: s("dashboard.productSlug") },
-    craft: {
-      eyebrow: s("craft.eyebrow"),
-      title: s("craft.title"),
-      body: s("craft.body"),
-      stats: json<{ value: string; label: string }[]>(fd, "craft.stats", []).filter((x) => x.value?.trim() || x.label?.trim()),
+    sections: normalizeSections(json<{ key: string; enabled: boolean }[]>(fd, "sections", [])),
+    spaces: { title: s("spaces.title"), items: { car: space("car"), temple: space("temple"), desk: space("desk"), shelf: space("shelf") } },
+    collection: { title: s("collection.title"), productSlugs: json<string[]>(fd, "collection.productSlugs", []) },
+    statement: {
+      items: json<{ word: string; productSlug: string; phrase: string }[]>(fd, "statement.items", []).filter((x) => x.word?.trim() || x.phrase?.trim()),
+      tail: s("statement.tail"),
     },
+    deities: { title: s("deities.title") },
+    tryBanner: { title: s("tryBanner.title"), body: s("tryBanner.body"), productSlug: s("tryBanner.productSlug") },
+    testimonials: { title: s("testimonials.title") },
     marketplaces: {
       title: s("marketplaces.title"),
-      items: json<{ name: string; rating: string; note: string; url: string }[]>(fd, "marketplaces.items", []).filter(
-        (x) => x.name?.trim() || x.url?.trim() || x.note?.trim(),
-      ),
+      items: json<{ name: string; url: string }[]>(fd, "marketplaces.items", []).filter((x) => x.name?.trim() || x.url?.trim()),
     },
     bulk: { title: s("bulk.title"), body: s("bulk.body") },
-    newsletter: { title: s("newsletter.title"), body: s("newsletter.body") },
+    faq: { title: s("faq.title") },
   };
 
   const parsed = homeSchema.safeParse(raw);

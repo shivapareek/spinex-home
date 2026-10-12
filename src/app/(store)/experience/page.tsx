@@ -3,7 +3,7 @@ import { listScenes } from "@/lib/scenes";
 import { Studio } from "@/components/visualizer/studio";
 
 export const metadata = {
-  title: "Darshan Studio — see idols in your car, mandir & desk",
+  title: "Try in your space: see idols in your car, mandir and desk",
   description: "Place any Spinex idol on a car dashboard, in a home mandir or on your desk — or use your own camera — before you buy.",
 };
 
