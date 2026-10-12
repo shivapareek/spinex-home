@@ -8,7 +8,7 @@ import {
   Car, HandsPraying, Desktop, Couch, Camera, ImageSquare, DownloadSimple, ShareNetwork, ArrowCounterClockwise,
   FlipHorizontal, MagnifyingGlassPlus, ArrowsClockwise, Cube, Hand, X, ShoppingBagOpen, Mountains,
 } from "@phosphor-icons/react";
-import { IdolLayer, PhotoFrame, SceneBackground, idolHeightFrac, type SceneData } from "./idol-in-scene";
+import { IdolLayer, PhotoFrame, SceneBackground, idolHeightFrac, photoRect, sceneFocus, type SceneData } from "./idol-in-scene";
 import { SCENE_LOOK } from "./scenes";
 import { ModelViewer } from "./model-viewer";
 import { useCart } from "@/lib/client/cart";
@@ -67,9 +67,11 @@ export function Studio({
     if (mode.type === "upload") return { ...FREE_SPACE, image: mode.url };
     return FREE_SPACE;
   }, [mode, scenes]);
-  const look = SCENE_LOOK[mode.type === "camera" ? "camera" : mode.type === "upload" ? "photo" : scene.kind];
+  const look = SCENE_LOOK[mode.type === "camera" ? "camera" : scene.image ? "photo" : scene.kind];
   const heightPct = idolHeightFrac(scene, idol, scale) * 100;
-  const photo = mode.type !== "camera" && scene.kind === "photo" && scene.image ? scene.image : null;
+  const photo = mode.type !== "camera" && scene.image ? scene.image : null;
+  // A visitor's own photo is shown whole; scene photos fill the stage.
+  const fit = mode.type === "upload" ? "contain" : "cover";
 
   const reset = useCallback(() => {
     setPos({ dx: 0, dy: 0 });
@@ -175,11 +177,12 @@ export function Studio({
         drawCover(ctx, video.current, video.current.videoWidth, video.current.videoHeight, W, H);
       } else if (photo) {
         const img = await loadImg(photo);
-        ctx.globalAlpha = 0.5;
-        drawCover(ctx, img, img.naturalWidth, img.naturalHeight, W, H);
-        ctx.globalAlpha = 1;
-        const k = Math.min(W / img.naturalWidth, H / img.naturalHeight);
-        frame = { x: (W - img.naturalWidth * k) / 2, y: (H - img.naturalHeight * k) / 2, w: img.naturalWidth * k, h: img.naturalHeight * k };
+        if (fit === "contain") {
+          ctx.globalAlpha = 0.5;
+          drawCover(ctx, img, img.naturalWidth, img.naturalHeight, W, H);
+          ctx.globalAlpha = 1;
+        }
+        frame = photoRect(W, H, img.naturalWidth, img.naturalHeight, fit, sceneFocus(scene));
         ctx.drawImage(img, frame.x, frame.y, frame.w, frame.h);
       } else {
         const svg = el.querySelector("svg[data-scene]") as SVGSVGElement | null ?? (el.querySelector("svg") as SVGSVGElement | null);
@@ -319,7 +322,7 @@ export function Studio({
               </motion.div>
             </AnimatePresence>
 
-            {photo ? <PhotoFrame src={photo}>{idolNode}</PhotoFrame> : idolNode}
+            {photo ? <PhotoFrame src={photo} fit={fit} focus={sceneFocus(scene)}>{idolNode}</PhotoFrame> : idolNode}
 
             <AnimatePresence>
               {hint && (

@@ -40,13 +40,13 @@ export default async function SceneEdit({ params }: { params: Promise<{ id: stri
         </div>
         <div className="space-y-6">
           <Card title="Scene type">
-            <Field label="Kind" hint="Illustrated scenes are drawn in code; the photo below is optional for them.">
+            <Field label="Kind" hint="Car, mandir, desk and living room use a drawn scene until you add a photo below — a real photo replaces the drawing everywhere.">
               <Select name="kind" defaultValue={s?.kind ?? "photo"}>
                 {KINDS.map((k) => <option key={k.value} value={k.value}>{k.label}</option>)}
               </Select>
             </Field>
           </Card>
-          <Card title="Background photo" description="Landscape, at least 1600px wide. Leave room around the anchor.">
+          <Card title="Background photo" description="Landscape, at least 1600px wide, with an empty spot where the idol should stand. Then drag the anchor onto that spot.">
             <MediaInput name="image" defaultValue={s?.image} folder="scenes" aspect="wide" label="Upload scene photo" />
           </Card>
           <Card title="Visibility">

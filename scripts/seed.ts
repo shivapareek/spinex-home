@@ -5,6 +5,8 @@
  *   npm run db:reset       → wipe DB and seed fresh
  */
 import bcrypt from "bcryptjs";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { eq } from "drizzle-orm";
 import { db } from "../src/db";
 import { categories, coupons, faqs, pages, products, scenes, users } from "../src/db/schema";
@@ -102,6 +104,21 @@ const SCENES = [
   { key: "shelf", name: "Living Room", tagline: "The heart of the home", kind: "shelf" as const, sortOrder: 4, anchorX: 0.5, anchorY: 0.6, baseScale: 0.26 },
 ];
 
+/**
+ * Realistic photo backdrops shipped in public/scenes. When a photo exists it replaces the drawn
+ * scene, with the anchor on the empty spot in that photo. Scenes the admin already gave a photo keep it.
+ */
+const SCENE_PHOTOS: Record<string, { image: string; anchorX: number; anchorY: number; baseScale: number }> = {
+  car: { image: "/scenes/car.jpg", anchorX: 0.5, anchorY: 0.58, baseScale: 0.3 },
+  temple: { image: "/scenes/temple.jpg", anchorX: 0.5, anchorY: 0.75, baseScale: 0.28 },
+  desk: { image: "/scenes/desk.jpg", anchorX: 0.5, anchorY: 0.62, baseScale: 0.32 },
+  shelf: { image: "/scenes/shelf.jpg", anchorX: 0.47, anchorY: 0.64, baseScale: 0.24 },
+};
+const scenePhoto = (key: string) => {
+  const ph = SCENE_PHOTOS[key];
+  return ph && existsSync(join(process.cwd(), "public", ph.image)) ? ph : null;
+};
+
 async function main() {
   const now = new Date().toISOString();
 
@@ -139,7 +156,10 @@ async function main() {
   }
   if (!db.select().from(faqs).get()) FAQS.forEach((f, i) => db.insert(faqs).values({ question: f.q, answer: f.a, sortOrder: i }).run());
   for (const s of SCENES) {
-    if (!db.select().from(scenes).where(eq(scenes.key, s.key)).get()) db.insert(scenes).values(s).run();
+    const row = db.select().from(scenes).where(eq(scenes.key, s.key)).get();
+    const photo = scenePhoto(s.key);
+    if (!row) db.insert(scenes).values({ ...s, ...photo }).run();
+    else if (photo && !row.image) db.update(scenes).set(photo).where(eq(scenes.key, s.key)).run();
   }
   if (!db.select().from(coupons).where(eq(coupons.code, "WELCOME10")).get()) {
     db.insert(coupons).values({ code: "WELCOME10", description: "10% off your first order (up to ₹100)", type: "percent", value: 10, minOrder: P(199), maxDiscount: P(100), createdAt: now }).run();

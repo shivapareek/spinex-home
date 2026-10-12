@@ -43,13 +43,13 @@ export function IdolInScene({
   scale?: number;
   children?: React.ReactNode;
 }) {
-  const look = SCENE_LOOK[scene.kind];
+  const look = SCENE_LOOK[scene.image ? "photo" : scene.kind];
   const h = idolHeightFrac(scene, idol, scale) * 100;
   const layer = <IdolLayer src={idol.cutout ?? idol.image ?? ""} alt={idol.name} x={scene.anchorX * 100} y={scene.anchorY * 100} heightPct={h} look={look} />;
   return (
     <div className={cn("relative overflow-hidden bg-ink", className)}>
-      {scene.kind === "photo" && scene.image ? (
-        <PhotoFrame src={scene.image}>{layer}</PhotoFrame>
+      {scene.image ? (
+        <PhotoFrame src={scene.image} focus={sceneFocus(scene)}>{layer}</PhotoFrame>
       ) : (
         <>
           <SceneBackground scene={scene} animated={animated} />
@@ -61,11 +61,31 @@ export function IdolInScene({
   );
 }
 
+export type Fit = "cover" | "contain";
+type Pt = { x: number; y: number };
+
+/** Where a photo should stay in view when cropped: just above the anchor, where the idol stands. */
+export const sceneFocus = (s: Pick<SceneData, "anchorX" | "anchorY">): Pt => ({ x: s.anchorX, y: Math.max(0, s.anchorY - 0.15) });
+
 /**
- * Photo scenes: anchors are fractions of the photo itself, so the photo is shown whole
- * (contain) over a blurred fill, and children are positioned inside the photo's own box.
+ * Box of a natW×natH photo inside a boxW×boxH container. "cover" fills the box and crops
+ * around `focus` (fractions of the photo); "contain" shows the whole photo centred.
  */
-export function PhotoFrame({ src, children }: { src: string; children?: React.ReactNode }) {
+export function photoRect(boxW: number, boxH: number, natW: number, natH: number, fit: Fit, focus: Pt = { x: 0.5, y: 0.5 }) {
+  const s = fit === "cover" ? Math.max(boxW / natW, boxH / natH) : Math.min(boxW / natW, boxH / natH);
+  const w = natW * s;
+  const h = natH * s;
+  if (fit === "contain") return { x: (boxW - w) / 2, y: (boxH - h) / 2, w, h };
+  const clamp = (v: number, min: number) => Math.min(0, Math.max(min, v));
+  return { x: clamp(boxW / 2 - focus.x * w, boxW - w), y: clamp(boxH / 2 - focus.y * h, boxH - h), w, h };
+}
+
+/**
+ * Photo scenes: anchors are fractions of the photo itself, so children are positioned inside
+ * the photo's own box. Scene photos fill the frame (cover, cropped around the idol); a visitor's
+ * own photo is shown whole (contain) over a blurred fill.
+ */
+export function PhotoFrame({ src, children, fit = "cover", focus }: { src: string; children?: React.ReactNode; fit?: Fit; focus?: Pt }) {
   const box = useRef<HTMLDivElement>(null);
   const [nat, setNat] = useState<{ w: number; h: number } | null>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
@@ -78,14 +98,12 @@ export function PhotoFrame({ src, children }: { src: string; children?: React.Re
   }, []);
   let frame: React.CSSProperties = { inset: 0 };
   if (nat && size) {
-    const s = Math.min(size.w / nat.w, size.h / nat.h);
-    const w = nat.w * s;
-    const h = nat.h * s;
-    frame = { width: w, height: h, left: (size.w - w) / 2, top: (size.h - h) / 2 };
+    const r = photoRect(size.w, size.h, nat.w, nat.h, fit, focus);
+    frame = { width: r.w, height: r.h, left: r.x, top: r.y };
   }
   return (
-    <div ref={box} className="absolute inset-0" data-photo-frame>
-      <img src={src} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-110 object-cover opacity-60 blur-2xl" draggable={false} />
+    <div ref={box} className="absolute inset-0 overflow-hidden" data-photo-frame>
+      {fit === "contain" && <img src={src} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-110 object-cover opacity-60 blur-2xl" draggable={false} />}
       <div className="absolute" style={frame} data-frame>
         <img src={src} alt="" className="absolute inset-0 h-full w-full" draggable={false} onLoad={(e) => setNat({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })} />
         {children}
@@ -95,7 +113,7 @@ export function PhotoFrame({ src, children }: { src: string; children?: React.Re
 }
 
 export function SceneBackground({ scene, animated = true }: { scene: SceneData; animated?: boolean }) {
-  if (scene.kind === "photo" && scene.image) {
+  if (scene.image) {
     return <img src={scene.image} alt="" className="absolute inset-0 h-full w-full object-cover" draggable={false} />;
   }
   if (scene.kind === "photo") return <div className="absolute inset-0 bg-gradient-to-b from-ivory-2 to-ivory-3" />;

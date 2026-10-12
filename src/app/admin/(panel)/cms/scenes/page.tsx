@@ -16,7 +16,7 @@ const KIND_BG: Record<string, string> = {
   shelf: "from-stone-100 to-stone-200",
   photo: "from-neutral-50 to-neutral-200",
 };
-const KIND_LABEL: Record<string, string> = { car: "Illustrated · Car", temple: "Illustrated · Mandir", desk: "Illustrated · Desk", shelf: "Illustrated · Shelf", photo: "Photo" };
+const KIND_LABEL: Record<string, string> = { car: "Car", temple: "Mandir", desk: "Desk", shelf: "Living room", photo: "Photo" };
 
 export default async function ScenesPage() {
   await requireAdmin();

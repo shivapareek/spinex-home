@@ -88,9 +88,10 @@ export function TryBanner({ copy, idol, scene }: { copy: HomeSettings["tryBanner
   if (!idol || !scene) return null;
   return (
     <section className="container py-10 md:py-16">
-      <div className="relative overflow-hidden rounded-[28px]">
-        <IdolInScene scene={scene} idol={idol} className="aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]" scale={1.5} />
-        <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-white p-6 sm:inset-x-auto sm:bottom-6 sm:left-6 sm:max-w-sm md:bottom-10 md:left-10 md:p-8">
+      <div className="relative">
+        <IdolInScene scene={scene} idol={idol} className="aspect-[4/3] rounded-[28px] sm:aspect-[16/9] lg:aspect-[21/9]" scale={1.15} />
+        {/* Below the photo on phones so it never hides the idol; floating card from sm up */}
+        <div className="mt-3 rounded-2xl bg-surface p-6 sm:absolute sm:mt-0 sm:bg-white sm:inset-x-auto sm:bottom-6 sm:left-6 sm:max-w-sm md:bottom-10 md:left-10 md:p-8">
           <h2 className="text-2xl font-bold leading-tight md:text-[32px]">{copy.title}</h2>
           {copy.body && <p className="mt-3 text-[15px] leading-6 text-muted">{copy.body}</p>}
           <div className="mt-6 flex flex-wrap gap-2">

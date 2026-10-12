@@ -47,7 +47,7 @@ export function ChooseSpace({ scenes, idols, copy }: { scenes: SceneData[]; idol
           <div className="relative overflow-hidden rounded-[28px]">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div key={scene.key} initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-                <IdolInScene scene={scene} idol={idol} className="aspect-[5/4]" scale={1.25} />
+                <IdolInScene scene={scene} idol={idol} className="aspect-[5/4]" scale={1.1} />
               </motion.div>
             </AnimatePresence>
           </div>
