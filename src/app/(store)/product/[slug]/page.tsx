@@ -78,7 +78,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               {off > 0 && (
                 <>
                   <span className="text-base text-muted line-through">{inr(p.mrp)}</span>
-                  <span className="rounded-md bg-accent px-2 py-0.5 text-xs font-semibold text-white">{off}% off</span>
+                  <span className="rounded-md bg-accent px-2 py-0.5 text-xs font-semibold text-accent-on">{off}% off</span>
                 </>
               )}
             </div>

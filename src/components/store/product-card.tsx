@@ -36,7 +36,7 @@ export function ProductCard({ p, className, priority }: { p: CardProduct; classN
 
   return (
     <div className={cn("group relative", className)}>
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface transition-colors duration-500 group-hover:bg-[#F1EEE8]">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface transition-colors duration-500 group-hover:bg-surface-2">
         <Link href={`/product/${p.slug}`} aria-label={p.name} className="absolute inset-0">
           {/* plinth */}
           <span className="absolute bottom-[9%] left-1/2 h-[9%] w-[62%] -translate-x-1/2 rounded-[50%] bg-gradient-to-b from-white to-[#E6E4DF] shadow-[0_18px_30px_-18px_rgba(0,0,0,0.35)] transition-transform duration-500 ease-silk group-hover:scale-105" />

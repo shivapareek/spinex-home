@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   SquaresFour, Package, Tag, Receipt, Users, Ticket, Star, EnvelopeSimple, At, House, FileText, Quotes,
-  Question, Mountains, Images, GearSix, ArrowSquareOut, SignOut, List, X, UserGear,
+  Question, Mountains, Images, GearSix, ArrowSquareOut, SignOut, List, X, UserGear, Palette,
 } from "@phosphor-icons/react";
 import { adminLogout } from "@/app/admin/login/actions";
 import { cn } from "@/lib/utils";
@@ -46,6 +46,7 @@ const NAV: { group: string; items: { href: string; label: string; icon: React.El
   {
     group: "System",
     items: [
+      { href: "/admin/theme", label: "Theme", icon: Palette },
       { href: "/admin/settings", label: "Settings", icon: GearSix },
       { href: "/admin/team", label: "Team", icon: UserGear },
     ],

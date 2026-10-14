@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import { db } from "@/db";
 import { pages } from "@/db/schema";
 import { getSetting } from "@/lib/settings";
+import { resolveTheme, themeCss } from "@/lib/themes";
 import { listCategories } from "@/lib/catalog";
 import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
@@ -18,12 +19,14 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
   const cats = listCategories();
   return (
     <div className="store">
+      {/* Admin-selected colour theme (Admin → Theme); the admin panel keeps the default palette */}
+      <style>{themeCss(resolveTheme(getSetting("theme")))}</style>
       <Header announcement={site.announcement.enabled ? site.announcement.items : []} />
       <main>{children}</main>
       <Footer site={site} pages={footerPages} categories={cats} />
       <CartDrawer freeShippingThreshold={commerce.freeShippingThreshold} />
       <SearchPalette />
-      <Toaster position="bottom-center" toastOptions={{ style: { borderRadius: 12, background: "#111111", color: "#FFFFFF", border: "none", fontFamily: "var(--font-geist-sans)" } }} />
+      <Toaster position="bottom-center" toastOptions={{ style: { borderRadius: 12, background: "rgb(var(--c-ink))", color: "#FFFFFF", border: "none", fontFamily: "var(--font-geist-sans)" } }} />
     </div>
   );
 }

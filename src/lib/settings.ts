@@ -2,6 +2,7 @@ import "server-only";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { settings } from "@/db/schema";
+import { DEFAULT_THEME_KEY, type ThemeSettings } from "@/lib/themes";
 
 export type SiteSettings = {
   name: string;
@@ -161,7 +162,9 @@ export function normalizeSections(saved: { key: string; enabled: boolean }[] | u
   return out;
 }
 
-const DEFAULTS = { site: DEFAULT_SITE, commerce: DEFAULT_COMMERCE, home: DEFAULT_HOME } as const;
+export const DEFAULT_THEME: ThemeSettings = { preset: DEFAULT_THEME_KEY, accent: "" };
+
+const DEFAULTS = { site: DEFAULT_SITE, commerce: DEFAULT_COMMERCE, home: DEFAULT_HOME, theme: DEFAULT_THEME } as const;
 type Keys = keyof typeof DEFAULTS;
 type ValueOf<K extends Keys> = (typeof DEFAULTS)[K] extends infer T ? (T extends object ? T : never) : never;
 

@@ -15,6 +15,7 @@ Direct-to-customer store for **Spinex Enterprises** (car dashboard & home décor
 - Bulk/wholesale enquiry page with the PDF catalogue download, contact form, FAQ, CMS pages, SEO (sitemap, robots, product JSON-LD).
 
 **Admin panel** (`/admin`)
+- **Theme**: 6 ready-made colour themes for the storefront (Saffron Classic, Mandir Maroon, Royal Peacock, Lotus Blush, Tulsi Green, Royal Indigo) with a live preview, plus an optional custom accent colour. Admin → Theme.
 - Dashboard: revenue chart, KPIs, recent orders, low stock, top sellers.
 - **Products**: gallery, transparent cut-out for the visualizer, **360° from a turntable video** (frames are extracted in the browser), GLB/USDZ for AR, placements, real height, marketplace links (Amazon/Flipkart/Meesho), SEO.
 - **Orders**: filters, CSV export, status workflow with history (stock is restored automatically on cancel or return), courier and tracking, printable **GST tax invoice**.

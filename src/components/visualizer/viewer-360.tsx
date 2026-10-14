@@ -189,7 +189,7 @@ function Dial({ deg }: { deg: number }) {
     <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/80 py-1 pl-1 pr-3 text-[11px] font-medium tabular-nums text-ink shadow-soft ring-1 ring-ink/5 backdrop-blur">
       <svg viewBox="0 0 24 24" className="h-7 w-7">
         <circle cx="12" cy="12" r="10" fill="none" stroke="#14080A" strokeOpacity=".12" strokeWidth="2" />
-        <circle cx="12" cy="12" r="10" fill="none" stroke="#EA580C" strokeWidth="2" strokeDasharray={`${(deg / 360) * 62.8} 62.8`} transform="rotate(-90 12 12)" />
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" className="text-accent" strokeWidth="2" strokeDasharray={`${(deg / 360) * 62.8} 62.8`} transform="rotate(-90 12 12)" />
       </svg>
       {Math.round(deg)}°
     </div>

@@ -12,7 +12,7 @@ export function Footer({ site, pages, categories }: { site: SiteSettings; pages:
     { href: site.whatsapp ? `https://wa.me/${site.whatsapp.replace(/\D/g, "")}` : "", Icon: WhatsappLogo, label: "WhatsApp" },
   ].filter((s) => s.href);
   return (
-    <footer className="border-t border-line bg-white">
+    <footer className="border-t border-line bg-page">
       <div className="container">
         <ul className="grid grid-cols-2 gap-6 border-b border-line py-10 md:grid-cols-4">
           {[

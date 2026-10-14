@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const v = (name: string) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 export default {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
@@ -10,16 +12,18 @@ export default {
     },
     extend: {
       colors: {
-        // Neutral, white-first palette. Legacy token names are kept so every screen maps cleanly.
-        ink: { DEFAULT: "#111111", 2: "#1C1C1C", 3: "#2A2A2A" },
-        ivory: { DEFAULT: "#F6F6F5", 2: "#EFEFED", 3: "#E4E4E1" },
-        surface: "#F6F6F5",
-        line: "#E8E8E6",
-        muted: "#6B6B6B",
-        // Single brand accent: saffron
-        accent: { DEFAULT: "#EA580C", soft: "#FFF1E8", deep: "#C2410C" },
-        maroon: { DEFAULT: "#C2410C", deep: "#9A3412", soft: "#EA580C" },
-        gold: { DEFAULT: "#EA580C", bright: "#F97316", deep: "#C2410C", pale: "#FFF1E8" },
+        // Every token reads a CSS variable so admin-selected themes recolour the store (see src/lib/themes.ts).
+        // Legacy token names (ivory, maroon, gold) map onto the same variables.
+        ink: { DEFAULT: v("ink"), 2: v("ink-2"), 3: v("ink-3") },
+        ivory: { DEFAULT: v("surface"), 2: v("surface-2"), 3: v("line") },
+        page: v("page"),
+        surface: { DEFAULT: v("surface"), 2: v("surface-2") },
+        line: v("line"),
+        muted: v("muted"),
+        accent: { DEFAULT: v("accent"), soft: v("accent-soft"), deep: v("accent-deep"), on: v("on-accent") },
+        maroon: { DEFAULT: v("accent-deep"), deep: v("accent-deep"), soft: v("accent") },
+        gold: { DEFAULT: v("accent"), bright: v("accent"), deep: v("accent-deep"), pale: v("accent-soft") },
+        tile: { 1: v("tile-1"), 2: v("tile-2"), 3: v("tile-3") },
         sindoor: "#DC2626",
         tulsi: "#16A34A",
       },
@@ -34,7 +38,7 @@ export default {
         spring: "cubic-bezier(0.34,1.56,0.64,1)",
       },
       boxShadow: {
-        aura: "0 12px 32px -12px rgba(234,88,12,0.35)",
+        aura: "0 12px 32px -12px rgb(var(--c-accent) / 0.35)",
         soft: "0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -12px rgba(0,0,0,0.12)",
         lift: "0 24px 60px -24px rgba(0,0,0,0.25)",
         inset: "inset 0 1px 0 rgba(255,255,255,0.6)",

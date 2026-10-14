@@ -21,7 +21,7 @@ export function Logo({ className }: { className?: string; light?: boolean }) {
   return (
     <Link href="/" className={cn("flex items-center gap-2", className)} aria-label="Spinex Home">
       <span className="grid h-8 w-8 place-items-center rounded-lg bg-ink">
-        <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent" fill="currentColor" aria-hidden>
+        <svg viewBox="0 0 24 24" className="h-4 w-4" style={{ color: "rgb(var(--c-accent))" }} fill="currentColor" aria-hidden>
           <path d="M12 2.5c-.9 2.7-3.6 4-3.6 7.2a3.6 3.6 0 0 0 7.2 0c0-3.2-2.7-4.5-3.6-7.2Z" />
           <path d="M4.5 16.5h15M7 20h10" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" />
         </svg>
@@ -64,7 +64,7 @@ export function Header({ announcement }: { announcement: string[] }) {
           </AnimatePresence>
         </div>
       )}
-      <header className="sticky top-0 z-40 border-b border-line bg-white/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-line bg-page/85 backdrop-blur-xl">
         <div className="container grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4">
           <div className="flex items-center gap-1">
             <button onClick={() => setMenu(true)} className="-ml-2 grid h-10 w-10 place-items-center rounded-full lg:hidden" aria-label="Open menu">
@@ -111,7 +111,7 @@ export function Header({ announcement }: { announcement: string[] }) {
           <>
             <motion.div className="fixed inset-0 z-50 bg-black/30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setMenu(false)} />
             <motion.aside
-              className="fixed inset-y-0 left-0 z-50 flex w-[86%] max-w-sm flex-col bg-white"
+              className="fixed inset-y-0 left-0 z-50 flex w-[86%] max-w-sm flex-col bg-page"
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
@@ -138,5 +138,5 @@ export function Header({ announcement }: { announcement: string[] }) {
 }
 
 const Dot = ({ n, accent }: { n: number; accent?: boolean }) => (
-  <span className={cn("absolute right-0.5 top-0.5 grid h-[18px] min-w-[18px] place-items-center rounded-full px-1 text-[10px] font-semibold text-white", accent ? "bg-accent" : "bg-ink")}>{n}</span>
+  <span className={cn("absolute right-0.5 top-0.5 grid h-[18px] min-w-[18px] place-items-center rounded-full px-1 text-[10px] font-semibold", accent ? "bg-accent text-accent-on" : "bg-ink text-white")}>{n}</span>
 );

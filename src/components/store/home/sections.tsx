@@ -13,10 +13,10 @@ type Deity = { deity: string; count: number; image: string };
 export function DeityBento({ deities, title }: { deities: Deity[]; title: string }) {
   const list = deities.slice(0, 5);
   const layout = [
-    "col-span-2 row-span-2 bg-[#F3EDE4] md:col-span-2 md:row-span-2",
-    "col-span-1 bg-[#E9EEF0]",
+    "col-span-2 row-span-2 bg-tile-1 md:col-span-2 md:row-span-2",
+    "col-span-1 bg-tile-2",
     "col-span-1 bg-accent-soft",
-    "col-span-1 bg-[#EDEBF3]",
+    "col-span-1 bg-tile-3",
     "col-span-1 bg-ink text-white",
   ];
   return (
@@ -147,14 +147,14 @@ export function Marketplaces({ copy }: { copy: HomeSettings["marketplaces"] }) {
 export function Bulk({ copy }: { copy: HomeSettings["bulk"] }) {
   return (
     <section className="container py-10 md:py-16">
-      <div className="relative overflow-hidden rounded-[28px] bg-accent px-6 py-12 text-white md:px-14 md:py-16">
-        <div className="pointer-events-none absolute -right-10 bottom-0 select-none font-display text-[180px] font-extrabold uppercase leading-[0.8] tracking-[-0.06em] text-white/10 md:text-[300px]" aria-hidden>Bulk</div>
+      <div className="relative overflow-hidden rounded-[28px] bg-accent px-6 py-12 text-accent-on md:px-14 md:py-16">
+        <div className="pointer-events-none absolute -right-10 bottom-0 select-none font-display text-[180px] font-extrabold uppercase leading-[0.8] tracking-[-0.06em] text-accent-on/10 md:text-[300px]" aria-hidden>Bulk</div>
         <div className="relative max-w-xl">
           <h2 className="text-3xl font-bold leading-tight md:text-5xl">{copy.title}</h2>
-          <p className="mt-4 text-[15px] leading-7 text-white/85">{copy.body}</p>
+          <p className="mt-4 text-[15px] leading-7 text-accent-on/85">{copy.body}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/bulk-orders" className="btn bg-white text-ink hover:bg-white/90">Get bulk pricing <ArrowRight className="h-4 w-4" /></Link>
-            <a href="/spinex-catalogue-2026.pdf" target="_blank" className="btn border border-white/40 text-white hover:bg-white/10"><DownloadSimple className="h-4 w-4" /> Catalogue PDF</a>
+            <a href="/spinex-catalogue-2026.pdf" target="_blank" className="btn border border-accent-on/40 text-accent-on hover:bg-accent-on/10"><DownloadSimple className="h-4 w-4" /> Catalogue PDF</a>
           </div>
         </div>
       </div>
@@ -173,7 +173,7 @@ export function Faqs({ faqs, title = "Good to know." }: { faqs: Faq[]; title?: s
         </div>
         <div className="space-y-2">
           {faqs.map((f) => (
-            <details key={f.id} className="group rounded-2xl bg-surface px-5 transition-colors open:bg-[#F1EEE8] [&_summary::-webkit-details-marker]:hidden">
+            <details key={f.id} className="group rounded-2xl bg-surface px-5 transition-colors open:bg-surface-2 [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left text-base font-semibold">
                 {f.question}
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white transition-transform duration-300 group-open:rotate-45"><Plus className="h-4 w-4" /></span>

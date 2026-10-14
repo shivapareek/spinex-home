@@ -47,7 +47,7 @@ export function Hero({ hero, idols }: { hero: HomeSettings["hero"]; idols: HeroI
 
   return (
     <section className="container pt-4 md:pt-6" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div className="relative overflow-hidden rounded-[28px] bg-[#EFEEEA]">
+      <div className="relative overflow-hidden rounded-[28px] bg-surface-2">
         {/* soft spotlight from above */}
         <div className="pointer-events-none absolute left-1/2 top-[-30%] h-[120%] w-[70%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.95),rgba(255,255,255,0))]" />
 
@@ -119,7 +119,7 @@ export function Hero({ hero, idols }: { hero: HomeSettings["hero"]; idols: HeroI
               {idol.id != null && (
                 <button
                   onClick={() => add({ productId: idol.id!, slug: idol.slug, name: idol.name, price: idol.price, image: idol.cutout, stock: idol.stock ?? 99 })}
-                  className="grid h-10 w-10 place-items-center rounded-full bg-ink text-white transition hover:bg-accent"
+                  className="grid h-10 w-10 place-items-center rounded-full bg-ink text-white transition hover:bg-accent hover:text-accent-on"
                   aria-label={`Add ${idol.name} to cart`}
                 >
                   <Plus className="h-4 w-4" weight="bold" />
