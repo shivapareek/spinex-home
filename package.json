@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "tsx scripts/ensure-db.ts",
     "dev": "next dev",
     "build": "next build",
+    "prestart": "tsx scripts/ensure-db.ts",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",

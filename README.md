@@ -32,9 +32,10 @@ Requirements: **Node.js 20.9 or newer** (22 LTS recommended), npm. Works on Wind
 
 ```bash
 npm install
-npm run db:seed           # creates data/spinex.db with the 16 catalogue products
 npm run dev               # http://localhost:3000  ·  admin: http://localhost:3000/admin
 ```
+
+The first `npm run dev` (or `npm start`) creates `data/spinex.db` and fills it with the 16 catalogue products, pages, scenes and the admin account. After that your data is never overwritten.
 
 Default admin: `admin@spinexhome.in` / `Spinex@2026`. **Change the password after your first login** (Admin → Team).
 
